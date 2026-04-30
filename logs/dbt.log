@@ -1,0 +1,28 @@
+[0m13:28:20.206917 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x111d14ec0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x113cc3890>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x113cc3750>]}
+
+
+============================== 13:28:20.210950 | 766dfeac-336c-4b20-a73e-1ac82d5a8d3f ==============================
+[0m13:28:20.210950 [info ] [MainThread]: Running with dbt=1.11.7
+[0m13:28:20.211449 [debug] [MainThread]: running dbt with arguments {'warn_error': 'None', 'indirect_selection': 'eager', 'quiet': 'False', 'write_json': 'True', 'send_anonymous_usage_stats': 'True', 'log_path': 'logs', 'static_parser': 'True', 'printer_width': '80', 'introspect': 'True', 'version_check': 'True', 'debug': 'False', 'empty': 'None', 'use_experimental_parser': 'False', 'use_colors': 'True', 'log_cache_events': 'False', 'target_path': 'None', 'profiles_dir': '/Users/manvargas/.dbt', 'invocation_command': 'dbt init cortex_skills_cdc --project-dir /Users/manvargas/Documents/Code/newsletter --skip-profile-setup', 'fail_fast': 'False', 'log_format': 'default', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'partial_parse': 'True', 'cache_selected_only': 'False', 'no_print': 'None'}
+[0m13:28:20.228143 [debug] [MainThread]: Starter project path: /Users/manvargas/.snowflake/cortex/remote_cache/github_snowflakedb_cortex-code-skills_fd84b8a564a5/main/data-modeling-agent/.venv/lib/python3.13/site-packages/dbt/include/starter_project
+[0m13:28:20.244334 [info ] [MainThread]: 
+Your new dbt project "cortex_skills_cdc" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m13:28:20.262437 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 0.11792083, "process_in_blocks": "0", "process_kernel_time": 0.281326, "process_mem_max_rss": "116703232", "process_out_blocks": "0", "process_user_time": 0.996737}
+[0m13:28:20.262941 [debug] [MainThread]: Command `dbt init` succeeded at 13:28:20.262854 after 0.12 seconds
+[0m13:28:20.263242 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x113cda780>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x113d94dd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x113a59f20>]}
+[0m13:28:20.263531 [debug] [MainThread]: Flushing usage events
+[0m13:28:23.009704 [debug] [MainThread]: An error was encountered while trying to flush usage events

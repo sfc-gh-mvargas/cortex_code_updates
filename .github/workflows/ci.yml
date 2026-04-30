@@ -1,0 +1,65 @@
+name: dbt CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'cortex_skills_cdc/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'cortex_skills_cdc/**'
+
+env:
+  DBT_PROJECT_DIR: cortex_skills_cdc
+  DBT_PROFILES_DIR: cortex_skills_cdc/profiles
+  DBT_SOURCE_DATABASE: PRODUCT_DEV
+
+jobs:
+  dbt-ci:
+    runs-on: ubuntu-latest
+
+    env:
+      SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+      SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+      SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+      SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
+      SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install dbt
+        run: pip install dbt-snowflake~=1.11
+
+      - name: dbt deps
+        run: dbt deps --project-dir $DBT_PROJECT_DIR --profiles-dir $DBT_PROFILES_DIR --target ci
+
+      - name: dbt seed (load mock data)
+        run: |
+          dbt seed \
+            --project-dir $DBT_PROJECT_DIR \
+            --profiles-dir $DBT_PROFILES_DIR \
+            --target ci \
+            --vars '{"use_seed": true, "source_database": "PRODUCT_DEV"}'
+
+      - name: dbt run (build models from seed)
+        run: |
+          dbt run \
+            --project-dir $DBT_PROJECT_DIR \
+            --profiles-dir $DBT_PROFILES_DIR \
+            --target ci \
+            --vars '{"use_seed": true, "source_database": "PRODUCT_DEV"}' \
+            --full-refresh
+
+      - name: dbt test (validate CDC logic)
+        run: |
+          dbt test \
+            --project-dir $DBT_PROJECT_DIR \
+            --profiles-dir $DBT_PROFILES_DIR \
+            --target ci \
+            --vars '{"use_seed": true, "source_database": "PRODUCT_DEV"}'

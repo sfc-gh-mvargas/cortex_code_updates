@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: stg_skills_latest
+    description: "Deduplicated view of skills per ingestion date (latest per day)"
+    columns:
+      - name: skill_name
+        tests:
+          - not_null
+
+  - name: skills_cdc_events
+    description: "CDC events detecting NEW, DELETED, and UPDATED skills between daily snapshots"
+    columns:
+      - name: cdc_key
+        description: "Surrogate key for deduplication (skill_name + detected_date + cdc_action)"
+        tests:
+          - unique
+          - not_null
+      - name: skill_name
+        tests:
+          - not_null
+      - name: cdc_action
+        description: "NEW = skill appeared, DELETED = skill removed, UPDATED = description/type/path changed"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['NEW', 'DELETED', 'UPDATED']
+      - name: detected_date
+        tests:
+          - not_null

@@ -1,0 +1,12 @@
+[project]
+name = "newsletter"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "dbt>=1.0.0.40.17",
+    "dbt-snowflake>=1.11.4",
+    "pyyaml>=6.0.3",
+    "snowflake-connector-python>=4.4.0",
+]
