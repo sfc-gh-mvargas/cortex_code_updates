@@ -1,85 +1,71 @@
-# Cortex CLI Skills CDC Pipeline
+# Quickstart
 
-Tracks changes to Cortex Code CLI skills over time. Captures skill metadata daily and detects NEW, DELETED, and UPDATED skills via CDC logic.
+## Prerequisites
 
-## Architecture
+- [uv](https://docs.astral.sh/uv/) installed
+- [Cortex Code CLI](https://docs.snowflake.com/en/user-guide/cortex-code) installed (`cortex --version`)
+- Snowflake connection configured in `~/.snowflake/connections.toml`
 
-```
-cortex skill list → ingest_skills.py → BRONZE (append-only)
-                                            ↓
-                                    STG_SKILLS_LATEST (dedup view)
-                                            ↓
-                                    V_SKILLS_CDC_PENDING (diff view)
-                                            ↓
-                                    SKILLS_CDC_EVENTS (silver table)
-```
-
-## Setup
+## 1. Install Python dependencies
 
 ```bash
 uv venv --python 3.13
 uv add snowflake-connector-python pyyaml
 ```
 
-Deploy Snowflake objects:
+## 2. Ingest skills (run weekly)
 
 ```bash
-# Run configs.sql against your Snowflake account
-# Or execute via snowsql / cortex
-```
-
-## Run Pipeline
-
-```bash
-# 1. Ingest current skills snapshot (appends to bronze)
 SNOWFLAKE_CONNECTION_NAME=default uv run python src/ingest_skills.py
-
-# 2. Materialize CDC events (run in Snowflake after ingestion)
 ```
 
-```sql
-INSERT INTO PRODUCT.UPDATES.SKILLS_CDC_EVENTS
-SELECT * FROM PRODUCT.UPDATES.V_SKILLS_CDC_PENDING p
-WHERE NOT EXISTS (
-    SELECT 1 FROM PRODUCT.UPDATES.SKILLS_CDC_EVENTS e
-    WHERE e.cdc_key = p.cdc_key
-);
-```
+## 3. Run dbt CDC models
 
-## Query CDC Results
-
-```sql
--- All changes detected today
-SELECT * FROM PRODUCT.UPDATES.SKILLS_CDC_EVENTS
-WHERE DETECTED_DATE = CURRENT_DATE()
-ORDER BY CDC_ACTION, SKILL_NAME;
-
--- History of a specific skill
-SELECT * FROM PRODUCT.UPDATES.SKILLS_CDC_EVENTS
-WHERE SKILL_NAME = 'cortex-agent'
-ORDER BY DETECTED_DATE;
-
--- Summary by action type
-SELECT CDC_ACTION, COUNT(*) AS cnt
-FROM PRODUCT.UPDATES.SKILLS_CDC_EVENTS
-GROUP BY CDC_ACTION;
-```
-
-## Snowflake Objects
-
-| Object | Type | Purpose |
-|--------|------|---------|
-| `PRODUCT.UPDATES.CORTEX_CLI_BUNDLED_SKILLS_LOG` | Table | Bronze append-only log |
-| `PRODUCT.UPDATES.STG_SKILLS_LATEST` | View | Dedup (latest per skill per day) |
-| `PRODUCT.UPDATES.V_SKILLS_CDC_PENDING` | View | CDC detection (today vs previous) |
-| `PRODUCT.UPDATES.SKILLS_CDC_EVENTS` | Table | Silver CDC events (append-only) |
-
-## dbt Project
-
-The `cortex_skills_cdc/` directory contains equivalent dbt models. Requires keypair or password auth in `~/.dbt/profiles.yml` (PAT not supported by dbt-snowflake 1.11.3).
+### Option A: Against real data (PRODUCT)
 
 ```bash
 cd cortex_skills_cdc
-dbt deps
-dbt run
+uv run dbt deps
+uv run dbt run --vars '{"source_database": "PRODUCT"}'
+uv run dbt test
+```
+
+### Option B: Against mock data (local CI validation)
+
+```bash
+cd cortex_skills_cdc
+uv run dbt deps
+uv run dbt seed --target ci --vars '{"use_seed": true, "source_database": "PRODUCT_DEV"}'
+uv run dbt run --target ci --vars '{"use_seed": true, "source_database": "PRODUCT_DEV"}' --full-refresh
+uv run dbt test --target ci --vars '{"use_seed": true, "source_database": "PRODUCT_DEV"}'
+```
+
+## Environment variables
+
+| Variable | Default | Purpose |
+|----------|---------|---------|
+| `SNOWFLAKE_CONNECTION_NAME` | `default` | Connection for `ingest_skills.py` |
+| `DBT_SOURCE_DATABASE` | `PRODUCT` | Overrides `var('source_database')` in dbt |
+
+## Project structure
+
+```
+newsletter/
+├── src/
+│   └── ingest_skills.py          # Bronze ingestion script
+├── cortex_skills_cdc/
+│   ├── dbt_project.yml           # Parametrized with var('source_database')
+│   ├── profiles/profiles.yml     # dev + ci targets
+│   ├── models/
+│   │   ├── staging/
+│   │   │   ├── sources.yml
+│   │   │   └── stg_skills_latest.sql
+│   │   └── silver/
+│   │       ├── schema.yml
+│   │       └── skills_cdc_events.sql
+│   └── seeds/
+│       ├── schema.yml
+│       └── raw_skills_mock.csv   # Mock data (2 weeks)
+├── .github/workflows/ci.yml      # GitHub Actions CI
+└── QUICKSTART.md
 ```
