@@ -34,7 +34,7 @@ jobs:
           cortex --version
 
       - name: Run monitor tests
-        run: bash tests/test_ci.sh
+        run: bash tests/test_monitor.sh
 
       - name: Check for version change
         id: version_check
