@@ -1,9 +1,0 @@
-skill_name,skill_description,skill_type,skill_path,cli_version,captured_at,ingestion_date
-skill-alpha,Alpha skill for testing,BUNDLED,/bundled/skill-alpha,1.0.70,2026-04-23 10:00:00,2026-04-23
-skill-beta,Beta skill original description,BUNDLED,/bundled/skill-beta,1.0.70,2026-04-23 10:00:00,2026-04-23
-skill-gamma,Gamma skill to be deleted,EXTERNAL,/external/skill-gamma,1.0.70,2026-04-23 10:00:00,2026-04-23
-skill-delta,Delta skill unchanged,REMOTE,/remote/skill-delta,1.0.70,2026-04-23 10:00:00,2026-04-23
-skill-alpha,Alpha skill for testing,BUNDLED,/bundled/skill-alpha,1.0.75,2026-04-30 10:00:00,2026-04-30
-skill-beta,Beta skill UPDATED description,BUNDLED,/bundled/skill-beta,1.0.75,2026-04-30 10:00:00,2026-04-30
-skill-delta,Delta skill unchanged,REMOTE,/remote/skill-delta,1.0.75,2026-04-30 10:00:00,2026-04-30
-skill-epsilon,Epsilon is brand new,BUNDLED,/bundled/skill-epsilon,1.0.75,2026-04-30 10:00:00,2026-04-30

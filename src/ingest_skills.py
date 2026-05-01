@@ -1,11 +1,13 @@
-import os
+import json
 import re
 import subprocess
-import yaml
 from datetime import datetime, timezone
 from pathlib import Path
 
-import snowflake.connector
+import yaml
+
+
+DATA_DIR = Path(__file__).parent.parent / "data"
 
 
 def get_cli_version() -> str:
@@ -58,74 +60,52 @@ def read_skill_description(skill_path: str) -> str | None:
         frontmatter = yaml.safe_load(match.group(1))
         desc = frontmatter.get("description", "")
         if isinstance(desc, str):
-            return desc.strip()[:16384]
+            return desc.strip()
     except yaml.YAMLError:
         pass
     return None
 
 
-def ensure_snowflake_objects(conn):
-    cur = conn.cursor()
-    cur.execute("CREATE DATABASE IF NOT EXISTS PRODUCT")
-    cur.execute("CREATE SCHEMA IF NOT EXISTS PRODUCT.UPDATES")
-    cur.execute("""
-        CREATE TABLE IF NOT EXISTS PRODUCT.UPDATES.CORTEX_CLI_BUNDLED_SKILLS_LOG (
-            SKILL_NAME          VARCHAR(256)    NOT NULL,
-            SKILL_DESCRIPTION   VARCHAR(16384),
-            SKILL_TYPE          VARCHAR(64)     NOT NULL,
-            SKILL_PATH          VARCHAR(4096),
-            CLI_VERSION         VARCHAR(64)     NOT NULL,
-            CAPTURED_AT         TIMESTAMP_NTZ   NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-            INGESTION_DATE      DATE            NOT NULL DEFAULT CURRENT_DATE()
-        )
-    """)
+def get_previous_snapshot() -> list[dict] | None:
+    snapshots = sorted(DATA_DIR.glob("skills_*.json"), reverse=True)
+    if not snapshots:
+        return None
+    with open(snapshots[0]) as f:
+        return json.load(f)["skills"]
 
 
-def upload_to_snowflake(skills: list[dict], cli_version: str):
-    conn = snowflake.connector.connect(
-        connection_name=os.getenv("SNOWFLAKE_CONNECTION_NAME") or "default"
-    )
-    try:
-        ensure_snowflake_objects(conn)
-        cur = conn.cursor()
-        cur.execute("USE DATABASE PRODUCT")
-        cur.execute("USE SCHEMA UPDATES")
+def compute_cdc(current: list[dict], previous: list[dict] | None) -> list[dict]:
+    if previous is None:
+        return [{"skill_name": s["name"], "action": "NEW", "detail": None} for s in current]
 
-        today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    prev_map = {s["name"]: s for s in previous}
+    curr_map = {s["name"]: s for s in current}
 
-        cur.execute(
-            "DELETE FROM PRODUCT.UPDATES.CORTEX_CLI_BUNDLED_SKILLS_LOG WHERE INGESTION_DATE = %s",
-            (today,),
-        )
+    changes = []
 
-        now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+    for name, skill in curr_map.items():
+        if name not in prev_map:
+            changes.append({"skill_name": name, "action": "NEW", "detail": None})
+        else:
+            prev = prev_map[name]
+            if skill.get("description") != prev.get("description"):
+                changes.append({"skill_name": name, "action": "MODIFIED", "detail": "description_changed"})
+            elif skill.get("type") != prev.get("type"):
+                changes.append({"skill_name": name, "action": "MODIFIED", "detail": "type_changed"})
+            elif skill.get("path") != prev.get("path"):
+                changes.append({"skill_name": name, "action": "MODIFIED", "detail": "path_changed"})
 
-        rows = []
-        for skill in skills:
-            rows.append((
-                skill["name"],
-                skill.get("description"),
-                skill["type"],
-                skill["path"],
-                cli_version,
-                now,
-                today,
-            ))
+    for name in prev_map:
+        if name not in curr_map:
+            changes.append({"skill_name": name, "action": "DELETED", "detail": None})
 
-        cur.executemany(
-            """
-            INSERT INTO PRODUCT.UPDATES.CORTEX_CLI_BUNDLED_SKILLS_LOG
-                (SKILL_NAME, SKILL_DESCRIPTION, SKILL_TYPE, SKILL_PATH, CLI_VERSION, CAPTURED_AT, INGESTION_DATE)
-            VALUES (%s, %s, %s, %s, %s, %s, %s)
-            """,
-            rows,
-        )
-        print(f"Inserted {len(rows)} skill records for CLI version {cli_version} (replaced today's snapshot)")
-    finally:
-        conn.close()
+    return changes
+
 
 
 def main():
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+
     cli_version = get_cli_version()
     print(f"Cortex CLI version: {cli_version}")
 
@@ -141,7 +121,58 @@ def main():
     external_count = sum(1 for s in skills if s["type"] == "EXTERNAL")
     print(f"  BUNDLED: {bundled_count}, REMOTE: {remote_count}, EXTERNAL: {external_count}")
 
-    upload_to_snowflake(skills, cli_version)
+    previous = get_previous_snapshot()
+    cdc = compute_cdc(skills, previous)
+
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    snapshot = {
+        "cli_version": cli_version,
+        "captured_at": datetime.now(timezone.utc).isoformat(),
+        "ingestion_date": today,
+        "skill_count": len(skills),
+        "skills": skills,
+    }
+
+    snapshot_path = DATA_DIR / f"skills_{today}.json"
+    with open(snapshot_path, "w") as f:
+        json.dump(snapshot, f, indent=2)
+    print(f"Wrote snapshot to {snapshot_path}")
+
+    if cdc:
+        cdc_path = DATA_DIR / f"cdc_{today}.json"
+        cdc_payload = {
+            "detected_date": today,
+            "cli_version": cli_version,
+            "changes": cdc,
+        }
+        with open(cdc_path, "w") as f:
+            json.dump(cdc_payload, f, indent=2)
+        print(f"CDC: {len(cdc)} changes written to {cdc_path}")
+        for c in cdc:
+            print(f"  {c['action']}: {c['skill_name']} {c['detail'] or ''}")
+
+
+    else:
+        print("CDC: No changes detected")
+
+    new_skills_week = [s for s in cdc if s["action"] == "NEW"] if cdc else []
+    skills_map = {s["name"]: s for s in skills}
+    weekly_path = DATA_DIR / f"new_skills_week_{today}.json"
+    weekly_payload = {
+        "week_of": today,
+        "cli_version": cli_version,
+        "new_skills": [
+            {
+                "name": s["skill_name"],
+                "description": skills_map.get(s["skill_name"], {}).get("description") or "",
+            }
+            for s in new_skills_week
+        ],
+        "count": len(new_skills_week),
+    }
+    with open(weekly_path, "w") as f:
+        json.dump(weekly_payload, f, indent=2)
+    print(f"Weekly new skills JSON written to {weekly_path}")
 
 
 if __name__ == "__main__":

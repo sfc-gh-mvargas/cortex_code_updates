@@ -1,7 +1,7 @@
-set_private_key_path.sql
 .venv/
-target/
-dbt_packages/
-logs/
-*.p8
-*.pem
+__pycache__/
+*.pyc
+
+src/build_history.py
+data/history/
+.DS_Store

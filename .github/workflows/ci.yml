@@ -1,65 +1,59 @@
-name: dbt CI
+name: Ingest Cortex CLI Skills
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'cortex_skills_cdc/**'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'cortex_skills_cdc/**'
+  schedule:
+    - cron: '0 12 * * 1'  # Every Monday at noon UTC
+  workflow_dispatch:
 
-env:
-  DBT_PROJECT_DIR: cortex_skills_cdc
-  DBT_PROFILES_DIR: cortex_skills_cdc/profiles
-  DBT_SOURCE_DATABASE: PRODUCT_DEV
+permissions:
+  contents: write
 
 jobs:
-  dbt-ci:
+  ingest:
     runs-on: ubuntu-latest
-
-    env:
-      SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
-      SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
-      SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
-      SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
-      SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
 
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
 
-      - name: Install dbt
-        run: pip install dbt-snowflake~=1.11
+      - name: Install dependencies
+        run: pip install pyyaml
 
-      - name: dbt deps
-        run: dbt deps --project-dir $DBT_PROJECT_DIR --profiles-dir $DBT_PROFILES_DIR --target ci
+      # - name: Create connections.toml
+      #   run: |
+      #     mkdir -p ~/.snowflake
+      #     cat <<EOF > ~/.snowflake/connections.toml
+      #     [default]
+      #     account = "${{ secrets.SNOWFLAKE_ACCOUNT }}"
+      #     user = "${{ secrets.SNOWFLAKE_USER }}"
+      #     password = "${{ secrets.SNOWFLAKE_PASSWORD }}"
+      #     EOF
+      #     chmod 600 ~/.snowflake/connections.toml
 
-      - name: dbt seed (load mock data)
+      - name: Install Cortex Code CLI
         run: |
-          dbt seed \
-            --project-dir $DBT_PROJECT_DIR \
-            --profiles-dir $DBT_PROFILES_DIR \
-            --target ci \
-            --vars '{"use_seed": true, "source_database": "PRODUCT_DEV"}'
+          curl -fsSL https://downloads.snowflake.com/cortex/install.sh | sh
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-      - name: dbt run (build models from seed)
-        run: |
-          dbt run \
-            --project-dir $DBT_PROJECT_DIR \
-            --profiles-dir $DBT_PROFILES_DIR \
-            --target ci \
-            --vars '{"use_seed": true, "source_database": "PRODUCT_DEV"}' \
-            --full-refresh
+      - name: Run ingestion
+        run: python src/ingest_skills.py
 
-      - name: dbt test (validate CDC logic)
+      - name: Generate email report
+        run: python src/build_report.py
+
+      - name: Commit and push
         run: |
-          dbt test \
-            --project-dir $DBT_PROJECT_DIR \
-            --profiles-dir $DBT_PROFILES_DIR \
-            --target ci \
-            --vars '{"use_seed": true, "source_database": "PRODUCT_DEV"}'
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/ report/
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: update skills snapshot $(date -u +%Y-%m-%d)"
+            git push
+          fi
