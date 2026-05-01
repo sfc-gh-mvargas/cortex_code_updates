@@ -25,24 +25,31 @@ jobs:
       - name: Install dependencies
         run: uv pip install pyyaml --system
 
-      - name: Install Cortex Code CLI
+      - name: Install Cortex Code CLI (stable)
         run: |
           curl -LsS https://ai.snowflake.com/static/cc-scripts/install.sh | sh
-          # echo "$HOME/.local/bin" >> $GITHUB_PATH
-          # export PATH="$HOME/.local/bin:$PATH"
-          # Verify installation
           if ! command -v cortex &> /dev/null; then
             echo "Cortex CLI installation failed"
             exit 1
           fi
           cortex --version
-          cortex update
 
-      - name: Run ingestion
+      - name: Run ingestion (stable)
         run: uv run python src/ingest_skills.py
 
-      - name: Generate CDC docs
+      - name: Generate CDC docs (stable)
         run: uv run python src/build_report.py
+
+      - name: Install Cortex Code CLI (beta)
+        run: |
+          curl -LsS https://ai.snowflake.com/static/cc-scripts/install.sh | CORTEX_CHANNEL=beta sh
+          cortex --version
+
+      - name: Run ingestion (beta)
+        run: uv run python src/ingest_skills.py --beta
+
+      - name: Generate CDC docs (beta)
+        run: uv run python src/build_report.py --beta
 
       - name: Commit and push
         run: |

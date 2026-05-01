@@ -1,10 +1,11 @@
+import argparse
 import json
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-DATA_DIR = Path(__file__).parent.parent / "data"
-OUTPUT_DIR = Path(__file__).parent.parent / "docs"
+BASE_DATA_DIR = Path(__file__).parent.parent / "data"
+BASE_OUTPUT_DIR = Path(__file__).parent.parent / "docs"
 
 COCO_ICON = "🥥"
 
@@ -23,10 +24,11 @@ STYLES = {
 }
 
 
-def load_change_history() -> list[dict]:
-    snapshot_path = DATA_DIR / "skills_2026-04-30.json"
-    if not snapshot_path.exists():
+def load_change_history(data_dir: Path) -> list[dict]:
+    snapshots = sorted(data_dir.glob("skills_*.json"))
+    if not snapshots:
         return []
+    snapshot_path = snapshots[0]
     with open(snapshot_path) as f:
         data = json.load(f)
     skills = data.get("skills", [])
@@ -43,16 +45,16 @@ def load_change_history() -> list[dict]:
     }]
 
 
-def _load_latest_snapshot() -> list[dict] | None:
-    snapshots = sorted(DATA_DIR.glob("skills_*.json"), reverse=True)
+def _load_latest_snapshot(data_dir: Path) -> list[dict] | None:
+    snapshots = sorted(data_dir.glob("skills_*.json"), reverse=True)
     if not snapshots:
         return None
     with open(snapshots[0]) as f:
         return json.load(f).get("skills", [])
 
 
-def load_weekly_json() -> dict:
-    candidates = sorted(DATA_DIR.glob("new_skills_week_*.json"), reverse=True)
+def load_weekly_json(data_dir: Path) -> dict:
+    candidates = sorted(data_dir.glob("new_skills_week_*.json"), reverse=True)
     if not candidates:
         print("ERROR: No new_skills_week_*.json found. Run src/ingest_skills.py first.")
         sys.exit(1)
@@ -63,13 +65,13 @@ def load_weekly_json() -> dict:
     with open(path) as f:
         data = json.load(f)
 
-    cdc_changes = load_cdc_changes(data.get("week_of", ""))
+    cdc_changes = load_cdc_changes(data.get("week_of", ""), data_dir)
     if cdc_changes["deleted"]:
         data["deleted_skills"] = cdc_changes["deleted"]
     if cdc_changes["modified"]:
         data["modified_skills"] = cdc_changes["modified"]
     if cdc_changes["new"] and not data.get("new_skills"):
-        snapshot = _load_latest_snapshot()
+        snapshot = _load_latest_snapshot(data_dir)
         skills_map = {s["name"]: s for s in snapshot} if snapshot else {}
         data["new_skills"] = [
             {"name": s["name"], "description": skills_map.get(s["name"], {}).get("description", "")}
@@ -79,9 +81,9 @@ def load_weekly_json() -> dict:
     return data
 
 
-def load_cdc_changes(week_of: str) -> dict:
+def load_cdc_changes(week_of: str, data_dir: Path) -> dict:
     result = {"new": [], "modified": [], "deleted": []}
-    for cdc_file in sorted(DATA_DIR.glob("cdc_*.json"), reverse=True):
+    for cdc_file in sorted(data_dir.glob("cdc_*.json"), reverse=True):
         with open(cdc_file) as f:
             cdc = json.load(f)
         cdc_date = cdc.get("detected_date", "")
@@ -249,7 +251,7 @@ def render_current_entry(data: dict) -> str:
     return section
 
 
-def render_email_html(data: dict, history: list[dict] | None = None) -> str:
+def render_email_html(data: dict, history: list[dict] | None = None, is_beta: bool = False) -> str:
     skills = data.get("new_skills", [])
     deleted_skills = data.get("deleted_skills", [])
     modified_skills = data.get("modified_skills", [])
@@ -270,9 +272,15 @@ def render_email_html(data: dict, history: list[dict] | None = None) -> str:
 <table width="640" cellpadding="0" cellspacing="0" style="background:{STYLES['card']};border:1px solid {STYLES['border']};border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
 
 <tr><td style="padding:24px 24px 14px;border-bottom:3px solid {STYLES['accent']};background:{STYLES['header_bg']};border-radius:6px 6px 0 0;">
-  <h1 style="margin:0;font-family:Arial,sans-serif;color:#FFFFFF;font-size:22px;letter-spacing:1px;">
-    {COCO_ICON} CoCo Skill Pulse
-  </h1>
+  <div style="display:flex;justify-content:space-between;align-items:center;">
+    <h1 style="margin:0;font-family:Arial,sans-serif;color:#FFFFFF;font-size:22px;letter-spacing:1px;">
+      {COCO_ICON} CoCo Skill Pulse
+    </h1>
+    <div style="display:inline-flex;border-radius:4px;overflow:hidden;border:1px solid #71D3DC;">
+      <a href="index.html" style="padding:4px 10px;font-family:Arial,sans-serif;font-size:11px;font-weight:bold;text-decoration:none;{'background:#71D3DC;color:#11567F;' if not is_beta else 'background:transparent;color:#71D3DC;'}">Stable</a>
+      <a href="beta.html" style="padding:4px 10px;font-family:Arial,sans-serif;font-size:11px;font-weight:bold;text-decoration:none;{'background:#71D3DC;color:#11567F;' if is_beta else 'background:transparent;color:#71D3DC;'}">Beta</a>
+    </div>
+  </div>
   <p style="margin:6px 0 0;font-family:Arial,sans-serif;color:#FFFFFFCC;font-size:12px;">
     Tracking skills shipped in the public <a href="https://docs.snowflake.com/en/user-guide/cortex-code/cortex-code-cli" style="color:#71D3DC;">Cortex Code CLI</a> installed via <code style="background:#ffffff22;padding:1px 4px;border-radius:3px;font-size:11px;">curl -LsS https://ai.snowflake.com/static/cc-scripts/install.sh</code>
   </p>
@@ -309,11 +317,20 @@ def render_email_html(data: dict, history: list[dict] | None = None) -> str:
 
 
 def main():
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    data = load_weekly_json()
-    history = load_change_history()
-    html = render_email_html(data, history)
-    out_path = OUTPUT_DIR / "index.html"
+    parser = argparse.ArgumentParser(description="Build CoCo Skill Pulse report")
+    parser.add_argument("--beta", action="store_true", help="Build report from beta channel data (reads data/beta/, writes docs/beta.html)")
+    args = parser.parse_args()
+
+    data_dir = BASE_DATA_DIR / "beta" if args.beta else BASE_DATA_DIR
+    output_dir = BASE_OUTPUT_DIR
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    out_filename = "beta.html" if args.beta else "index.html"
+
+    data = load_weekly_json(data_dir)
+    history = load_change_history(data_dir)
+    html = render_email_html(data, history, is_beta=args.beta)
+    out_path = output_dir / out_filename
     out_path.write_text(html, encoding="utf-8")
     print(f"Webpage status updated to {out_path}")
 

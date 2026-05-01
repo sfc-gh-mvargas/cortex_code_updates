@@ -1,3 +1,4 @@
+import argparse
 import json
 import re
 import subprocess
@@ -7,7 +8,7 @@ from pathlib import Path
 import yaml
 
 
-DATA_DIR = Path(__file__).parent.parent / "data"
+BASE_DATA_DIR = Path(__file__).parent.parent / "data"
 
 
 def get_cli_version() -> str:
@@ -66,8 +67,12 @@ def read_skill_description(skill_path: str) -> str | None:
     return None
 
 
-def get_previous_snapshot() -> list[dict] | None:
-    snapshots = sorted(DATA_DIR.glob("skills_*.json"), reverse=True)
+def get_previous_snapshot(data_dir: Path, today: str) -> list[dict] | None:
+    today_file = f"skills_{today}.json"
+    snapshots = sorted(
+        [s for s in data_dir.glob("skills_*.json") if s.name != today_file],
+        reverse=True,
+    )
     if not snapshots:
         return None
     with open(snapshots[0]) as f:
@@ -92,8 +97,7 @@ def compute_cdc(current: list[dict], previous: list[dict] | None) -> list[dict]:
                 changes.append({"skill_name": name, "action": "MODIFIED", "detail": "description_changed"})
             elif skill.get("type") != prev.get("type"):
                 changes.append({"skill_name": name, "action": "MODIFIED", "detail": "type_changed"})
-            elif skill.get("path") != prev.get("path"):
-                changes.append({"skill_name": name, "action": "MODIFIED", "detail": "path_changed"})
+
 
     for name in prev_map:
         if name not in curr_map:
@@ -104,7 +108,15 @@ def compute_cdc(current: list[dict], previous: list[dict] | None) -> list[dict]:
 
 
 def main():
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    parser = argparse.ArgumentParser(description="Ingest Cortex Code CLI skills")
+    parser.add_argument("--beta", action="store_true", help="Ingest from beta channel (writes to data/beta/)")
+    args = parser.parse_args()
+
+    data_dir = BASE_DATA_DIR / "beta" if args.beta else BASE_DATA_DIR
+    data_dir.mkdir(parents=True, exist_ok=True)
+
+    channel = "beta" if args.beta else "stable"
+    print(f"Channel: {channel}")
 
     cli_version = get_cli_version()
     print(f"Cortex CLI version: {cli_version}")
@@ -121,28 +133,30 @@ def main():
     external_count = sum(1 for s in skills if s["type"] == "EXTERNAL")
     print(f"  BUNDLED: {bundled_count}, REMOTE: {remote_count}, EXTERNAL: {external_count}")
 
-    previous = get_previous_snapshot()
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    previous = get_previous_snapshot(data_dir, today)
     cdc = compute_cdc(skills, previous)
 
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     snapshot = {
         "cli_version": cli_version,
         "captured_at": datetime.now(timezone.utc).isoformat(),
         "ingestion_date": today,
         "skill_count": len(skills),
+        "channel": channel,
         "skills": skills,
     }
 
-    snapshot_path = DATA_DIR / f"skills_{today}.json"
+    snapshot_path = data_dir / f"skills_{today}.json"
     with open(snapshot_path, "w") as f:
         json.dump(snapshot, f, indent=2)
     print(f"Wrote snapshot to {snapshot_path}")
 
     if cdc:
-        cdc_path = DATA_DIR / f"cdc_{today}.json"
+        cdc_path = data_dir / f"cdc_{today}.json"
         cdc_payload = {
             "detected_date": today,
             "cli_version": cli_version,
+            "channel": channel,
             "changes": cdc,
         }
         with open(cdc_path, "w") as f:
@@ -151,16 +165,16 @@ def main():
         for c in cdc:
             print(f"  {c['action']}: {c['skill_name']} {c['detail'] or ''}")
 
-
     else:
         print("CDC: No changes detected")
 
     new_skills_week = [s for s in cdc if s["action"] == "NEW"] if cdc else []
     skills_map = {s["name"]: s for s in skills}
-    weekly_path = DATA_DIR / f"new_skills_week_{today}.json"
+    weekly_path = data_dir / f"new_skills_week_{today}.json"
     weekly_payload = {
         "week_of": today,
         "cli_version": cli_version,
+        "channel": channel,
         "new_skills": [
             {
                 "name": s["skill_name"],
