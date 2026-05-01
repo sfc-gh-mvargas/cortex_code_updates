@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: '0 12 * * 1'  # Every Monday at noon UTC
   workflow_dispatch:
-
+g
 permissions:
   contents: write
 
@@ -35,10 +35,14 @@ jobs:
       #     EOF
       #     chmod 600 ~/.snowflake/connections.toml
 
+
       - name: Install Cortex Code CLI
         run: |
           curl -fsSL https://downloads.snowflake.com/cortex/install.sh | sh
+          export PATH="$HOME/.local/bin:$PATH"
           echo "$HOME/.local/bin" >> $GITHUB_PATH
+          # Verify installation
+          which cortex || (echo "Cortex CLI not found" && exit 1)
 
       - name: Run ingestion
         run: python src/ingest_skills.py
