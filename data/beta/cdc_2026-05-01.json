@@ -4,247 +4,27 @@
   "channel": "beta",
   "changes": [
     {
-      "skill_name": "access-troubleshooter",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "error-tables-ops",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "network-security",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "ai-data-share",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "attach-ai-products-to-share",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "setup-snowflake-sso",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "snowpark-python",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "machine-learning",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "data-cleanrooms",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "migration-guide",
-      "action": "NEW",
-      "detail": null
-    },
-    {
       "skill_name": "native-app-provider",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "build-react-app",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "event-table",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "dynamic-tables",
-      "action": "NEW",
-      "detail": null
+      "action": "MODIFIED",
+      "detail": "description_changed"
     },
     {
       "skill_name": "declarative-sharing",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "cortex-code-guide",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "data-governance",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "snowflake-interactive",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "security-investigation",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "skill-development",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "lineage",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "ctx-workflow",
-      "action": "NEW",
-      "detail": null
+      "action": "MODIFIED",
+      "detail": "description_changed"
     },
     {
       "skill_name": "alert",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "iceberg",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "developing-with-streamlit",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "cortex-ai-functions",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "semantic-view",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "warehouse",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "openflow",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "billing",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "cost-intelligence",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "internal-marketplace-org-listing",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "snowflake-notebooks",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "key-and-secret-management",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "data-quality",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "dcm",
-      "action": "NEW",
-      "detail": null
+      "action": "MODIFIED",
+      "detail": "description_changed"
     },
     {
       "skill_name": "snowflake-postgres",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "cortex-agent",
-      "action": "NEW",
-      "detail": null
+      "action": "MODIFIED",
+      "detail": "description_changed"
     },
     {
       "skill_name": "spark-migration",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "sql-author",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "cortex-secrets",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "dbt-projects-on-snowflake",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "workload-performance-analysis",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "native-app-consumer",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "organization-management",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "notification",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "trust-center",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "deploy-to-spcs",
-      "action": "NEW",
-      "detail": null
-    },
-    {
-      "skill_name": "integrations",
       "action": "NEW",
       "detail": null
     }
