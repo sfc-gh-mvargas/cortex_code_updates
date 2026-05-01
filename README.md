@@ -6,7 +6,7 @@
 
 Documentation and monitoring tools for Snowflake Cortex Code Skills.
 
-- Visit the [Live Docs](https://sfc-gh-mvargas.github.io/cortex_code_updates/)
+- Visit the **[GitHub Pages Documentation](https://sfc-gh-mvargas.github.io/cortex_code_updates/)**: Live documentation site
 
 ## Overview
 
@@ -18,7 +18,6 @@ This repository provides documentation, version monitoring, and automated skill 
 - 📚 **Skill Documentation**: Ingests and catalogs all available Cortex Code Skills
 - 🤖 **Automated Updates**: GitHub Actions workflows keep documentation in sync
 - 📊 **Comprehensive Reporting**: Generates detailed skill reports and snapshots
-- 📖 **[GitHub Pages Documentation](https://sfc-gh-mvargas.github.io/cortex_code_updates/)**: Live documentation site
 
 ## GitHub Workflows
 
