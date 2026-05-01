@@ -2,7 +2,7 @@
 
 [![Website Status](https://github.com/sfc-gh-mvargas/cortex_code_updates/actions/workflows/cortex_version_monitor.yml/badge.svg)](https://github.com/sfc-gh-mvargas/cortex_code_updates/actions/workflows/cortex_version_monitor.yml)
 [![Ingest Cortex CLI Skills](https://github.com/sfc-gh-mvargas/cortex_code_updates/actions/workflows/cortex_code_docs_updated.yml/badge.svg)](https://github.com/sfc-gh-mvargas/cortex_code_updates/actions/workflows/cortex_code_docs_updated.yml)
-[![GitHub Pages](https://github.com/sfc-gh-mvargas/cortex_code_updates/actions/workflows/pages/build-deployment/badge.svg)](https://sfc-gh-mvargas.github.io/cortex_code_updates/)
+[![pages-build-deployment](https://github.com/sfc-gh-mvargas/cortex_code_updates/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/sfc-gh-mvargas/cortex_code_updates/actions/workflows/pages/pages-build-deployment)
 
 Documentation and monitoring tools for Snowflake Cortex Code Skills.
 
