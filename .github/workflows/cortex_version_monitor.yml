@@ -86,16 +86,10 @@ jobs:
           git commit -m "chore: bump cortex cli version ($MSGS)"
           git push
 
-      - name: Trigger docs update workflow (stable)
+      - name: Trigger docs update workflow
         if: steps.version_check.outputs.changed == 'true'
         run: |
           gh workflow run cortex_code_docs_updated.yml
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
 
-      - name: Trigger docs update workflow (beta)
-        if: steps.beta_version_check.outputs.changed == 'true'
-        run: |
-          gh workflow run cortex_code_docs_updated.yml -f channel=beta
-        env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
