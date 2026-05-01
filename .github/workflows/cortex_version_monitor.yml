@@ -87,7 +87,7 @@ jobs:
           git push
 
       - name: Trigger docs update workflow
-        if: steps.version_check.outputs.changed == 'true'
+        if: steps.version_check.outputs.changed == 'true' || steps.beta_version_check.outputs.changed == 'true'
         run: |
           gh workflow run cortex_code_docs_updated.yml
         env:
