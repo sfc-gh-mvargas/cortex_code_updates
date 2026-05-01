@@ -45,6 +45,7 @@ def load_change_history(data_dir: Path) -> list[dict]:
     }]
 
 
+
 def _load_latest_snapshot(data_dir: Path) -> list[dict] | None:
     snapshots = sorted(data_dir.glob("skills_*.json"), reverse=True)
     if not snapshots:
@@ -154,7 +155,7 @@ def _render_skill_list(added: list, removed: list, modified: list) -> str:
     return f'<ul style="list-style:none;margin:6px 0 0 0;padding:0;">{items}</ul>'
 
 
-def render_history_section(history: list[dict]) -> str:
+def render_history_section(history: list[dict], is_beta: bool = False) -> str:
     if not history:
         return ""
 
@@ -212,7 +213,7 @@ def _render_summary(added_count: int, removed_count: int, modified_count: int) -
     )
 
 
-def render_current_entry(data: dict) -> str:
+def render_current_entry(data: dict, is_beta: bool = False) -> str:
     skills = data.get("new_skills", [])
     deleted_skills = data.get("deleted_skills", [])
     modified_skills = data.get("modified_skills", [])
@@ -242,7 +243,7 @@ def render_current_entry(data: dict) -> str:
 
     section = f"""<tr><td style="padding:20px 24px 8px;">
   <h2 style="margin:0;font-family:Arial,sans-serif;color:{STYLES['heading']};font-size:16px;border-bottom:2px solid {STYLES['accent']};padding-bottom:6px;">
-    Latest Changes
+    {'Latest changes (Beta versions)' if is_beta else 'Latest Changes'}
   </h2>
 </td></tr>
 <tr><td style="padding:8px 24px 16px;">
@@ -261,7 +262,7 @@ def render_email_html(data: dict, history: list[dict] | None = None, is_beta: bo
     deleted_count = len(deleted_skills)
     modified_count = len(modified_skills)
 
-    changes_section = render_current_entry(data)
+    changes_section = render_current_entry(data, is_beta=is_beta)
 
     html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -288,7 +289,7 @@ def render_email_html(data: dict, history: list[dict] | None = None, is_beta: bo
 
 {changes_section}
 
-{render_history_section(history or [])}
+{render_history_section(history or [], is_beta=is_beta)}
 
 <tr><td style="padding:20px 24px 8px;">
   <h2 style="margin:0;font-family:Arial,sans-serif;color:{STYLES['heading']};font-size:16px;border-bottom:2px solid {STYLES['accent']};padding-bottom:6px;">
