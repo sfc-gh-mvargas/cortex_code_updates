@@ -37,7 +37,7 @@ jobs:
       - name: Run monitor tests
         run: bash tests/test_monitor.sh
 
-      - name: Check for version change
+      - name: Check for version change (stable)
         id: version_check
         run: |
           CURRENT=$(cortex --version | awk '{print $NF}' | sed 's/^v//')
@@ -51,18 +51,51 @@ jobs:
             echo "changed=false" >> $GITHUB_OUTPUT
           fi
 
+      - name: Check for version change (beta)
+        id: beta_version_check
+        run: |
+          cortex update --beta || true
+          CURRENT=$(cortex --version | awk '{print $NF}' | sed 's/^v//')
+          mkdir -p data/beta
+          STORED=""
+          if [ -f data/beta/cortex_code_cli_version ]; then
+            STORED=$(cat data/beta/cortex_code_cli_version | tr -d '[:space:]')
+          fi
+          echo "current=$CURRENT" >> $GITHUB_OUTPUT
+          echo "stored=$STORED" >> $GITHUB_OUTPUT
+          if [ "$CURRENT" != "$STORED" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "$CURRENT" > data/beta/cortex_code_cli_version
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Commit version update
-        if: steps.version_check.outputs.changed == 'true'
+        if: steps.version_check.outputs.changed == 'true' || steps.beta_version_check.outputs.changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/cortex_code_cli_version
-          git commit -m "chore: bump cortex cli version to ${{ steps.version_check.outputs.current }}"
+          git add data/cortex_code_cli_version data/beta/cortex_code_cli_version
+          MSGS=""
+          if [ "${{ steps.version_check.outputs.changed }}" == "true" ]; then
+            MSGS="stable=${{ steps.version_check.outputs.current }}"
+          fi
+          if [ "${{ steps.beta_version_check.outputs.changed }}" == "true" ]; then
+            MSGS="${MSGS:+$MSGS, }beta=${{ steps.beta_version_check.outputs.current }}"
+          fi
+          git commit -m "chore: bump cortex cli version ($MSGS)"
           git push
 
-      - name: Trigger docs update workflow
+      - name: Trigger docs update workflow (stable)
         if: steps.version_check.outputs.changed == 'true'
         run: |
           gh workflow run cortex_code_docs_updated.yml
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+
+      - name: Trigger docs update workflow (beta)
+        if: steps.beta_version_check.outputs.changed == 'true'
+        run: |
+          gh workflow run cortex_code_docs_updated.yml -f channel=beta
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
