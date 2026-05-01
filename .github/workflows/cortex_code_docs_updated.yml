@@ -1,8 +1,6 @@
 name: Ingest Cortex CLI Skills
 
 on:
-  schedule:
-    - cron: '0 12 * * 1'  # Every Monday at noon UTC
   workflow_dispatch:
 
 permissions:
