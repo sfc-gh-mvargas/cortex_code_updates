@@ -46,6 +46,15 @@ jobs:
           curl -LsS https://ai.snowflake.com/static/cc-scripts/install.sh | CORTEX_CHANNEL=beta sh
           cortex --version
 
+      - name: Ensure beta baseline exists
+        run: |
+          mkdir -p data/beta
+          if ! ls data/beta/skills_*.json 1>/dev/null 2>&1; then
+            echo "No beta baseline found, seeding from latest stable snapshot"
+            LATEST=$(ls data/skills_*.json | sort | tail -1)
+            cp "$LATEST" "data/beta/$(basename $LATEST)"
+          fi
+
       - name: Run ingestion (beta)
         run: uv run python src/ingest_skills.py --beta
 

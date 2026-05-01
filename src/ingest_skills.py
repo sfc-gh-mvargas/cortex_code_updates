@@ -135,6 +135,9 @@ def main():
 
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     previous = get_previous_snapshot(data_dir, today)
+    if previous is None:
+        print("WARNING: No previous snapshot found — CDC will mark everything as NEW.")
+        print("  Ensure a baseline skills_*.json exists in the data directory before running.")
     cdc = compute_cdc(skills, previous)
 
     snapshot = {
