@@ -298,7 +298,7 @@ def main():
     data = load_weekly_json()
     history = load_change_history()
     html = render_email_html(data, history)
-    out_path = OUTPUT_DIR / "weekly_updates.html"
+    out_path = OUTPUT_DIR / "index.html"
     out_path.write_text(html, encoding="utf-8")
     print(f"Webpage status updated to {out_path}")
 
