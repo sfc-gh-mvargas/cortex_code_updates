@@ -17,12 +17,15 @@ jobs:
         with:
           token: ${{ secrets.GH_PAT }}
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
 
       - name: Install dependencies
-        run: pip install pyyaml
+        run: uv pip install pyyaml --system
 
       # - name: Create connections.toml
       #   run: |
@@ -39,16 +42,20 @@ jobs:
       - name: Install Cortex Code CLI
         run: |
           curl -fsSL https://downloads.snowflake.com/cortex/install.sh | sh
-          export PATH="$HOME/.local/bin:$PATH"
           echo "$HOME/.local/bin" >> $GITHUB_PATH
+          export PATH="$HOME/.local/bin:$PATH"
           # Verify installation
-          which cortex || (echo "Cortex CLI not found" && exit 1)
+          if ! command -v cortex &> /dev/null; then
+            echo "Cortex CLI installation failed"
+            exit 1
+          fi
+          cortex --version
 
       - name: Run ingestion
-        run: python src/ingest_skills.py
+        run: uv run python src/ingest_skills.py
 
       - name: Generate email report
-        run: python src/build_report.py
+        run: uv run python src/build_report.py
 
       - name: Commit and push
         run: |
