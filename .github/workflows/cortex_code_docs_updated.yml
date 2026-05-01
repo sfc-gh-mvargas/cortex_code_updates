@@ -36,11 +36,12 @@ jobs:
             exit 1
           fi
           cortex --version
+          cortex update
 
       - name: Run ingestion
         run: uv run python src/ingest_skills.py
 
-      - name: Generate docs
+      - name: Generate CDC docs
         run: uv run python src/build_report.py
 
       - name: Commit and push

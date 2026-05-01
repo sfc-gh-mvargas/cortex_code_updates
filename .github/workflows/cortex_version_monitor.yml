@@ -32,6 +32,7 @@ jobs:
             exit 1
           fi
           cortex --version
+          cortex update
 
       - name: Run monitor tests
         run: bash tests/test_monitor.sh
