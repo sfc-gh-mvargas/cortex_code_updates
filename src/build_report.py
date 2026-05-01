@@ -24,11 +24,23 @@ STYLES = {
 
 
 def load_change_history() -> list[dict]:
-    path = DATA_DIR / "CHANGE_HISTORY.json"
-    if not path.exists():
+    snapshot_path = DATA_DIR / "skills_2026-04-30.json"
+    if not snapshot_path.exists():
         return []
-    with open(path) as f:
-        return json.load(f)
+    with open(snapshot_path) as f:
+        data = json.load(f)
+    skills = data.get("skills", [])
+    if not skills:
+        return []
+    return [{
+        "date": data.get("ingestion_date", "2026-04-30"),
+        "version": data.get("cli_version", "unknown"),
+        "skill_count_before": 0,
+        "skill_count_after": len(skills),
+        "added": [{"name": s["name"], "description": s.get("description", "")} for s in skills],
+        "removed": [],
+        "modified": [],
+    }]
 
 
 def _load_latest_snapshot() -> list[dict] | None:
@@ -171,7 +183,7 @@ def render_history_section(history: list[dict]) -> str:
 
     section = f"""<tr><td style="padding:20px 24px 8px;">
   <h2 style="margin:0;font-family:Arial,sans-serif;color:{STYLES['heading']};font-size:16px;border-bottom:2px solid {STYLES['accent']};padding-bottom:6px;">
-    Change History (last 10)
+    Base Version (when this tracker started)
   </h2>
 </td></tr>
 <tr><td style="padding:8px 24px 16px;">
@@ -269,7 +281,7 @@ def render_email_html(data: dict, history: list[dict] | None = None) -> str:
 
 <tr><td style="padding:20px 24px 8px;">
   <h2 style="margin:0;font-family:Arial,sans-serif;color:{STYLES['heading']};font-size:16px;border-bottom:2px solid {STYLES['accent']};padding-bottom:6px;">
-    Base Version
+    Latest Version
   </h2>
 </td></tr>
 <tr><td style="padding:8px 24px 20px;">
