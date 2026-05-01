@@ -2,12 +2,13 @@
 
 [![Website Status](https://github.com/sfc-gh-mvargas/cortex_code_updates/actions/workflows/cortex_version_monitor.yml/badge.svg)](https://github.com/sfc-gh-mvargas/cortex_code_updates/actions/workflows/cortex_version_monitor.yml)
 [![Ingest Cortex CLI Skills](https://github.com/sfc-gh-mvargas/cortex_code_updates/actions/workflows/cortex_code_docs_updated.yml/badge.svg)](https://github.com/sfc-gh-mvargas/cortex_code_updates/actions/workflows/cortex_code_docs_updated.yml)
+[![GitHub Pages](https://github.com/sfc-gh-mvargas/cortex_code_updates/actions/workflows/pages/build-deployment/badge.svg)](https://sfc-gh-mvargas.github.io/cortex_code_updates/)
 
 Documentation and monitoring tools for Snowflake Cortex Code Skills.
 
 ## Overview
 
-This repository provides documentation, version monitoring, and automated skill ingestion for Snowflake's Cortex Code capabilities. It maintains up-to-date records of available CLI tools and generates comprehensive documentation for developers.
+This repository provides documentation, version monitoring, and automated skill ingestion for Snowflake's Cortex Code capabilities. It maintains up-to-date records of available CLI tools and generates comprehensive reports.
 
 ## Features
 
@@ -15,6 +16,7 @@ This repository provides documentation, version monitoring, and automated skill 
 - 📚 **Skill Documentation**: Ingests and catalogs all available Cortex Code Skills
 - 🤖 **Automated Updates**: GitHub Actions workflows keep documentation in sync
 - 📊 **Comprehensive Reporting**: Generates detailed skill reports and snapshots
+- 📖 **[GitHub Pages Documentation](https://sfc-gh-mvargas.github.io/cortex_code_updates/)**: Live documentation site
 
 ## GitHub Workflows
 
@@ -156,6 +158,7 @@ This project is open source and available under the MIT License.
 For issues or questions:
 - Check [GitHub Issues](https://github.com/sfc-gh-mvargas/cortex_code_updates/issues)
 - Review workflow logs in [GitHub Actions](https://github.com/sfc-gh-mvargas/cortex_code_updates/actions)
+- Visit the [Live Documentation](https://sfc-gh-mvargas.github.io/cortex_code_updates/)
 
 ## Related Resources
 
