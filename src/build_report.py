@@ -31,6 +31,14 @@ def load_change_history() -> list[dict]:
         return json.load(f)
 
 
+def _load_latest_snapshot() -> list[dict] | None:
+    snapshots = sorted(DATA_DIR.glob("skills_*.json"), reverse=True)
+    if not snapshots:
+        return None
+    with open(snapshots[0]) as f:
+        return json.load(f).get("skills", [])
+
+
 def load_weekly_json() -> dict:
     candidates = sorted(DATA_DIR.glob("new_skills_week_*.json"), reverse=True)
     if not candidates:
@@ -49,7 +57,12 @@ def load_weekly_json() -> dict:
     if cdc_changes["modified"]:
         data["modified_skills"] = cdc_changes["modified"]
     if cdc_changes["new"] and not data.get("new_skills"):
-        data["new_skills"] = [{"name": s["name"], "description": ""} for s in cdc_changes["new"]]
+        snapshot = _load_latest_snapshot()
+        skills_map = {s["name"]: s for s in snapshot} if snapshot else {}
+        data["new_skills"] = [
+            {"name": s["name"], "description": skills_map.get(s["name"], {}).get("description", "")}
+            for s in cdc_changes["new"]
+        ]
         data["count"] = len(cdc_changes["new"])
     return data
 
@@ -101,7 +114,7 @@ def _render_skill_list(added: list, removed: list, modified: list) -> str:
     items = ""
     for s in added:
         name = s["name"] if isinstance(s, dict) else s
-        desc = s.get("description", "") if isinstance(s, dict) else ""
+        desc = s.get("description") or "" if isinstance(s, dict) else ""
         short_desc = (desc[:80] + "\u2026") if len(desc) > 80 else desc
         label = f'<code style="background:#E8F9FA;padding:1px 5px;border-radius:3px;font-size:11px;">{name}</code>'
         if short_desc:
@@ -215,7 +228,7 @@ def render_current_entry(data: dict) -> str:
 
     section = f"""<tr><td style="padding:20px 24px 8px;">
   <h2 style="margin:0;font-family:Arial,sans-serif;color:{STYLES['heading']};font-size:16px;border-bottom:2px solid {STYLES['accent']};padding-bottom:6px;">
-    This Week
+    Latest Changes
   </h2>
 </td></tr>
 <tr><td style="padding:8px 24px 16px;">
