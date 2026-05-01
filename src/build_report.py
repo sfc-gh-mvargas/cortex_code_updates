@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 DATA_DIR = Path(__file__).parent.parent / "data"
-OUTPUT_DIR = Path(__file__).parent.parent / "report"
+OUTPUT_DIR = Path(__file__).parent.parent / "docs"
 
 COCO_ICON = "🥥"
 
