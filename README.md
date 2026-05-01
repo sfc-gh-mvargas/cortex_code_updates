@@ -6,7 +6,7 @@
 
 Documentation and monitoring tools for Snowflake Cortex Code Skills.
 
-- Visit the **[GitHub Pages Documentation](https://sfc-gh-mvargas.github.io/cortex_code_updates/)**: Live documentation site
+- Visit the **[Cortex Skill Pulse](https://sfc-gh-mvargas.github.io/cortex_code_updates/)** live doc site
 
 ## Overview
 
