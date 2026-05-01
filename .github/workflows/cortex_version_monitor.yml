@@ -54,7 +54,7 @@ jobs:
       - name: Check for version change (beta)
         id: beta_version_check
         run: |
-          cortex update --beta || true
+          curl -LsS https://ai.snowflake.com/static/cc-scripts/install.sh | CORTEX_CHANNEL=beta sh
           CURRENT=$(cortex --version | awk '{print $NF}' | sed 's/^v//')
           mkdir -p data/beta
           STORED=""
