@@ -271,8 +271,11 @@ def render_email_html(data: dict, history: list[dict] | None = None) -> str:
 
 <tr><td style="padding:24px 24px 14px;border-bottom:3px solid {STYLES['accent']};background:{STYLES['header_bg']};border-radius:6px 6px 0 0;">
   <h1 style="margin:0;font-family:Arial,sans-serif;color:#FFFFFF;font-size:22px;letter-spacing:1px;">
-    {COCO_ICON} Cortex Code Catalog
+    {COCO_ICON} CoCo Skill Pulse
   </h1>
+  <p style="margin:6px 0 0;font-family:Arial,sans-serif;color:#FFFFFFCC;font-size:12px;">
+    Tracking skills shipped in the public <a href="https://docs.snowflake.com/en/user-guide/cortex-code/cortex-code-cli" style="color:#71D3DC;">Cortex Code CLI</a> installed via <code style="background:#ffffff22;padding:1px 4px;border-radius:3px;font-size:11px;">curl -LsS https://ai.snowflake.com/static/cc-scripts/install.sh</code>
+  </p>
 </td></tr>
 
 {changes_section}
