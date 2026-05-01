@@ -1,0 +1,67 @@
+name: Cortex Code Version Monitor
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # Every 6 hours
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install Cortex Code CLI
+        run: |
+          curl -LsS https://ai.snowflake.com/static/cc-scripts/install.sh | sh
+          if ! command -v cortex &> /dev/null; then
+            echo "Cortex CLI installation failed"
+            exit 1
+          fi
+          cortex --version
+
+      - name: Run monitor tests
+        run: bash tests/test_ci.sh
+
+      - name: Check for version change
+        id: version_check
+        run: |
+          CURRENT=$(cortex --version | awk '{print $NF}' | sed 's/^v//')
+          STORED=$(cat data/cortex_code_cli_version | tr -d '[:space:]')
+          echo "current=$CURRENT" >> $GITHUB_OUTPUT
+          echo "stored=$STORED" >> $GITHUB_OUTPUT
+          if [ "$CURRENT" != "$STORED" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "$CURRENT" > data/cortex_code_cli_version
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit version update
+        if: steps.version_check.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/cortex_code_cli_version
+          git commit -m "chore: bump cortex cli version to ${{ steps.version_check.outputs.current }}"
+          git push
+
+      - name: Trigger docs update workflow
+        if: steps.version_check.outputs.changed == 'true'
+        run: |
+          gh workflow run cortex_code_docs_updated.yml
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}

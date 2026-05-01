@@ -27,18 +27,6 @@ jobs:
       - name: Install dependencies
         run: uv pip install pyyaml --system
 
-      # - name: Create connections.toml
-      #   run: |
-      #     mkdir -p ~/.snowflake
-      #     cat <<EOF > ~/.snowflake/connections.toml
-      #     [default]
-      #     account = "${{ secrets.SNOWFLAKE_ACCOUNT }}"
-      #     user = "${{ secrets.SNOWFLAKE_USER }}"
-      #     password = "${{ secrets.SNOWFLAKE_PASSWORD }}"
-      #     EOF
-      #     chmod 600 ~/.snowflake/connections.toml
-
-
       - name: Install Cortex Code CLI
         run: |
           curl -LsS https://ai.snowflake.com/static/cc-scripts/install.sh | sh
