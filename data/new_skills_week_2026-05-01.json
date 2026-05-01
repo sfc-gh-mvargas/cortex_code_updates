@@ -1,0 +1,199 @@
+{
+  "week_of": "2026-05-01",
+  "cli_version": "1.0.73",
+  "new_skills": [
+    {
+      "name": "access-troubleshooter",
+      "description": "Debug authorization and permission issues in Snowflake. Use when: access denied, insufficient privileges, permission errors,  role issues, missing grants, privilege analysis, least-privilege role creation, find authorizing roles. Triggers: access denied, insufficient privileges, permission error, authorization failed, can't access, missing permission, grant needed, role recommendation, SQL access control error, does not exist or not authorized, EXPLAIN_PRIVILEGES, SYSTEM$ANALYZE_ROLE_ACCESS, SYSTEM$SUGGEST_ROLE_GRANTS."
+    },
+    {
+      "name": "error-tables-ops",
+      "description": "Assess, enable, monitor, and manage Error Tables (DML Error Logging) across your Snowflake account. Use when: error tables, error logging, ERROR_TABLE, DML errors, which tables should I enable, which tables have error logging, analyze errors, error table storage, error table retention, clean up errors, monitor errors, error table health, error table report, set up alerting, failed DML queries, string truncation, NOT NULL violation, numeric overflow, check constraint violation, constraint failed."
+    },
+    {
+      "name": "network-security",
+      "description": "Recommend, evaluate, and migrate Snowflake network policies using built-in security procedures. Use when: generating network policy recommendations from access history, evaluating candidate policies before deployment, migrating existing policies to use Snowflake-managed SaaS rules, creating hybrid policies combining custom rules with SaaS rules. Triggers: recommend network policy, evaluate network policy, candidate policy, migrate policy, SaaS rules, hybrid policy."
+    },
+    {
+      "name": "ai-data-share",
+      "description": "Make a listing or data share AI-Ready. Use when: creating semantic views for listings, creating cortex agents for data shares, making data AI-ready. Triggers: AI-ready listing, share agent, data share semantic view, marketplace AI."
+    },
+    {
+      "name": "attach-ai-products-to-share",
+      "description": "Attach AI products to Snowflake shares. Use when: adding semantic views, cortex agents, or cortex search services to a share. Triggers: share semantic view, share agent, share cortex search. Invoke this skill to add AI products to a share as a step of sharing AI products or creating a listing to share an AI product."
+    },
+    {
+      "name": "setup-snowflake-sso",
+      "description": "Set up Single Sign-On (SSO) for Snowflake with your Identity Provider (IdP).\nSupports Microsoft Entra ID (Azure AD), Okta, and other SAML 2.0 providers including\nOneLogin, Ping Identity, Google Workspace, Auth0, Duo, JumpCloud, and more.\nIncludes advanced scenarios: Allowed Interfaces, Auto Redirect, and Snowflake Intelligence tile setup."
+    },
+    {
+      "name": "snowpark-python",
+      "description": "**[REQUIRED]** Use for **ALL** requests involving Snowpark Python \u2014 writing pipelines, transforming data, loading files, deploying stored procedures/UDFs, OR observability. MUST invoke this skill even for seemingly simple tasks because Snowflake DataFrame semantics differ from Pandas in ways that silently produce wrong results (NULL handling, division by zero, GREATEST, datediff, type casting). Always load this skill BEFORE writing any Snowpark code. Triggers: Snowpark, Python, DataFrame, pipeline, ETL, ingest, transform, load data, CSV, Parquet, JSON, XML, join, aggregate, window function, UDF, UDTF, UDAF, Stored Procedure, deploy, snow snowpark CLI, DBAPI, JDBC, external database, pull data, event table, logging, tracing, trace events, profiler, debug UDF, debug procedure, observability, telemetry, slow procedure, alert on error, monitor."
+    },
+    {
+      "name": "machine-learning",
+      "description": "**[REQUIRED]** For **ALL** data science and machine learning tasks. This skill should ALWAYS be loaded in even if only a portion of the workflow is related to machine learning. Use when: analyzing data, training models, deploying models to Snowflake, registering models, working with ML workflows, running ML jobs on Snowflake compute, model registry, model service, model inference, log model, deploy pickle file, experiment tracking, model monitoring, ML observability, tracking drift, model performance analysis, distributed training, XGBoost, LightGBM, PyTorch, DPF, distributed partition function, many model training, hyperparameter tuning, HPO, compute pools, train at scale, feature store, feature views, entities, training datasets, online features, pipeline orchestration, DAG, task graph, schedule training, datasets, dataset versioning, DataConnector, ML lineage, model lineage, GET_LINEAGE, trace lineage, forecast, forecasting, time series, anomaly detection, outlier, predict, predictions, backtest, classify, classification, regression, clustering, build a model, create a model, sklearn, scikit-learn, tensorflow, ML, mlops, ray, GPU, deep learning, neural network, explain model, SHAP, Shapley, feature importance, model explainability, interpret model, preprocessing, preprocessor, scaling, encoding, imputation, normalize, transform data before training, preprocessing pipeline. Routes to specialized sub-skills."
+    },
+    {
+      "name": "data-cleanrooms",
+      "description": "Use for ALL requests related to Snowflake Data Clean Rooms (DCR): clean room, cleanroom, DCR, collaboration(s), view/list collaborations, join/review collaboration, invitation, data offering(s), template(s), register, share table, run analysis, run activation, audience overlap, activation, export segment, create collaboration, create cleanroom, measure overlap. Covers browsing, joining, registering, running analysis/activation, and creating collaborations via the DCR Collaboration API."
+    },
+    {
+      "name": "migration-guide",
+      "description": ""
+    },
+    {
+      "name": "native-app-provider",
+      "description": "Use for **ALL** Snowflake Native App Framework tasks: creating app packages, writing manifest files, writing setup scripts, sharing data, testing, versioning, publishing, configuring telemetry and health status reporting, monitoring app health and lifecycle events, setting up event sharing, and debugging apps. Also use for **ALL** SPCS (Snowpark Container Services) work within native apps: adding containers, upgrading container services, building and pushing images, writing service specs, configuring compute pools, and managing service lifecycle. This is the **REQUIRED** entry point for any native app work. DO NOT attempt native app development manually - invoke this skill first. Triggers: native app, app package, application package, manifest.yml, setup script, CREATE APPLICATION, Snowflake marketplace, listing, native app framework, build native app, walk me through, guide me, get started, add version, register version, add patch, release channel, release directive, publish app, publish version, upgrade consumers, telemetry, health status, SYSTEM$REPORT_HEALTH_STATUS, log_level, trace_level, event definitions, event sharing, APPLICATION_STATE, lifecycle events, monitor app, debug app, observability, add streamlit, streamlit dashboard, add dashboard, streamlit UI, add UI to native app, native app streamlit, streamlit frontend, get_active_session, default_streamlit, SPCS native app, container native app, native app containers, native app SPCS, add containers, container_services, grant_callback, specification file, version_initializer."
+    },
+    {
+      "name": "build-react-app",
+      "description": "Build React/Next.js apps with Snowflake data. Use when: building dashboards, creating data apps, making analytics tools."
+    },
+    {
+      "name": "event-table",
+      "description": "Manage Snowflake event tables and telemetry configuration. Use when: viewing/configuring event tables, checking telemetry setup, getting/setting telemetry levels, querying event table data, understanding telemetry formats. Triggers: event table, get event table, show event table, current event table, event table setup, event table configuration, telemetry, telemetry setup, telemetry configuration, telemetry levels, get telemetry, show telemetry, check telemetry, log level, trace level, metric level, logging setup, tracing setup, observability setup, event table format, telemetry format, log format, trace format, metric format."
+    },
+    {
+      "name": "dynamic-tables",
+      "description": "**[REQUIRED]** Use for **ALL** Snowflake Dynamic Table operations: creating, optimizing, monitoring, troubleshooting, and pipeline diagnostics. This is the required entry point for any dynamic table related tasks (DT is an acronym for dynamic table). Triggers: dynamic table, data pipeline, incremental pipeline, DT pipeline, incremental refresh, target lag, UPSTREAM_FAILED, refresh failing, full refresh instead of incremental, DT health, create DT, debug DT, pipeline timeline, Gantt chart, why was DT skipped, trace pipeline, critical path, why was DT skipped."
+    },
+    {
+      "name": "declarative-sharing",
+      "description": "**[REQUIRED]** Use for **ALL** declarative sharing and application packages with TYPE=DATA, (i.e data apps). Share data products across Snowflake accounts with versioning. Default choice when user wants to share data with another account. Also use when converting an existing data share to declarative sharing. Triggers: declarative, data product, native app, data app, data application, share, sharing, another account, cross account, cross region, application package, manifest, marketplace, listing, publish, share a table, share data, manifest from share, share to manifest, generate manifest from share, inspect share, share to yaml, introspect share, convert share, migrate share, existing share, secure share to declarative, upgrade share, future-proof share, multiple shares, combine shares, merge shares, multiple data shares"
+    },
+    {
+      "name": "cortex-code-guide",
+      "description": "Complete reference guide for Cortex Code (CoCo) CLI. Use when: learning cortex features, understanding commands, troubleshooting setup, exploring Snowflake tools, managing sessions, configuring agents, keyboard shortcuts, MCP integration. Triggers: how to use cortex, cortex guide, cortex help, cortex commands, getting started, snowflake tools, #table syntax, subagents, sessions, resume, fork, rewind, compact, /agents, configuration."
+    },
+    {
+      "name": "data-governance",
+      "description": "**[REQUIRED]** for all Snowflake data governance tasks. Routes to six sub-skills: (1) horizon-catalog \u2014 access history, users, roles, grants, permissions, query history, compliance, catalog; (2) data-policy \u2014 [REQUIRED] masking, row access, projection policies, tag-based masking, protect sensitive data, column/TIMESTAMP masking; (3) sensitive-data-classification \u2014 [REQUIRED for ALL classification] PII, classify, data classification, manual/automatic classification, Classification Profile, auto_tag, custom classifiers, regex, semantic/privacy category, IDENTIFIER, QUASI_IDENTIFIER, SENSITIVE, SYSTEM$CLASSIFY, DATA_CLASSIFICATION_LATEST, GDPR/CCPA/PCI; (4) governance-maturity-score \u2014 governance posture, maturity score, assessment, recommendations; (5) observability-maturity-score \u2014 data observability, DMF coverage, quality monitoring maturity, lineage usage, observability assessment; (6) object-contacts \u2014 [REQUIRED] assign data steward, create contact, object contact, contact report, who owns this table, SET CONTACT, data stewardship. MUST be used for classification or masking tasks \u2014 do not answer from general knowledge. horizon-catalog is the fallback. Triggers: governance, access history, permissions, grants, roles, audit, compliance, catalog, masking policy, row access policy, PII, sensitive data, classification, run classification, SYSTEM$CLASSIFY, classifier, classification profile, DATA_CLASSIFICATION_LATEST, detect PII, GDPR, CCPA, PCI, tag sensitive columns, governance maturity score, governance posture, how well governed, data observability, observability maturity, DMF coverage, lineage usage, observability assessment, data steward, object contact, assign contact, who owns this table, contact report, SET CONTACT."
+    },
+    {
+      "name": "snowflake-interactive",
+      "description": "**[REQUIRED]** Use for **ALL** Snowflake Interactive Table and Interactive Warehouse operations. Triggers: interactive table, interactive warehouse, low-latency queries, high-concurrency dashboard, TARGET_LAG for interactive."
+    },
+    {
+      "name": "security-investigation",
+      "description": "Comprehensive Snowflake security investigation and threat detection. Use for: login anomalies, IP analysis, brute force detection, impossible travel, data exfiltration, bulk exports, unauthorized sharing, privilege escalation, RBAC violations, suspicious grants, backdoor accounts. This is the REQUIRED entry point for all security investigations. Routes to specialized sub-skills for focused analysis."
+    },
+    {
+      "name": "skill-development",
+      "description": "Create, document, or audit skills for Cortex Code. Use when: creating new skills, capturing session work as skills, reviewing skills. Triggers: create skill, build skill, new skill, summarize session, capture workflow, audit skill, review skill."
+    },
+    {
+      "name": "lineage",
+      "description": "Analyze data lineage and dependencies in Snowflake. Use for: impact analysis, root cause debugging, data discovery, column-level tracing. Triggers: 'what depends on', 'what breaks', 'where does this come from', 'is this trustworthy', 'column lineage'. For quality issues (missing data, wrong values, DMF failures) use the data_quality skill first, then this skill to trace upstream."
+    },
+    {
+      "name": "ctx-workflow",
+      "description": "Multi-phase team orchestration for feature implementation. Supports two entry paths: explicit user request for teammates, or autonomous complexity-based assessment after entering plan mode. HIGHEST PRIORITY \u2014 must be loaded FIRST (before any domain skills) when user asks to use teammates, teams, or parallel agents. Triggers: use teammates, use a team, work in parallel with agents, delegate to teammates, swarm this, swarm, team up on this, team up, orchestrate with subagents, subagent-orchestrated, gated workflow, multi-phase workflow, coordinate agents, spawn workers, worker/verifier, parallel agents, run as a team, investigate with agents, research with agents, explore with agents."
+    },
+    {
+      "name": "alert",
+      "description": "Snowflake alert management - create, alter, suspend, resume alerts. Use when: user wants to create a new alert, modify an existing alert, set up monitoring, suspend or resume alerts. Triggers: create alert, new alert, add alert, alter alert, modify alert, change alert, suspend alert, resume alert, monitor with alert, set up alert, alert condition."
+    },
+    {
+      "name": "iceberg",
+      "description": "Use for **ALL** Iceberg table requests in Snowflake. This is the **REQUIRED** entry point for catalog integrations, catalog-linked databases, external volumes, auto-refresh issues, and Snowflake Intelligence. DO NOT work with Iceberg manually - invoke this skill first. Triggers: iceberg, iceberg table, apache iceberg, catalog integration, REST catalog, ICEBERG_REST, glue, AWS glue, glue IRC, lake formation, unity catalog, databricks, polaris, opencatalog, open catalog, onelake, OneLake, microsoft fabric, fabric, fabric lakehouse, onelake REST, SAP, SAP BDC, SAP Business Data Cloud, CLD, catalog-linked database, linked catalog, auto-discover tables, sync tables, LINKED_CATALOG, external volume, storage access, S3, Azure blob, GCS, IAM role, trust policy, Access Denied, 403 error, ALLOW_WRITES, storage permissions, auto-refresh, autorefresh, stale data, refresh stuck, delta direct, snowflake intelligence, text-to-SQL iceberg, query iceberg natural language."
+    },
+    {
+      "name": "developing-with-streamlit",
+      "description": "**[REQUIRED]** Use for ALL Streamlit tasks: creating, editing, debugging, beautifying, styling, theming, optimizing, or deploying Streamlit applications. Also required for building custom components (inline or packaged), using st.components.v2, or any HTML/JS/CSS component work. Triggers: streamlit, st., dashboard, app.py, beautify, style, CSS, color, background, theme, button, widget styling, custom component, st.components, packaged component, pyproject.toml, asset_dir, CCv2, HTML/JS component."
+    },
+    {
+      "name": "cortex-ai-functions",
+      "description": "Use Snowflake Cortex AI Functions for text/image analytics. Use when: classifying content, extracting entities, sentiment analysis, summarizing text, translating, filtering, embedding, parsing documents, redacting PII, aggregating data, document intelligence workflows, content insight workflows, fine-tuning arctic-extract for domain-specific extraction. Triggers: AI_CLASSIFY, AI_COMPLETE, AI_EXTRACT, AI_FILTER, AI_SENTIMENT, AI_SUMMARIZE, AI_TRANSLATE, AI_EMBED, AI_AGG, AI_REDACT, AI_PARSE_DOCUMENT, classify text, data, documents, extract from text, extract text from document, extract text from PDF, extract text from image, extracting, invoices, sentiment, summarize, translate, which AI function, cortex function, process documents, label content, analyze text, OCR, read PDF, read document, get text from PDF, get text from document, pull text from file, extract data from files, extract from my files, process my files, my files, my documents, read my documents, get data from document, file extraction, document processing, file processing, get information from documents, analyze files, parse files, data from PDF, invoice processing, contract extraction, receipt extraction, form extraction, extract fields, document data, file data, stage files, files on stage, PDF extraction, image extraction, document OCR, scan documents, digitize documents, fine-tune, fine-tuning, custom model, train arctic-extract, improve extraction accuracy, domain-specific extraction, FINETUNE, better extraction results."
+    },
+    {
+      "name": "semantic-view",
+      "description": "Use for ALL requests that mention: create, build, debug, fix, troubleshoot, optimize, improve, or analyze a semantic view \u2014 AND for requests about VQR suggestions, verified queries, verified query representations, seeding/generating queries, suggesting metrics, suggesting filters, recommending metrics/filters/facts, or enriching a semantic view. This is the entry point - even if the request seems simple. DO NOT attempt to create, debug, or generate suggestions for semantic views manually - always invoke this skill first. This skill guides users through creation, setup, auditing, VQR suggestion generation, filter & metric suggestions, and SQL generation debugging workflows for semantic views with Cortex Analyst."
+    },
+    {
+      "name": "warehouse",
+      "description": "Warehouse configuration, DDL, Gen2 creation/conversion, performance tuning, DML optimization, ETL workloads, sizing, credit-per-hour rates from Credit Consumption Table. Resume behavior, region availability, Snowpark-optimized limitations. Not for cost analytics or historical warehouse spend (cost-intelligence) or org billing (billing)."
+    },
+    {
+      "name": "openflow",
+      "description": "Openflow data integration operations. Openflow is a Snowflake NiFi-based product for data replication and transformation. Use for connector deployment, configuration, diagnostics, and custom flows."
+    },
+    {
+      "name": "billing",
+      "description": "Org-level spend in currency via SNOWFLAKE.ORGANIZATION_USAGE. Covers USAGE_IN_CURRENCY_DAILY, REMAINING_BALANCE_DAILY, CONTRACT_ITEMS, RATE_SHEET_DAILY. Invoices, charges, contracts, balance, reconciliation, rate comparison, spend by account. Not for single-account credit analytics (cost-intelligence) or warehouse config (warehouse)."
+    },
+    {
+      "name": "cost-intelligence",
+      "description": "Account-level cost analytics via SNOWFLAKE.ACCOUNT_USAGE. Credit usage by warehouse, user, service. Budgets, spending limits, custom budgets. Resource monitors, credit quotas, suspend triggers. Anomaly detection, Cortex AI costs, chargeback, storage, serverless, containers, data transfer, top user spend, query cost grouping. Not for org-wide currency spend or multi-account billing (billing/organization-management) or warehouse DDL (warehouse)."
+    },
+    {
+      "name": "internal-marketplace-org-listing",
+      "description": "Create organizational listings to share data products via Internal Marketplace. Triggers: create data product, share to internal marketplace, publish to internal marketplace, share to other accounts, share with other accounts, organization listing, org listing, share across accounts, internal marketplace, cross-account sharing, share my agent to other accounts.\nWHEN TO USE THIS SKILL: - User wants to share with OTHER ACCOUNTS \u2192 Use this skill - User mentions \"internal marketplace\" or \"data product\" (even for same account) \u2192 Use this skill\nWHEN TO USE RBAC INSTEAD (not this skill): - User wants to share with roles in SAME account only - User does NOT mention \"internal marketplace\" or \"data product\" or \"listing\" - Example: \"share this table with ANALYST role\" \u2192 Use GRANT, not this skill\nWHEN NOT TO USE THIS SKILL: - User wants to migrate an EXISTING direct share to an org listing \u2192 Use the direct-share-to-org-listing-migration skill instead - User wants to migrate an EXISTING personalized listing to an org listing \u2192 Use the personalized-listing-to-org-listing-migration skill instead - User wants to migrate an EXISTING private data exchange (PDX) listing to an org listing \u2192 Use the pdx-listing-to-org-listing-migration skill instead\nKEY: If user says \"share via internal marketplace\" or \"as a data product\" even for same-account roles, use this skill. Otherwise, same-account = regular RBAC grants."
+    },
+    {
+      "name": "snowflake-notebooks",
+      "description": "Create and edit Workspace notebooks (.ipynb files) for Snowflake. Use when: creating workspace notebooks, editing notebooks, debugging notebook issues, converting code to notebooks, multi-step workflows that combine SQL queries with Python code execution and visualization, step-by-step data analysis requiring both SQL and Python, interactive data exploration with code and charts. Do NOT use for: static SQL-only dashboards (use dashboard skill), Streamlit apps, standalone Python scripts, or stored procedures. Triggers: notebook, .ipynb, snowflake notebook, workspace notebook, create notebook, edit notebook, jupyter, ipynb file, notebook cell, SQL cell, step-by-step analysis with SQL and Python, data exploration with code and visualization, combine SQL and Python."
+    },
+    {
+      "name": "key-and-secret-management",
+      "description": "Use for **ALL** requests that mention Tri-Secret Secure, customer-managed key operations, or periodic data rekeying in Snowflake. Handles CMK status checks, registration, activation (standard, Postgres, private connectivity), deactivation, key rotation, change history, and periodic data rekeying. DO NOT attempt TSS, CMK, or periodic rekeying operations manually - invoke this skill first. Triggers: tri-secret secure, TSS, CMK, BYOK, encryption key, key rotation, CMK history, activate CMK, deactivate CMK, periodic rekeying, periodic data rekeying, PERIODIC_DATA_REKEYING, data rekey, enable rekeying, disable rekeying."
+    },
+    {
+      "name": "data-quality",
+      "description": "Schema-level data quality monitoring, table comparison, dataset popularity analysis, ad-hoc column quality assessment using Snowflake Data Metric Functions (DMFs) and Access History, and LLM prompt quality scoring and rewriting. Use when user asks about: data quality, schema health, DMF results, quality score, trust my data, quality regression, quality trends, SLA alerting, data metric functions, failing metrics, quality issues, compare tables, data diff, validate migration, table comparison, popular tables, most used tables, unused data, dataset usage, table popularity, listing quality, listing health, listing freshness, provider data quality, consumer data quality, one-time quality check, quick quality scan, check data quality without DMFs, recommend monitors, what should I monitor, DQ coverage gaps, unmonitored tables, DMF coverage report, monitoring health, noisy monitors, silent monitors, misconfigured monitors, DMF cost optimization, investigate DQ incident, why did freshness drop, why did row count drop, correlate violation, multi-dimensional root cause, circuit breaker, pause pipeline on violation, halt bad data propagation, custom DMF, format validation DMF, email format check, value range check, DMF expectations, set threshold, tune DMF threshold, DMF expectation management, attach DMFs, set up DMFs for first time, DMF setup wizard, accepted values, ACCEPTED_VALUES, validate column values, allowed values check, value in set, categorical validation, referential integrity, REFERENTIAL_INTEGRITY_COUNT, orphaned rows, foreign key validation, FK check, cross-table integrity, prompt quality, score my prompt, prompt score, improve prompt, rewrite prompt, prompt linter, prompt engineering, prompt regression, compare prompts, prompt scoring dimensions."
+    },
+    {
+      "name": "dcm",
+      "description": "Use for **ALL** requests that mention: create, build, set up, debug, fix, troubleshoot, optimize, improve, evaluate, or analyze a DCM project. This is the **REQUIRED** entry point - even if the request seems simple. DO NOT attempt to create DCM projects manually or search for DCM documentation - always invoke this skill first. This skill guides users through creating, auditing, evaluating, and debugging workflows for DCM (Database Change Management) projects. Triggers: DCM, DCM project, Database Change Management, snow dcm, manifest.yml with DEFINE, infrastructure-as-code, three-tier role pattern, database roles, DEFINE TABLE, DEFINE SCHEMA."
+    },
+    {
+      "name": "snowflake-postgres",
+      "description": "**[REQUIRED]** Use for **ALL** requests involving Snowflake Postgres, and for general help working with any PostgreSQL database through standard PG tooling (psql, ~/.pg_service.conf, ~/.pgpass, pg_doctor diagnostics). Triggers: 'postgres', 'postgresql', 'pg', 'psql', 'create postgres instance', 'show postgres instances', 'suspend postgres', 'resume postgres', 'reset postgres credentials', 'rotate postgres password', 'import postgres connection', 'postgres network policy', 'postgres health check', 'pg_doctor', 'pg_lake', 'postgres iceberg', 'pg iceberg', 'postgres slow queries', 'cache hit', 'bloat', 'vacuum', 'dead rows', 'postgres locks', 'blocking queries', 'postgres disk usage', 'active postgres queries', 'postgres connection count', 'neon', 'supabase', 'rds postgres', 'aurora postgres', 'azure postgres', 'crunchy bridge', 'external postgres', 'my postgres'. Do NOT use for generic Iceberg / catalog integration / storage integration / data lake requests \u2014 those are owned by the `iceberg` skill. Only handle Iceberg when it is scoped to pg_lake (Postgres-resident Iceberg tables)."
+    },
+    {
+      "name": "cortex-agent",
+      "description": "**[REQUIRED]** Use for ALL requests that mention agents: list, show, create, build, set up, edit, modify, update, delete, drop, remove, download, export, debug, fix, troubleshoot, optimize, improve, evaluate, or analyze a (Cortex) agent. Also use when user wants to: chat with, talk to, converse with, send messages to, have a conversation with an agent, or run a lite/objectless agent. Also use when debugging Snowflake Intelligence with a request ID (SI is powered by Cortex Agents). This is the REQUIRED entry point - even if the request seems simple. DO NOT attempt to manage (Cortex) agents manually - always invoke this skill first."
+    },
+    {
+      "name": "sql-author",
+      "description": "Use for ANY task that involves writing, running, or debugging SQL against Snowflake tables. Helps find the right table, verify columns exist, avoid timeouts on large tables, and validate joins. Triggers: write a query, sql for, query this table, author sql, build a query, fix this query, how many, how much, show me data, explore this table, describe table, select from."
+    },
+    {
+      "name": "cortex-secrets",
+      "description": "MUST consult whenever any command needs a credential, secret, API key, token, or password \u2014 whether discovered from an error, source code, --help output, or any other signal. MUST also consult when the user shares, pastes, or includes a secret value directly in their message. Also use when: the user asks about /secrets, storing credentials, secret scopes, or consent modes. Triggers: secret, secrets, /secrets, API key, credential, token, password, authentication, unauthorized, 401, 403, forbidden, EACCES, permission denied, access denied, missing key, invalid token, auth error, connection refused, login failed, .env, environment variable, env var, keychain, export SECRET, cortex secret list, inline secret injection, pasted secret, shared secret, my key is, my password is, my token is, here is my, use it to."
+    },
+    {
+      "name": "dbt-projects-on-snowflake",
+      "description": "ONLY for dbt projects deployed INTO Snowflake as native objects via the `snow dbt` CLI, OR for authoring dbt models using Snowflake-native features (e.g., semantic_view materialization via dbt_semantic_view package). NOT for normal dbt development. Invoke ONLY when the user explicitly mentions: `snow dbt` commands (deploy, execute, list), `EXECUTE DBT PROJECT` SQL, a deployed dbt project object (e.g., DB.SCHEMA.MY_PROJECT), `ALTER/DROP/DESCRIBE/SHOW DBT PROJECT` SQL, scheduling a deployed dbt project with CREATE TASK, generating documentation/catalog/lineage for a deployed project, OR authoring Snowflake-specific dbt materializations (semantic_view, dbt_semantic_view), OR adding a semantic view to an existing dbt project. Do NOT invoke for standard dbt workflows: dbt run, dbt build, dbt test, dbt seed, dbt init, dbt compile, dbt debug, dbt snapshot, dbt deps, dbt clean, dbt retry, dbt ls, profiles.yml, dbt_project.yml, model editing, source freshness, Jinja/macro development, CI/CD pipelines, or any dbt command run from a terminal. The key distinction: this skill is about dbt-as-a-Snowflake-object (snow dbt deploy), not dbt-as-a-CLI-tool (dbt run). Triggers: snow dbt, snow dbt deploy, snow dbt execute, snow dbt list, EXECUTE DBT PROJECT, deployed dbt project, ALTER DBT PROJECT, DROP DBT PROJECT, DESCRIBE DBT PROJECT, SHOW DBT PROJECTS, VERSION$, external-access-integration, dbt project object, migrate, prepare for snowflake, docs generate deployed, documentation deployed project, data catalog deployed, lineage deployed project, generate documentation for deployed, semantic_view materialization, dbt_semantic_view, semantic view in dbt project, add semantic view to dbt, dbt project semantic view, analytical access dbt project."
+    },
+    {
+      "name": "workload-performance-analysis",
+      "description": "Snowflake SQL query execution analysis via ACCOUNT_USAGE views. Triggers: spilling, partition pruning, cache hit rates, clustering keys, search optimization (SOS) candidates, query acceleration (QAS) eligibility, predicate column analysis for clustering/SOS, per-warehouse spill/prune/cache metrics, slow SQL query diagnosis. Not for: cost/credits (cost-intelligence), access audit (data-governance), writing or debugging user SQL."
+    },
+    {
+      "name": "native-app-consumer",
+      "description": "**[REQUIRED]** for ALL Snowflake Native App consumer tasks: installing apps from listings as a consumer, configuring installed apps (granting privileges, approving specifications, reviewing references), managing maintenance policies, understanding native app cost and credit usage, adding native apps to budgets. Triggers: native app, install native app, configure native app, approve spec, decline spec, maintenance policy, maintenance window, upgrade schedule, control upgrades, app cost, app budget, app spending, native app cost, native app credits, how much does my app cost."
+    },
+    {
+      "name": "organization-management",
+      "description": "Snowflake organization management \u2014 accounts, org users, org insights, org spending, org security, globalorgadmin. ORGANIZATION_USAGE views, cross-account analytics, org-wide metrics. Use when the user asks about: 30 day summary of my organization, 30-day summary, 30 day summary, accounts in my organization, list accounts, how many accounts, account editions, account regions, account inventory, organization users, organization user groups, executive summary of my org, org overview, org spending, org cost, org security posture, org reliability, org auth posture, org hub, org usage views, trust center, MFA readiness, login failures, warehouse credits, storage trends, edition distribution, who has globalorgadmin, what is globalorgadmin, globalorgadmin role, orgadmin role, organization administrator, org admin, enable orgadmin, disable orgadmin, org admin permissions, account admins, ORGANIZATION_USAGE, org-level, cross-account, org-wide."
+    },
+    {
+      "name": "notification",
+      "description": "Router for Snowflake notification skills. Routes to integration creation/management, content formatting, or sending. Triggers: notification, notification integration, email notification, webhook, slack, teams, pagerduty, send notification, notification content."
+    },
+    {
+      "name": "trust-center",
+      "description": "Use for ALL Snowflake Trust Center requests: security findings, scanner analysis, scanner management, finding remediation, severity distribution, CIS benchmarks, Security Essentials, Threat Intelligence, enable/disable scanners, scanner schedules, notifications, webhook, notification integration, at-risk entities, security posture, vulnerability analysis, detection analysis, remediation guidance."
+    },
+    {
+      "name": "deploy-to-spcs",
+      "description": "Deploy containerized apps to Snowpark Container Services. Use when: deploying Docker apps, creating SPCS services, pushing images to Snowflake registry, granting role access to SPCS service endpoints. Triggers: SPCS, Snowpark Container Services, deploy to Snowflake, container deployment, grant access to service, grant role access, service role, consumer access, SPCS service, service endpoints."
+    },
+    {
+      "name": "integrations",
+      "description": "Create, replace, alter, drop, describe, and show Snowflake integrations. Covers API, catalog, external access, notification, security, and storage integration types. Use when the user wants to manage integrations or asks about integration SQL commands."
+    }
+  ],
+  "count": 48
+}
