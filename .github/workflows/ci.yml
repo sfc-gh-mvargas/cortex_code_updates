@@ -41,9 +41,9 @@ jobs:
 
       - name: Install Cortex Code CLI
         run: |
-          curl -fsSL https://downloads.snowflake.com/cortex/install.sh | sh
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
-          export PATH="$HOME/.local/bin:$PATH"
+          curl -LsS https://ai.snowflake.com/static/cc-scripts/install.sh | sh
+          # echo "$HOME/.local/bin" >> $GITHUB_PATH
+          # export PATH="$HOME/.local/bin:$PATH"
           # Verify installation
           if ! command -v cortex &> /dev/null; then
             echo "Cortex CLI installation failed"
