@@ -352,10 +352,10 @@ def render_history_section(history: list[dict], is_beta: bool = False) -> str:
     version_badge = f'<span style="color:{STYLES["accent"]};font-size:11px;font-weight:bold;">[v{version}]</span> ' if version else ""
 
     skill_items = "".join(
-        f'<li style="margin:2px 0;font-family:Arial,sans-serif;font-size:11px;color:{STYLES["text"]};">{s["name"]}</li>'
+        _bullet(STYLES["add"], s["name"] + (_expandable_desc(s["description"]) if s.get("description") else ""))
         for s in added
     )
-    skill_list = f'<ul style="margin:8px 0 0;padding-left:18px;">{skill_items}</ul>' if skill_items else ""
+    skill_list = f'<ul style="margin:8px 0 0;padding-left:18px;list-style:none;">{skill_items}</ul>' if skill_items else ""
 
     section = f"""<tr><td style="padding:20px 24px 8px;">
   <h2 style="margin:0;font-family:Arial,sans-serif;color:{STYLES['heading']};font-size:16px;border-bottom:2px solid {STYLES['accent']};padding-bottom:6px;">
