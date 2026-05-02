@@ -1,0 +1,50 @@
+{
+  "date_of": "2026-05-02",
+  "from_version": "1.0.72",
+  "to_version": "1.0.73",
+  "cli_version": "1.0.73",
+  "channel": "stable",
+  "new_skills": [
+    {
+      "name": "ai-data-share",
+      "description": "Make a listing or data share AI-Ready. Use when: creating semantic views for listings, creating cortex agents for data shares, making data AI-ready. Triggers: AI-ready listing, share agent, data share semantic view, marketplace AI."
+    },
+    {
+      "name": "attach-ai-products-to-share",
+      "description": "Attach AI products to Snowflake shares. Use when: adding semantic views, cortex agents, or cortex search services to a share. Triggers: share semantic view, share agent, share cortex search. Invoke this skill to add AI products to a share as a step of sharing AI products or creating a listing to share an AI product."
+    },
+    {
+      "name": "snowpark-python",
+      "description": "**[REQUIRED]** Use for **ALL** requests involving Snowpark Python \u2014 writing pipelines, transforming data, loading files, deploying stored procedures/UDFs, OR observability. MUST invoke this skill even for seemingly simple tasks because Snowflake DataFrame semantics differ from Pandas in ways that silently produce wrong results (NULL handling, division by zero, GREATEST, datediff, type casting). Always load this skill BEFORE writing any Snowpark code. Triggers: Snowpark, Python, DataFrame, pipeline, ETL, ingest, transform, load data, CSV, Parquet, JSON, XML, join, aggregate, window function, UDF, UDTF, UDAF, Stored Procedure, deploy, snow snowpark CLI, DBAPI, JDBC, external database, pull data, event table, logging, tracing, trace events, profiler, debug UDF, debug procedure, observability, telemetry, slow procedure, alert on error, monitor."
+    },
+    {
+      "name": "event-table",
+      "description": "Manage Snowflake event tables and telemetry configuration. Use when: viewing/configuring event tables, checking telemetry setup, getting/setting telemetry levels, querying event table data, understanding telemetry formats. Triggers: event table, get event table, show event table, current event table, event table setup, event table configuration, telemetry, telemetry setup, telemetry configuration, telemetry levels, get telemetry, show telemetry, check telemetry, log level, trace level, metric level, logging setup, tracing setup, observability setup, event table format, telemetry format, log format, trace format, metric format."
+    },
+    {
+      "name": "snowflake-interactive",
+      "description": "**[REQUIRED]** Use for **ALL** Snowflake Interactive Table and Interactive Warehouse operations. Triggers: interactive table, interactive warehouse, low-latency queries, high-concurrency dashboard, TARGET_LAG for interactive."
+    },
+    {
+      "name": "security-investigation",
+      "description": "Comprehensive Snowflake security investigation and threat detection. Use for: login anomalies, IP analysis, brute force detection, impossible travel, data exfiltration, bulk exports, unauthorized sharing, privilege escalation, RBAC violations, suspicious grants, backdoor accounts. This is the REQUIRED entry point for all security investigations. Routes to specialized sub-skills for focused analysis."
+    },
+    {
+      "name": "skill-development",
+      "description": "Create, document, or audit skills for Cortex Code. Use when: creating new skills, capturing session work as skills, reviewing skills. Triggers: create skill, build skill, new skill, summarize session, capture workflow, audit skill, review skill."
+    },
+    {
+      "name": "alert",
+      "description": "Snowflake alert management - create, alter, suspend, resume alerts. Use when: user wants to create a new alert, modify an existing alert, set up monitoring, suspend or resume alerts. Triggers: create alert, new alert, add alert, alter alert, modify alert, change alert, suspend alert, resume alert, monitor with alert, set up alert, alert condition."
+    },
+    {
+      "name": "internal-marketplace-org-listing",
+      "description": "Create organizational listings to share data products via Internal Marketplace. Triggers: create data product, share to internal marketplace, publish to internal marketplace, share to other accounts, share with other accounts, organization listing, org listing, share across accounts, internal marketplace, cross-account sharing, share my agent to other accounts.\nWHEN TO USE THIS SKILL: - User wants to share with OTHER ACCOUNTS \u2192 Use this skill - User mentions \"internal marketplace\" or \"data product\" (even for same account) \u2192 Use this skill\nWHEN TO USE RBAC INSTEAD (not this skill): - User wants to share with roles in SAME account only - User does NOT mention \"internal marketplace\" or \"data product\" or \"listing\" - Example: \"share this table with ANALYST role\" \u2192 Use GRANT, not this skill\nWHEN NOT TO USE THIS SKILL: - User wants to migrate an EXISTING direct share to an org listing \u2192 Use the direct-share-to-org-listing-migration skill instead - User wants to migrate an EXISTING personalized listing to an org listing \u2192 Use the personalized-listing-to-org-listing-migration skill instead - User wants to migrate an EXISTING private data exchange (PDX) listing to an org listing \u2192 Use the pdx-listing-to-org-listing-migration skill instead\nKEY: If user says \"share via internal marketplace\" or \"as a data product\" even for same-account roles, use this skill. Otherwise, same-account = regular RBAC grants."
+    },
+    {
+      "name": "notification",
+      "description": "Router for Snowflake notification skills. Routes to integration creation/management, content formatting, or sending. Triggers: notification, notification integration, email notification, webhook, slack, teams, pagerduty, send notification, notification content."
+    }
+  ],
+  "count": 10
+}
