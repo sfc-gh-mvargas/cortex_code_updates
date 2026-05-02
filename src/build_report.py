@@ -102,6 +102,34 @@ def load_cdc_changes(week_of: str, data_dir: Path) -> dict:
     return result
 
 
+def load_cdc_entries(data_dir: Path) -> list[dict]:
+    entries = []
+    for cdc_file in sorted(data_dir.glob("cdc_*.json"), reverse=True):
+        with open(cdc_file) as f:
+            cdc = json.load(f)
+        added = []
+        removed = []
+        modified = []
+        for change in cdc.get("changes", []):
+            action = change.get("action")
+            entry = {"name": change["skill_name"], "detail": change.get("detail")}
+            if action == "DELETED":
+                removed.append(entry)
+            elif action in ("MODIFIED", "UPDATED"):
+                modified.append(entry)
+            elif action == "NEW":
+                added.append(entry)
+        if added or removed or modified:
+            entries.append({
+                "date": cdc.get("detected_date", ""),
+                "version": cdc.get("cli_version", ""),
+                "added": added,
+                "removed": removed,
+                "modified": modified,
+            })
+    return entries
+
+
 def _is_beta_entry(entry: dict) -> bool:
     msg = entry.get("commit_message", "").lower()
     if "beta" in msg:
@@ -213,46 +241,45 @@ def _render_summary(added_count: int, removed_count: int, modified_count: int) -
     )
 
 
-def render_current_entry(data: dict, is_beta: bool = False) -> str:
-    skills = data.get("new_skills", [])
-    deleted_skills = data.get("deleted_skills", [])
-    modified_skills = data.get("modified_skills", [])
-    week_of = data.get("week_of", "unknown")
-    cli_version = data.get("cli_version", "?")
-
-    if not skills and not deleted_skills and not modified_skills:
-        return ""
-
-    version_badge = f'<span style="color:{STYLES["accent"]};font-size:11px;font-weight:bold;">[v{cli_version}]</span> '
-    date_span = f'<span style="color:{STYLES["heading"]};font-family:Arial,sans-serif;font-size:12px;font-weight:bold;">{week_of}</span> '
-
-    summary = _render_summary(len(skills), len(deleted_skills), len(modified_skills))
-
-    added_list = [s if isinstance(s, dict) else {"name": s} for s in skills]
-    removed_list = [s if isinstance(s, dict) else {"name": s} for s in deleted_skills]
-    modified_list = [s if isinstance(s, dict) else {"name": s} for s in modified_skills]
-    skill_list = _render_skill_list(added_list, removed_list, modified_list)
-
-    row = (
-        f'<tr><td style="padding:10px 12px;border-bottom:1px solid {STYLES["border"]};">'
-        f'{version_badge}{date_span}'
-        f'{summary}'
-        f'{skill_list}'
-        f'</td></tr>'
-    )
-
-    section = f"""<tr><td style="padding:20px 24px 8px;">
+def render_current_entry(data: dict, is_beta: bool = False, data_dir: Path | None = None) -> str:
+    if data_dir:
+        cdc_entries = load_cdc_entries(data_dir)
+        if not cdc_entries:
+            return ""
+        rows = ""
+        for entry in cdc_entries:
+            version = entry.get("version", "")
+            date = entry.get("date", "")
+            added = entry.get("added", [])
+            removed = entry.get("removed", [])
+            modified = entry.get("modified", [])
+            version_suffix = "-beta" if is_beta else ""
+            version_badge = f'<span style="color:{STYLES["accent"]};font-size:11px;font-weight:bold;">[v{version}{version_suffix}]</span> ' if version else ""
+            date_span = f'<span style="color:{STYLES["heading"]};font-family:Arial,sans-serif;font-size:12px;font-weight:bold;">{date}</span>'
+            summary = _render_summary(len(added), len(removed), len(modified))
+            skill_list = _render_skill_list(added, removed, modified)
+            rows += (
+                f'<tr><td style="padding:10px 12px;border-bottom:1px solid {STYLES["border"]};">' 
+                f'{version_badge}{date_span}'
+                f'{summary}'
+                f'{skill_list}'
+                f'</td></tr>'
+            )
+        heading = "Latest changes (Beta versions)" if is_beta else "Latest Changes"
+        section = f"""<tr><td style="padding:20px 24px 8px;">
   <h2 style="margin:0;font-family:Arial,sans-serif;color:{STYLES['heading']};font-size:16px;border-bottom:2px solid {STYLES['accent']};padding-bottom:6px;">
-    {'Latest changes (Beta versions)' if is_beta else 'Latest Changes'}
+    {heading}
   </h2>
 </td></tr>
 <tr><td style="padding:8px 24px 16px;">
-  <table style="width:100%;border-collapse:collapse;">{row}</table>
+  <table style="width:100%;border-collapse:collapse;">{rows}</table>
 </td></tr>"""
-    return section
+        return section
+
+    return ""
 
 
-def render_email_html(data: dict, history: list[dict] | None = None, is_beta: bool = False) -> str:
+def render_email_html(data: dict, history: list[dict] | None = None, is_beta: bool = False, data_dir: Path | None = None) -> str:
     skills = data.get("new_skills", [])
     deleted_skills = data.get("deleted_skills", [])
     modified_skills = data.get("modified_skills", [])
@@ -262,7 +289,7 @@ def render_email_html(data: dict, history: list[dict] | None = None, is_beta: bo
     deleted_count = len(deleted_skills)
     modified_count = len(modified_skills)
 
-    changes_section = render_current_entry(data, is_beta=is_beta)
+    changes_section = render_current_entry(data, is_beta=is_beta, data_dir=data_dir)
 
     html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -330,7 +357,7 @@ def main():
 
     data = load_weekly_json(data_dir)
     history = load_change_history(data_dir)
-    html = render_email_html(data, history, is_beta=args.beta)
+    html = render_email_html(data, history, is_beta=args.beta, data_dir=data_dir)
     out_path = output_dir / out_filename
     out_path.write_text(html, encoding="utf-8")
     print(f"Webpage status updated to {out_path}")
