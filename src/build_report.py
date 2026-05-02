@@ -82,8 +82,20 @@ def load_weekly_json(data_dir: Path) -> dict:
     return data
 
 
+def _build_description_map(data_dir: Path) -> dict[str, str]:
+    desc_map = {}
+    for f in data_dir.glob("new_skills_week_*.json"):
+        with open(f) as fh:
+            week_data = json.load(fh)
+        for skill in week_data.get("new_skills", []):
+            if skill.get("name") and skill.get("description"):
+                desc_map[skill["name"]] = skill["description"]
+    return desc_map
+
+
 def load_cdc_changes(week_of: str, data_dir: Path) -> dict:
     result = {"new": [], "modified": [], "deleted": []}
+    desc_map = _build_description_map(data_dir)
     for cdc_file in sorted(data_dir.glob("cdc_*.json"), reverse=True):
         with open(cdc_file) as f:
             cdc = json.load(f)
@@ -92,7 +104,7 @@ def load_cdc_changes(week_of: str, data_dir: Path) -> dict:
             break
         for change in cdc.get("changes", []):
             action = change.get("action")
-            entry = {"name": change["skill_name"], "detail": change.get("detail")}
+            entry = {"name": change["skill_name"], "detail": change.get("detail"), "description": desc_map.get(change["skill_name"], "")}
             if action == "DELETED":
                 result["deleted"].append(entry)
             elif action in ("MODIFIED", "UPDATED"):
@@ -104,6 +116,7 @@ def load_cdc_changes(week_of: str, data_dir: Path) -> dict:
 
 def load_cdc_entries(data_dir: Path) -> list[dict]:
     entries = []
+    desc_map = _build_description_map(data_dir)
     for cdc_file in sorted(data_dir.glob("cdc_*.json"), reverse=True):
         with open(cdc_file) as f:
             cdc = json.load(f)
@@ -112,7 +125,7 @@ def load_cdc_entries(data_dir: Path) -> list[dict]:
         modified = []
         for change in cdc.get("changes", []):
             action = change.get("action")
-            entry = {"name": change["skill_name"], "detail": change.get("detail")}
+            entry = {"name": change["skill_name"], "detail": change.get("detail"), "description": desc_map.get(change["skill_name"], "")}
             if action == "DELETED":
                 removed.append(entry)
             elif action in ("MODIFIED", "UPDATED"):
@@ -153,19 +166,30 @@ def _bullet(color: str, text: str) -> str:
     )
 
 
+def _expandable_desc(desc: str) -> str:
+    return (
+        f'<details style="display:inline;margin-left:6px;">'
+        f'<summary style="cursor:pointer;color:{STYLES["accent"]};font-size:11px;display:inline;">show description</summary>'
+        f'<span style="color:{STYLES["muted"]};font-size:11px;display:block;margin-top:3px;">{desc}</span>'
+        f'</details>'
+    )
+
+
 def _render_skill_list(added: list, removed: list, modified: list) -> str:
     items = ""
     for s in added:
         name = s["name"] if isinstance(s, dict) else s
         desc = s.get("description") or "" if isinstance(s, dict) else ""
-        short_desc = (desc[:80] + "\u2026") if len(desc) > 80 else desc
         label = f'<code style="background:#E8F9FA;padding:1px 5px;border-radius:3px;font-size:11px;">{name}</code>'
-        if short_desc:
-            label += f' <span style="color:{STYLES["muted"]};font-size:11px;">{short_desc}</span>'
+        if desc:
+            label += _expandable_desc(desc)
         items += _bullet(STYLES["add"], label)
     for s in removed:
         name = s["name"] if isinstance(s, dict) else s
+        desc = s.get("description") or "" if isinstance(s, dict) else ""
         label = f'<code style="background:#FDE8F0;padding:1px 5px;border-radius:3px;font-size:11px;">{name}</code>'
+        if desc:
+            label += _expandable_desc(desc)
         items += _bullet(STYLES["remove"], label)
     for s in modified:
         name = s["name"] if isinstance(s, dict) else s
@@ -174,9 +198,12 @@ def _render_skill_list(added: list, removed: list, modified: list) -> str:
             detail_text = ", ".join(s["changes"])
         elif isinstance(s, dict) and s.get("detail"):
             detail_text = s["detail"]
+        desc = s.get("description") or "" if isinstance(s, dict) else ""
         label = f'<code style="background:#FFF3E5;padding:1px 5px;border-radius:3px;font-size:11px;">{name}</code>'
         if detail_text:
             label += f' <span style="color:{STYLES["muted"]};font-size:11px;">{detail_text}</span>'
+        if desc:
+            label += _expandable_desc(desc)
         items += _bullet(STYLES["modify"], label)
     if not items:
         return ""
@@ -184,7 +211,7 @@ def _render_skill_list(added: list, removed: list, modified: list) -> str:
 
 
 def render_history_section(history: list[dict], is_beta: bool = False) -> str:
-    if not history:
+    if not history or is_beta:
         return ""
 
     filtered = [e for e in history if not _is_beta_entry(e)]
