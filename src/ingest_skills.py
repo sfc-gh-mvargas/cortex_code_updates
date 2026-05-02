@@ -175,7 +175,7 @@ def main():
     skills_map = {s["name"]: s for s in skills}
     weekly_path = data_dir / f"new_skills_week_{today}.json"
     weekly_payload = {
-        "week_of": today,
+        "date_of": today,
         "cli_version": cli_version,
         "channel": channel,
         "new_skills": [

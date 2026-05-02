@@ -66,7 +66,7 @@ def load_weekly_json(data_dir: Path) -> dict:
     with open(path) as f:
         data = json.load(f)
 
-    cdc_changes = load_cdc_changes(data.get("week_of", ""), data_dir)
+    cdc_changes = load_cdc_changes(data.get("date_of", ""), data_dir)
     if cdc_changes["deleted"]:
         data["deleted_skills"] = cdc_changes["deleted"]
     if cdc_changes["modified"]:
@@ -93,14 +93,14 @@ def _build_description_map(data_dir: Path) -> dict[str, str]:
     return desc_map
 
 
-def load_cdc_changes(week_of: str, data_dir: Path) -> dict:
+def load_cdc_changes(date_of: str, data_dir: Path) -> dict:
     result = {"new": [], "modified": [], "deleted": []}
     desc_map = _build_description_map(data_dir)
     for cdc_file in sorted(data_dir.glob("cdc_*.json"), reverse=True):
         with open(cdc_file) as f:
             cdc = json.load(f)
         cdc_date = cdc.get("detected_date", "")
-        if week_of and cdc_date < week_of:
+        if date_of and cdc_date < date_of:
             break
         for change in cdc.get("changes", []):
             action = change.get("action")
@@ -316,7 +316,7 @@ def render_email_html(data: dict, history: list[dict] | None = None, is_beta: bo
     skills = data.get("new_skills", [])
     deleted_skills = data.get("deleted_skills", [])
     modified_skills = data.get("modified_skills", [])
-    week_of = data.get("week_of", "unknown")
+    date_of = data.get("date_of", "unknown")
     cli_version = data.get("cli_version", "?")
     count = data.get("count", len(skills))
     deleted_count = len(deleted_skills)
@@ -371,7 +371,7 @@ def render_email_html(data: dict, history: list[dict] | None = None, is_beta: bo
 
 <tr><td style="padding:12px 24px 20px;border-top:1px solid {STYLES['border']};">
   <p style="margin:0;font-family:Arial,sans-serif;color:{STYLES['muted']};font-size:11px;">
-    Week of {week_of} &nbsp;|&nbsp; +{count} new &nbsp;|&nbsp; -{deleted_count} deleted &nbsp;|&nbsp; ~{modified_count} modified &nbsp;|&nbsp;
+    Latest change {date_of} &nbsp;|&nbsp; +{count} new &nbsp;|&nbsp; -{deleted_count} deleted &nbsp;|&nbsp; ~{modified_count} modified &nbsp;|&nbsp;
     Generated {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}
   </p>
 </td></tr>
