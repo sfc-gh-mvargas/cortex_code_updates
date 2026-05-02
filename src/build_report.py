@@ -167,10 +167,16 @@ def _bullet(color: str, text: str) -> str:
 
 
 def _expandable_desc(desc: str) -> str:
+    short = (desc[:80] + "\u2026") if len(desc) > 80 else desc
+    if len(desc) <= 80:
+        return f' <span style="color:{STYLES["muted"]};font-size:11px;">{short}</span>'
     return (
-        f'<details style="display:inline;margin-left:6px;">'
-        f'<summary style="cursor:pointer;color:{STYLES["accent"]};font-size:11px;display:inline;">show description</summary>'
-        f'<span style="color:{STYLES["muted"]};font-size:11px;display:block;margin-top:3px;">{desc}</span>'
+        f'<details style="display:inline;margin-left:6px;" class="skill-desc">'
+        f'<summary style="cursor:pointer;color:{STYLES["muted"]};font-size:11px;display:inline;list-style:none;">'
+        f'<span class="sd-short">{short}</span>'
+        f' <span class="sd-plus" style="color:{STYLES["accent"]};font-weight:bold;font-size:14px;">+</span>'
+        f'<span class="sd-full" style="display:none;">{desc}</span>'
+        f'</summary>'
         f'</details>'
     )
 
@@ -320,7 +326,14 @@ def render_email_html(data: dict, history: list[dict] | None = None, is_beta: bo
 
     html = f"""<!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width"></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<style>
+.skill-desc[open] .sd-short{{display:none}}
+.skill-desc[open] .sd-full{{display:inline !important}}
+.skill-desc[open] .sd-plus{{display:none}}
+.skill-desc summary::marker,.skill-desc summary::-webkit-details-marker{{display:none}}
+</style>
+</head>
 <body style="margin:0;padding:0;background:{STYLES['bg']};">
 <table width="100%" cellpadding="0" cellspacing="0" style="background:{STYLES['bg']};">
 <tr><td align="center" style="padding:20px;">
