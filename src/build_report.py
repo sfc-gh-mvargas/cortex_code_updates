@@ -39,6 +39,7 @@ STYLES = {
 
 
 SNAPSHOT_PATTERN = re.compile(r"^skills_v([\d.]+)\.json$")
+PLUGIN_SNAPSHOT_PATTERN = re.compile(r"^plugins_v([\d.]+)\.json$")
 
 
 def load_change_history(data_dir: Path) -> list[dict]:
@@ -147,26 +148,32 @@ def load_weekly_json(data_dir: Path) -> dict:
 
 def _build_description_map(data_dir: Path) -> dict[str, str]:
     desc_map = {}
-    for f in data_dir.glob("new_skills_v*.json"):
-        with open(f) as fh:
-            week_data = json.load(fh)
-        for skill in week_data.get("new_skills", []):
-            if skill.get("name") and skill.get("description"):
-                desc_map[skill["name"]] = skill["description"]
+    for pattern in ("new_skills_v*.json", "new_plugins_v*.json"):
+        for f in data_dir.glob(pattern):
+            with open(f) as fh:
+                week_data = json.load(fh)
+            items_key = "new_plugins" if "plugin" in f.name else "new_skills"
+            for item in week_data.get(items_key, []):
+                if item.get("name") and item.get("description"):
+                    desc_map[item["name"]] = item["description"]
     return desc_map
 
 
 def _load_snapshot_map(path: Path) -> dict[str, str]:
     with open(path) as f:
         data = json.load(f)
-    return {s["name"]: s.get("description", "") for s in data.get("skills", [])}
+    items = data.get("skills", []) or data.get("plugins", [])
+    return {s["name"]: s.get("description", "") for s in items}
 
 
 def _build_diff_map(data_dir: Path) -> dict[str, dict[str, tuple[str, str]]]:
-    snapshots = sorted(f for f in data_dir.glob("skills_v*.json") if SNAPSHOT_PATTERN.match(f.name))
+    snapshots = sorted(
+        f for f in data_dir.glob("*_v*.json")
+        if SNAPSHOT_PATTERN.match(f.name) or PLUGIN_SNAPSHOT_PATTERN.match(f.name)
+    )
     diff_map: dict[str, dict[str, tuple[str, str]]] = {}
     for i in range(1, len(snapshots)):
-        m = SNAPSHOT_PATTERN.match(snapshots[i].name)
+        m = SNAPSHOT_PATTERN.match(snapshots[i].name) or PLUGIN_SNAPSHOT_PATTERN.match(snapshots[i].name)
         version_str = m.group(1) if m else snapshots[i].stem
         old_map = _load_snapshot_map(snapshots[i - 1])
         new_map = _load_snapshot_map(snapshots[i])
@@ -181,7 +188,7 @@ def _build_diff_map(data_dir: Path) -> dict[str, dict[str, tuple[str, str]]]:
     return diff_map
 
 
-def load_cdc_changes(date_of: str, data_dir: Path) -> dict:
+def load_cdc_changes(date_of: str, data_dir: Path, name_key: str = "skill_name") -> dict:
     result = {"new": [], "modified": [], "deleted": []}
     desc_map = _build_description_map(data_dir)
     for cdc_file in sorted(data_dir.glob("cdc_v*.json"), reverse=True):
@@ -189,7 +196,8 @@ def load_cdc_changes(date_of: str, data_dir: Path) -> dict:
             cdc = json.load(f)
         for change in cdc.get("changes", []):
             action = change.get("action")
-            entry = {"name": change["skill_name"], "detail": change.get("detail"), "description": desc_map.get(change["skill_name"], "")}
+            item_name = change.get(name_key, change.get("skill_name", change.get("plugin_name", "")))
+            entry = {"name": item_name, "detail": change.get("detail"), "description": desc_map.get(item_name, "")}
             if action == "DELETED":
                 result["deleted"].append(entry)
             elif action in ("MODIFIED", "UPDATED"):
@@ -199,7 +207,7 @@ def load_cdc_changes(date_of: str, data_dir: Path) -> dict:
     return result
 
 
-def load_cdc_entries(data_dir: Path) -> list[dict]:
+def load_cdc_entries(data_dir: Path, name_key: str = "skill_name") -> list[dict]:
     entries = []
     desc_map = _build_description_map(data_dir)
     diff_map = _build_diff_map(data_dir)
@@ -213,10 +221,10 @@ def load_cdc_entries(data_dir: Path) -> list[dict]:
         modified = []
         for change in cdc.get("changes", []):
             action = change.get("action")
-            skill_name = change["skill_name"]
-            entry = {"name": skill_name, "detail": change.get("detail"), "description": desc_map.get(skill_name, "")}
+            item_name = change.get(name_key, change.get("skill_name", change.get("plugin_name", "")))
+            entry = {"name": item_name, "detail": change.get("detail"), "description": desc_map.get(item_name, "")}
             if change.get("detail") == "description_changed" and to_version in diff_map:
-                pair = diff_map[to_version].get(skill_name)
+                pair = diff_map[to_version].get(item_name)
                 if pair:
                     entry["old_description"] = pair[0]
                     entry["new_description"] = pair[1]
@@ -389,9 +397,10 @@ def _render_summary(added_count: int, removed_count: int, modified_count: int) -
     )
 
 
-def render_current_entry(data: dict, is_beta: bool = False, data_dir: Path | None = None) -> str:
+def render_current_entry(data: dict, is_beta: bool = False, is_plugins: bool = False, data_dir: Path | None = None) -> str:
+    name_key = "plugin_name" if is_plugins else "skill_name"
     if data_dir:
-        cdc_entries = load_cdc_entries(data_dir)
+        cdc_entries = load_cdc_entries(data_dir, name_key=name_key)
         if not cdc_entries:
             return ""
         rows = ""
@@ -413,7 +422,12 @@ def render_current_entry(data: dict, is_beta: bool = False, data_dir: Path | Non
                 f'{skill_list}'
                 f'</td></tr>'
             )
-        heading = "Latest changes (Beta versions)" if is_beta else "Latest Changes"
+        if is_plugins:
+            heading = "Plugin Changes"
+        elif is_beta:
+            heading = "Latest changes (Beta versions)"
+        else:
+            heading = "Latest Changes"
         tracking_note = f'<p style="margin:4px 0 0;font-family:Arial,sans-serif;font-size:10px;color:{STYLES["muted"]};">Tracking started on v1.0.76</p>' if is_beta else ""
         section = f"""<tr><td style="padding:20px 24px 8px;">
   <h2 style="margin:0;font-family:Arial,sans-serif;color:{STYLES['heading']};font-size:16px;border-bottom:2px solid {STYLES['accent']};padding-bottom:6px;">
@@ -429,7 +443,7 @@ def render_current_entry(data: dict, is_beta: bool = False, data_dir: Path | Non
     return ""
 
 
-def render_email_html(data: dict, history: list[dict] | None = None, is_beta: bool = False, data_dir: Path | None = None) -> str:
+def render_email_html(data: dict, history: list[dict] | None = None, is_beta: bool = False, is_plugins: bool = False, data_dir: Path | None = None) -> str:
     skills = data.get("new_skills", [])
     deleted_skills = data.get("deleted_skills", [])
     modified_skills = data.get("modified_skills", [])
@@ -439,7 +453,7 @@ def render_email_html(data: dict, history: list[dict] | None = None, is_beta: bo
     deleted_count = len(deleted_skills)
     modified_count = len(modified_skills)
 
-    changes_section = render_current_entry(data, is_beta=is_beta, data_dir=data_dir)
+    changes_section = render_current_entry(data, is_beta=is_beta, is_plugins=is_plugins, data_dir=data_dir)
 
     html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -461,9 +475,15 @@ def render_email_html(data: dict, history: list[dict] | None = None, is_beta: bo
     <h1 style="margin:0;font-family:Arial,sans-serif;color:#FFFFFF;font-size:22px;letter-spacing:1px;display:flex;align-items:center;gap:10px;">
       {COCO_ICON} CoCo Skills Pulse
     </h1>
-    <div style="display:inline-flex;border-radius:4px;overflow:hidden;border:1px solid #71D3DC;">
-      <a href="index.html" style="padding:4px 10px;font-family:Arial,sans-serif;font-size:11px;font-weight:bold;text-decoration:none;{'background:#71D3DC;color:#11567F;' if not is_beta else 'background:transparent;color:#71D3DC;'}">Stable</a>
-      <a href="beta.html" style="padding:4px 10px;font-family:Arial,sans-serif;font-size:11px;font-weight:bold;text-decoration:none;{'background:#71D3DC;color:#11567F;' if is_beta else 'background:transparent;color:#71D3DC;'}">Beta</a>
+    <div style="display:inline-flex;align-items:center;gap:8px;">
+      <div style="display:inline-flex;border-radius:4px;overflow:hidden;border:1px solid #71D3DC;">
+        <a href="{'index.html' if not is_plugins else 'plugins.html'}" style="padding:4px 10px;font-family:Arial,sans-serif;font-size:11px;font-weight:bold;text-decoration:none;{'background:#71D3DC;color:#11567F;' if not is_beta else 'background:transparent;color:#71D3DC;'}">Stable</a>
+        <a href="{'beta.html' if not is_plugins else 'plugins-beta.html'}" style="padding:4px 10px;font-family:Arial,sans-serif;font-size:11px;font-weight:bold;text-decoration:none;{'background:#71D3DC;color:#11567F;' if is_beta else 'background:transparent;color:#71D3DC;'}">Beta</a>
+      </div>
+      <div style="display:inline-flex;border-radius:4px;overflow:hidden;border:1px solid #71D3DC;">
+        <a href="{'index.html' if not is_beta else 'beta.html'}" style="padding:4px 10px;font-family:Arial,sans-serif;font-size:11px;font-weight:bold;text-decoration:none;{'background:#71D3DC;color:#11567F;' if not is_plugins else 'background:transparent;color:#71D3DC;'}">Skills</a>
+        <a href="{'plugins.html' if not is_beta else 'plugins-beta.html'}" style="padding:4px 10px;font-family:Arial,sans-serif;font-size:11px;font-weight:bold;text-decoration:none;{'background:#71D3DC;color:#11567F;' if is_plugins else 'background:transparent;color:#71D3DC;'}">Plugins</a>
+      </div>
     </div>
   </div>
   <p style="margin:6px 0 0;font-family:Arial,sans-serif;color:#FFFFFFCC;font-size:12px;">
@@ -501,20 +521,75 @@ def render_email_html(data: dict, history: list[dict] | None = None, is_beta: bo
     return html
 
 
+def load_plugin_data(data_dir: Path) -> dict:
+    snapshots = sorted(
+        (f for f in data_dir.glob("plugins_v*.json") if PLUGIN_SNAPSHOT_PATTERN.match(f.name)),
+        reverse=True,
+    )
+    cli_version = ""
+    if snapshots:
+        with open(snapshots[0]) as f:
+            snap_data = json.load(f)
+        cli_version = snap_data.get("cli_version", "")
+
+    candidates = sorted(data_dir.glob("new_plugins_v*.json"), reverse=True)
+    if not candidates:
+        return {"new_skills": [], "deleted_skills": [], "modified_skills": [], "count": 0, "cli_version": cli_version, "date_of": ""}
+
+    with open(candidates[0]) as f:
+        data = json.load(f)
+
+    cdc_changes = load_cdc_changes(data.get("date_of", ""), data_dir, name_key="plugin_name")
+    result = {
+        "new_skills": data.get("new_plugins", []),
+        "deleted_skills": [{"name": e["name"]} for e in cdc_changes["deleted"]],
+        "modified_skills": [{"name": e["name"], "detail": e.get("detail", "")} for e in cdc_changes["modified"]],
+        "count": data.get("count", 0),
+        "cli_version": data.get("cli_version", cli_version),
+        "date_of": data.get("date_of", ""),
+    }
+    return result
+
+
 def main():
     parser = argparse.ArgumentParser(description="Build CoCo Skills Pulse report")
     parser.add_argument("--beta", action="store_true", help="Build report from beta channel data (reads data/beta/, writes docs/beta.html)")
+    parser.add_argument("--plugins", action="store_true", help="Build report from plugin data (reads data/plugins/, writes docs/plugins.html)")
+    parser.add_argument("--plugins-beta", action="store_true", help="Build report from plugins beta data (reads data/plugins/beta/, writes docs/plugins-beta.html)")
     args = parser.parse_args()
 
-    data_dir = BASE_DATA_DIR / "beta" if args.beta else BASE_DATA_DIR
+    if args.plugins_beta:
+        data_dir = BASE_DATA_DIR / "plugins" / "beta"
+        out_filename = "plugins-beta.html"
+        is_beta = True
+        is_plugins = True
+    elif args.plugins:
+        data_dir = BASE_DATA_DIR / "plugins"
+        out_filename = "plugins.html"
+        is_beta = False
+        is_plugins = True
+    elif args.beta:
+        data_dir = BASE_DATA_DIR / "beta"
+        out_filename = "beta.html"
+        is_beta = True
+        is_plugins = False
+    else:
+        data_dir = BASE_DATA_DIR
+        out_filename = "index.html"
+        is_beta = False
+        is_plugins = False
+
     output_dir = BASE_OUTPUT_DIR
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    out_filename = "beta.html" if args.beta else "index.html"
+    if is_plugins:
+        data = load_plugin_data(data_dir)
+        history = []
+    else:
+        data = load_weekly_json(data_dir)
+        history = load_change_history(data_dir)
 
-    data = load_weekly_json(data_dir)
-    history = load_change_history(data_dir)
-    html = render_email_html(data, history, is_beta=args.beta, data_dir=data_dir)
+    html = render_email_html(data, history, is_beta=is_beta, is_plugins=is_plugins, data_dir=data_dir)
     out_path = output_dir / out_filename
     out_path.write_text(html, encoding="utf-8")
     print(f"Webpage status updated to {out_path}")

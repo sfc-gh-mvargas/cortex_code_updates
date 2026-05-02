@@ -61,6 +61,27 @@ jobs:
       - name: Generate CDC docs (beta)
         run: uv run python src/build_report.py --beta
 
+      - name: Run ingestion (plugins)
+        run: uv run python src/ingest_plugins.py
+
+      - name: Generate CDC docs (plugins)
+        run: uv run python src/build_report.py --plugins
+
+      - name: Ensure plugins beta baseline exists
+        run: |
+          mkdir -p data/plugins/beta
+          if ! ls data/plugins/beta/plugins_v*.json 1>/dev/null 2>&1; then
+            echo "No plugins beta baseline found, seeding from latest stable plugin snapshot"
+            LATEST=$(ls data/plugins/plugins_v*.json | sort | tail -1)
+            cp "$LATEST" "data/plugins/beta/$(basename $LATEST)"
+          fi
+
+      - name: Run ingestion (plugins beta)
+        run: uv run python src/ingest_plugins.py --beta
+
+      - name: Generate CDC docs (plugins beta)
+        run: uv run python src/build_report.py --plugins-beta
+
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
