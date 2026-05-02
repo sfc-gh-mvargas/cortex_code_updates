@@ -2,7 +2,7 @@ name: Cortex Code Version Monitor
 
 on:
   schedule:
-    - cron: '0 */6 * * *'  # Every 6 hours
+    - cron: '17 */6 * * *'  # Moved to minute 17 to avoid high-load delays
   workflow_dispatch:
 
 permissions:
