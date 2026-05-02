@@ -1,0 +1,49 @@
+{
+  "detected_date": "2026-05-02",
+  "from_version": "1.0.60",
+  "to_version": "1.0.66",
+  "cli_version": "1.0.66",
+  "channel": "stable",
+  "changes": [
+    {
+      "skill_name": "billing",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "cost-intelligence",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "ctx-workflow",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "data-products",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "dynamic-tables",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "iceberg",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "snowflake-postgres",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "warehouse",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    }
+  ]
+}

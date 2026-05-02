@@ -1,6 +1,7 @@
 import argparse
 import difflib
 import json
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -37,30 +38,73 @@ STYLES = {
 }
 
 
+SNAPSHOT_PATTERN = re.compile(r"^skills_v([\d.]+)\.json$")
+
+
 def load_change_history(data_dir: Path) -> list[dict]:
-    snapshots = sorted(data_dir.glob("skills_*.json"))
+    snapshots = sorted(f for f in data_dir.glob("skills_v*.json") if SNAPSHOT_PATTERN.match(f.name))
     if not snapshots:
         return []
-    snapshot_path = snapshots[0]
-    with open(snapshot_path) as f:
-        data = json.load(f)
-    skills = data.get("skills", [])
-    if not skills:
-        return []
-    return [{
-        "date": data.get("ingestion_date", "2026-04-30"),
-        "version": data.get("cli_version", "unknown"),
-        "skill_count_before": 0,
-        "skill_count_after": len(skills),
-        "added": [{"name": s["name"], "description": s.get("description", "")} for s in skills],
-        "removed": [],
-        "modified": [],
-    }]
+
+    ### first tracked version v1.0.58
+    base_path = snapshots[0]
+    with open(base_path) as f:
+        base_data = json.load(f)
+    base_skills = base_data.get("skills", [])
+
+    history = []
+    if base_skills:
+        history.append({
+            "date": base_data.get("ingestion_date", ""),
+            "version": base_data.get("cli_version", "1.0.58"),
+            "skill_count_before": 0,
+            "skill_count_after": len(base_skills),
+            "added": [{"name": s["name"], "description": s.get("description", "")} for s in base_skills],
+            "removed": [],
+            "modified": [],
+        })
+
+    cdc_files = sorted(data_dir.glob("cdc_v*_v*.json"))
+    for cdc_path in cdc_files:
+        with open(cdc_path) as f:
+            cdc = json.load(f)
+        changes = cdc.get("changes", [])
+        if not changes:
+            continue
+        added = [c for c in changes if c["action"] == "NEW"]
+        removed = [c for c in changes if c["action"] == "DELETED"]
+        modified = [c for c in changes if c["action"] == "MODIFIED"]
+
+        to_version = cdc.get("to_version", "")
+        to_snapshot_path = data_dir / f"skills_v{to_version}.json"
+        skills_map = {}
+        if to_snapshot_path.exists():
+            with open(to_snapshot_path) as f:
+                skills_map = {s["name"]: s for s in json.load(f).get("skills", [])}
+
+        from_version = cdc.get("from_version", "")
+        from_snapshot_path = data_dir / f"skills_v{from_version}.json"
+        prev_count = 0
+        if from_snapshot_path.exists():
+            with open(from_snapshot_path) as f:
+                prev_count = json.load(f).get("skill_count", 0)
+
+        history.append({
+            "date": cdc.get("detected_date", ""),
+            "version": to_version,
+            "skill_count_before": prev_count,
+            "skill_count_after": len(skills_map),
+            "added": [{"name": c["skill_name"], "description": skills_map.get(c["skill_name"], {}).get("description", "")} for c in added],
+            "removed": [{"name": c["skill_name"], "description": ""} for c in removed],
+            "modified": [{"name": c["skill_name"], "description": c.get("detail", "")} for c in modified],
+        })
+
+    return history
 
 
 
 def _load_latest_snapshot(data_dir: Path) -> list[dict] | None:
-    snapshots = sorted(data_dir.glob("skills_*.json"), reverse=True)
+    snapshots = sorted((f for f in data_dir.glob("skills_v*.json") if SNAPSHOT_PATTERN.match(f.name)), reverse=True)
     if not snapshots:
         return None
     with open(snapshots[0]) as f:
@@ -68,10 +112,16 @@ def _load_latest_snapshot(data_dir: Path) -> list[dict] | None:
 
 
 def load_weekly_json(data_dir: Path) -> dict:
-    candidates = sorted(data_dir.glob("new_skills_week_*.json"), reverse=True)
+    candidates = sorted(data_dir.glob("new_skills_v*.json"), reverse=True)
     if not candidates:
-        print("ERROR: No new_skills_week_*.json found. Run src/ingest_skills.py first.")
-        sys.exit(1)
+        snapshot = _load_latest_snapshot(data_dir)
+        cli_version = ""
+        if snapshot:
+            snapshots = sorted((f for f in data_dir.glob("skills_v*.json") if SNAPSHOT_PATTERN.match(f.name)), reverse=True)
+            if snapshots:
+                with open(snapshots[0]) as f:
+                    cli_version = json.load(f).get("cli_version", "")
+        return {"new_skills": [], "deleted_skills": [], "modified_skills": [], "count": 0, "cli_version": cli_version, "date_of": ""}
     path = candidates[0]
     if not path.exists():
         print(f"ERROR: {path} not found. Run src/ingest_skills.py first.")
@@ -97,7 +147,7 @@ def load_weekly_json(data_dir: Path) -> dict:
 
 def _build_description_map(data_dir: Path) -> dict[str, str]:
     desc_map = {}
-    for f in data_dir.glob("new_skills_week_*.json"):
+    for f in data_dir.glob("new_skills_v*.json"):
         with open(f) as fh:
             week_data = json.load(fh)
         for skill in week_data.get("new_skills", []):
@@ -113,10 +163,11 @@ def _load_snapshot_map(path: Path) -> dict[str, str]:
 
 
 def _build_diff_map(data_dir: Path) -> dict[str, dict[str, tuple[str, str]]]:
-    snapshots = sorted(data_dir.glob("skills_*.json"))
+    snapshots = sorted(f for f in data_dir.glob("skills_v*.json") if SNAPSHOT_PATTERN.match(f.name))
     diff_map: dict[str, dict[str, tuple[str, str]]] = {}
     for i in range(1, len(snapshots)):
-        date_str = snapshots[i].stem.replace("skills_", "")
+        m = SNAPSHOT_PATTERN.match(snapshots[i].name)
+        version_str = m.group(1) if m else snapshots[i].stem
         old_map = _load_snapshot_map(snapshots[i - 1])
         new_map = _load_snapshot_map(snapshots[i])
         changes = {}
@@ -126,19 +177,16 @@ def _build_diff_map(data_dir: Path) -> dict[str, dict[str, tuple[str, str]]]:
             if old_desc != new_desc:
                 changes[name] = (old_desc, new_desc)
         if changes:
-            diff_map[date_str] = changes
+            diff_map[version_str] = changes
     return diff_map
 
 
 def load_cdc_changes(date_of: str, data_dir: Path) -> dict:
     result = {"new": [], "modified": [], "deleted": []}
     desc_map = _build_description_map(data_dir)
-    for cdc_file in sorted(data_dir.glob("cdc_*.json"), reverse=True):
+    for cdc_file in sorted(data_dir.glob("cdc_v*.json"), reverse=True):
         with open(cdc_file) as f:
             cdc = json.load(f)
-        cdc_date = cdc.get("detected_date", "")
-        if date_of and cdc_date < date_of:
-            break
         for change in cdc.get("changes", []):
             action = change.get("action")
             entry = {"name": change["skill_name"], "detail": change.get("detail"), "description": desc_map.get(change["skill_name"], "")}
@@ -155,10 +203,11 @@ def load_cdc_entries(data_dir: Path) -> list[dict]:
     entries = []
     desc_map = _build_description_map(data_dir)
     diff_map = _build_diff_map(data_dir)
-    for cdc_file in sorted(data_dir.glob("cdc_*.json"), reverse=True):
+    for cdc_file in sorted(data_dir.glob("cdc_v*.json"), reverse=True):
         with open(cdc_file) as f:
             cdc = json.load(f)
         cdc_date = cdc.get("detected_date", "")
+        to_version = cdc.get("to_version", "")
         added = []
         removed = []
         modified = []
@@ -166,8 +215,8 @@ def load_cdc_entries(data_dir: Path) -> list[dict]:
             action = change.get("action")
             skill_name = change["skill_name"]
             entry = {"name": skill_name, "detail": change.get("detail"), "description": desc_map.get(skill_name, "")}
-            if change.get("detail") == "description_changed" and cdc_date in diff_map:
-                pair = diff_map[cdc_date].get(skill_name)
+            if change.get("detail") == "description_changed" and to_version in diff_map:
+                pair = diff_map[to_version].get(skill_name)
                 if pair:
                     entry["old_description"] = pair[0]
                     entry["new_description"] = pair[1]
@@ -295,30 +344,18 @@ def render_history_section(history: list[dict], is_beta: bool = False) -> str:
     if not history or is_beta:
         return ""
 
-    filtered = [e for e in history if not _is_beta_entry(e)]
-    recent = filtered[-10:]
-    recent.reverse()
+    base_entry = history[0]
+    version = base_entry.get("version", "")
+    skill_count = base_entry.get("skill_count_after", 0)
+    added = base_entry.get("added", [])
 
-    rows = ""
-    for entry in recent:
-        date = entry["date"]
-        version = entry.get("version", "")
-        added = entry.get("added", [])
-        removed = entry.get("removed", [])
-        modified = entry.get("modified", [])
+    version_badge = f'<span style="color:{STYLES["accent"]};font-size:11px;font-weight:bold;">[v{version}]</span> ' if version else ""
 
-        version_badge = f'<span style="color:{STYLES["accent"]};font-size:11px;font-weight:bold;">[{version}]</span> ' if version else ""
-
-        summary = _render_summary(len(added), len(removed), len(modified))
-        skill_list = _render_skill_list(added, removed, modified)
-
-        rows += (
-            f'<tr><td style="padding:10px 12px;border-bottom:1px solid {STYLES["border"]};">'
-            f'{version_badge}<span style="color:{STYLES["heading"]};font-family:Arial,sans-serif;font-size:12px;font-weight:bold;">{date}</span>'
-            f'{summary}'
-            f'{skill_list}'
-            f'</td></tr>'
-        )
+    skill_items = "".join(
+        f'<li style="margin:2px 0;font-family:Arial,sans-serif;font-size:11px;color:{STYLES["text"]};">{s["name"]}</li>'
+        for s in added
+    )
+    skill_list = f'<ul style="margin:8px 0 0;padding-left:18px;">{skill_items}</ul>' if skill_items else ""
 
     section = f"""<tr><td style="padding:20px 24px 8px;">
   <h2 style="margin:0;font-family:Arial,sans-serif;color:{STYLES['heading']};font-size:16px;border-bottom:2px solid {STYLES['accent']};padding-bottom:6px;">
@@ -326,7 +363,10 @@ def render_history_section(history: list[dict], is_beta: bool = False) -> str:
   </h2>
 </td></tr>
 <tr><td style="padding:8px 24px 16px;">
-  <table style="width:100%;border-collapse:collapse;">{rows}</table>
+  <p style="margin:0;font-family:Arial,sans-serif;font-size:13px;color:{STYLES['text']};">
+    {version_badge}{skill_count} bundled skills
+  </p>
+  {skill_list}
 </td></tr>"""
     return section
 
@@ -374,10 +414,12 @@ def render_current_entry(data: dict, is_beta: bool = False, data_dir: Path | Non
                 f'</td></tr>'
             )
         heading = "Latest changes (Beta versions)" if is_beta else "Latest Changes"
+        tracking_note = f'<p style="margin:4px 0 0;font-family:Arial,sans-serif;font-size:10px;color:{STYLES["muted"]};">Tracking started on v1.0.76</p>' if is_beta else ""
         section = f"""<tr><td style="padding:20px 24px 8px;">
   <h2 style="margin:0;font-family:Arial,sans-serif;color:{STYLES['heading']};font-size:16px;border-bottom:2px solid {STYLES['accent']};padding-bottom:6px;">
     {heading}
   </h2>
+  {tracking_note}
 </td></tr>
 <tr><td style="padding:8px 24px 16px;">
   <table style="width:100%;border-collapse:collapse;">{rows}</table>

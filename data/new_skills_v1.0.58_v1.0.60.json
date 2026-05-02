@@ -1,0 +1,22 @@
+{
+  "date_of": "2026-05-02",
+  "from_version": "1.0.58",
+  "to_version": "1.0.60",
+  "cli_version": "1.0.60",
+  "channel": "stable",
+  "new_skills": [
+    {
+      "name": "declarative-sharing",
+      "description": "**[REQUIRED]** Use for **ALL** declarative sharing and application packages with TYPE=DATA, (i.e data apps). Share data products across Snowflake accounts with versioning. Default choice when user wants to share data with another account. Also use when converting an existing data share to declarative sharing. Triggers: declarative, data product, native app, data app, data application, share, sharing, another account, cross account, cross region, application package, manifest, marketplace, listing, publish, share a table, share data, manifest from share, share to manifest, generate manifest from share, inspect share, share to yaml, introspect share, convert share, migrate share, existing share, secure share to declarative, upgrade share, future-proof share, multiple shares, combine shares, merge shares, multiple data shares"
+    },
+    {
+      "name": "migration-guide",
+      "description": ""
+    },
+    {
+      "name": "setup-snowflake-sso",
+      "description": "Set up Single Sign-On (SSO) for Snowflake with your Identity Provider (IdP).\nSupports Microsoft Entra ID (Azure AD), Okta, and other SAML 2.0 providers including\nOneLogin, Ping Identity, Google Workspace, Auth0, Duo, JumpCloud, and more.\nIncludes advanced scenarios: Allowed Interfaces, Auto Redirect, and Snowflake Intelligence tile setup."
+    }
+  ],
+  "count": 3
+}

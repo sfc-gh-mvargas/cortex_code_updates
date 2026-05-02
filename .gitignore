@@ -5,3 +5,4 @@ __pycache__/
 src/build_history.py
 data/history/
 .DS_Store
+src/ingest_local_versions.py

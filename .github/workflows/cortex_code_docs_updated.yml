@@ -49,9 +49,9 @@ jobs:
       - name: Ensure beta baseline exists
         run: |
           mkdir -p data/beta
-          if ! ls data/beta/skills_*.json 1>/dev/null 2>&1; then
+          if ! ls data/beta/skills_v*.json 1>/dev/null 2>&1; then
             echo "No beta baseline found, seeding from latest stable snapshot"
-            LATEST=$(ls data/skills_*.json | sort | tail -1)
+            LATEST=$(ls data/skills_v*.json | sort | tail -1)
             cp "$LATEST" "data/beta/$(basename $LATEST)"
           fi
 

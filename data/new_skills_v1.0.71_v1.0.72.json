@@ -1,6 +1,8 @@
 {
   "date_of": "2026-05-02",
-  "cli_version": "1.0.73",
+  "from_version": "1.0.71",
+  "to_version": "1.0.72",
+  "cli_version": "1.0.72",
   "channel": "stable",
   "new_skills": [],
   "count": 0

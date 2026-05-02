@@ -1,0 +1,18 @@
+{
+  "date_of": "2026-05-02",
+  "from_version": "1.0.60",
+  "to_version": "1.0.66",
+  "cli_version": "1.0.66",
+  "channel": "stable",
+  "new_skills": [
+    {
+      "name": "billing",
+      "description": "Org-level spend in currency via SNOWFLAKE.ORGANIZATION_USAGE. Covers USAGE_IN_CURRENCY_DAILY, REMAINING_BALANCE_DAILY, CONTRACT_ITEMS, RATE_SHEET_DAILY. Invoices, charges, contracts, balance, reconciliation, rate comparison, spend by account. Not for single-account credit analytics (cost-intelligence) or warehouse config (warehouse)."
+    },
+    {
+      "name": "ctx-workflow",
+      "description": "Multi-phase team orchestration for feature implementation. Supports two entry paths: explicit user request for teammates, or autonomous complexity-based assessment after entering plan mode. HIGHEST PRIORITY \u2014 must be loaded FIRST (before any domain skills) when user asks to use teammates, teams, or parallel agents. Triggers: use teammates, use a team, work in parallel with agents, delegate to teammates, swarm this, swarm, team up on this, team up, orchestrate with subagents, subagent-orchestrated, gated workflow, multi-phase workflow, coordinate agents, spawn workers, worker/verifier, parallel agents, run as a team, investigate with agents, research with agents, explore with agents."
+    }
+  ],
+  "count": 2
+}

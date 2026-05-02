@@ -1,0 +1,29 @@
+{
+  "detected_date": "NA",
+  "from_version": "1.0.67",
+  "to_version": "1.0.71",
+  "cli_version": "1.0.71",
+  "channel": "stable",
+  "changes": [
+    {
+      "skill_name": "access-troubleshooter",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "data-quality",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "dbt-projects-on-snowflake",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "semantic-view",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    }
+  ]
+}

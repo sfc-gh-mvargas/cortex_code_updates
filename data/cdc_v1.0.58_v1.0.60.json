@@ -1,0 +1,59 @@
+{
+  "detected_date": "NA",
+  "from_version": "1.0.58",
+  "to_version": "1.0.60",
+  "cli_version": "1.0.60",
+  "channel": "stable",
+  "changes": [
+    {
+      "skill_name": "cortex-ai-functions",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "declarative-sharing",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "machine-learning",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "migration-guide",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "native-app-consumer",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "native-app-provider",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "setup-snowflake-sso",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "dashboard",
+      "action": "DELETED",
+      "detail": null
+    },
+    {
+      "skill_name": "declarative",
+      "action": "DELETED",
+      "detail": null
+    },
+    {
+      "skill_name": "snowconvert-assessment",
+      "action": "DELETED",
+      "detail": null
+    }
+  ]
+}

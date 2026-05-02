@@ -1,0 +1,14 @@
+{
+  "date_of": "2026-05-02",
+  "from_version": "1.0.67",
+  "to_version": "1.0.71",
+  "cli_version": "1.0.71",
+  "channel": "stable",
+  "new_skills": [
+    {
+      "name": "access-troubleshooter",
+      "description": "Debug authorization and permission issues in Snowflake. Use when: access denied, insufficient privileges, permission errors,  role issues, missing grants, privilege analysis, least-privilege role creation, find authorizing roles. Triggers: access denied, insufficient privileges, permission error, authorization failed, can't access, missing permission, grant needed, role recommendation, SQL access control error, does not exist or not authorized, EXPLAIN_PRIVILEGES, SYSTEM$ANALYZE_ROLE_ACCESS, SYSTEM$SUGGEST_ROLE_GRANTS."
+    }
+  ],
+  "count": 1
+}
