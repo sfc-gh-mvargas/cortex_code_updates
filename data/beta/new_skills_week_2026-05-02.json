@@ -1,0 +1,12 @@
+{
+  "week_of": "2026-05-02",
+  "cli_version": "1.0.77",
+  "channel": "beta",
+  "new_skills": [
+    {
+      "name": "snowpipe-streaming",
+      "description": "**[REQUIRED]** Use for ALL Snowpipe Streaming tasks: setup, configure, troubleshoot, monitor, optimize, or migrate streaming pipelines. Covers the High-Performance Architecture exclusively. Triggers: snowpipe streaming, streaming ingestion, low-latency ingestion, real-time ingestion, Snowpipe Streaming SDK, channel, insertRows, appendRows, streaming channel, PIPE object, streaming pipe, snowpipe v2, high-performance streaming, migrate classic streaming, troubleshoot streaming."
+    }
+  ],
+  "count": 1
+}
