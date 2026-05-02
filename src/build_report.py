@@ -1,4 +1,5 @@
 import argparse
+import difflib
 import json
 import sys
 from datetime import datetime, timezone
@@ -7,7 +8,19 @@ from pathlib import Path
 BASE_DATA_DIR = Path(__file__).parent.parent / "data"
 BASE_OUTPUT_DIR = Path(__file__).parent.parent / "docs"
 
-COCO_ICON = "🥥"
+_B = '<span style="color:#29B5E8;">\u2588</span>'
+_O = '<span style="color:#FF9F36;">\u2588</span>'
+_W = '<span style="color:#FFFFFF;">\u2588</span>'
+_E = '<span style="background:#29B5E8;color:#000000;">\u2584</span>'
+_S = " "
+COCO_ICON = (
+    '<pre style="margin:0;font-family:monospace;font-size:10px;line-height:1.2;display:inline-block;vertical-align:middle;">'
+    f'{_S}{_S}{_B}{_E}{_B}{_E}{_B}\n'
+    f'{_S}{_B}{_B}{_B}{_O}{_B}{_B}{_B}\n'
+    f'{_B}{_B}{_B}{_W}{_W}{_W}{_B}{_B}{_B}\n'
+    f'{_S}{_B}{_O}{_B}{_B}{_B}{_O}{_B}\n'
+    '</pre>'
+)
 
 STYLES = {
     "add": "#71D3DC",
@@ -93,6 +106,30 @@ def _build_description_map(data_dir: Path) -> dict[str, str]:
     return desc_map
 
 
+def _load_snapshot_map(path: Path) -> dict[str, str]:
+    with open(path) as f:
+        data = json.load(f)
+    return {s["name"]: s.get("description", "") for s in data.get("skills", [])}
+
+
+def _build_diff_map(data_dir: Path) -> dict[str, dict[str, tuple[str, str]]]:
+    snapshots = sorted(data_dir.glob("skills_*.json"))
+    diff_map: dict[str, dict[str, tuple[str, str]]] = {}
+    for i in range(1, len(snapshots)):
+        date_str = snapshots[i].stem.replace("skills_", "")
+        old_map = _load_snapshot_map(snapshots[i - 1])
+        new_map = _load_snapshot_map(snapshots[i])
+        changes = {}
+        for name in set(old_map) | set(new_map):
+            old_desc = old_map.get(name, "")
+            new_desc = new_map.get(name, "")
+            if old_desc != new_desc:
+                changes[name] = (old_desc, new_desc)
+        if changes:
+            diff_map[date_str] = changes
+    return diff_map
+
+
 def load_cdc_changes(date_of: str, data_dir: Path) -> dict:
     result = {"new": [], "modified": [], "deleted": []}
     desc_map = _build_description_map(data_dir)
@@ -117,15 +154,23 @@ def load_cdc_changes(date_of: str, data_dir: Path) -> dict:
 def load_cdc_entries(data_dir: Path) -> list[dict]:
     entries = []
     desc_map = _build_description_map(data_dir)
+    diff_map = _build_diff_map(data_dir)
     for cdc_file in sorted(data_dir.glob("cdc_*.json"), reverse=True):
         with open(cdc_file) as f:
             cdc = json.load(f)
+        cdc_date = cdc.get("detected_date", "")
         added = []
         removed = []
         modified = []
         for change in cdc.get("changes", []):
             action = change.get("action")
-            entry = {"name": change["skill_name"], "detail": change.get("detail"), "description": desc_map.get(change["skill_name"], "")}
+            skill_name = change["skill_name"]
+            entry = {"name": skill_name, "detail": change.get("detail"), "description": desc_map.get(skill_name, "")}
+            if change.get("detail") == "description_changed" and cdc_date in diff_map:
+                pair = diff_map[cdc_date].get(skill_name)
+                if pair:
+                    entry["old_description"] = pair[0]
+                    entry["new_description"] = pair[1]
             if action == "DELETED":
                 removed.append(entry)
             elif action in ("MODIFIED", "UPDATED"):
@@ -134,7 +179,7 @@ def load_cdc_entries(data_dir: Path) -> list[dict]:
                 added.append(entry)
         if added or removed or modified:
             entries.append({
-                "date": cdc.get("detected_date", ""),
+                "date": cdc_date,
                 "version": cdc.get("cli_version", ""),
                 "added": added,
                 "removed": removed,
@@ -181,6 +226,32 @@ def _expandable_desc(desc: str) -> str:
     )
 
 
+def _expandable_diff(old_desc: str, new_desc: str) -> str:
+    short = "description_changed"
+    sm = difflib.SequenceMatcher(None, old_desc.split(), new_desc.split())
+    diff_parts = []
+    for op, i1, i2, j1, j2 in sm.get_opcodes():
+        if op == "equal":
+            diff_parts.append(" ".join(old_desc.split()[i1:i2]))
+        elif op == "delete":
+            diff_parts.append(f'<span style="background:#FDE8F0;text-decoration:line-through;color:{STYLES["remove"]};">{" ".join(old_desc.split()[i1:i2])}</span>')
+        elif op == "insert":
+            diff_parts.append(f'<span style="background:#E8F9FA;color:{STYLES["add"]};font-weight:bold;">{" ".join(new_desc.split()[j1:j2])}</span>')
+        elif op == "replace":
+            diff_parts.append(f'<span style="background:#FDE8F0;text-decoration:line-through;color:{STYLES["remove"]};">{" ".join(old_desc.split()[i1:i2])}</span>')
+            diff_parts.append(f'<span style="background:#E8F9FA;color:{STYLES["add"]};font-weight:bold;">{" ".join(new_desc.split()[j1:j2])}</span>')
+    diff_html = " ".join(diff_parts)
+    return (
+        f'<details style="display:inline;margin-left:6px;" class="skill-desc">'
+        f'<summary style="cursor:pointer;color:{STYLES["muted"]};font-size:11px;display:inline;list-style:none;">'
+        f'<span class="sd-short">{short}</span>'
+        f' <span class="sd-plus" style="color:{STYLES["accent"]};font-weight:bold;font-size:14px;">+</span>'
+        f'<span class="sd-full" style="display:none;font-size:11px;">{diff_html}</span>'
+        f'</summary>'
+        f'</details>'
+    )
+
+
 def _render_skill_list(added: list, removed: list, modified: list) -> str:
     items = ""
     for s in added:
@@ -205,10 +276,14 @@ def _render_skill_list(added: list, removed: list, modified: list) -> str:
         elif isinstance(s, dict) and s.get("detail"):
             detail_text = s["detail"]
         desc = s.get("description") or "" if isinstance(s, dict) else ""
+        old_desc = s.get("old_description", "") if isinstance(s, dict) else ""
+        new_desc = s.get("new_description", "") if isinstance(s, dict) else ""
         label = f'<code style="background:#FFF3E5;padding:1px 5px;border-radius:3px;font-size:11px;">{name}</code>'
-        if detail_text:
+        if old_desc and new_desc:
+            label += _expandable_diff(old_desc, new_desc)
+        elif detail_text:
             label += f' <span style="color:{STYLES["muted"]};font-size:11px;">{detail_text}</span>'
-        if desc:
+        elif desc:
             label += _expandable_desc(desc)
         items += _bullet(STYLES["modify"], label)
     if not items:
@@ -341,8 +416,8 @@ def render_email_html(data: dict, history: list[dict] | None = None, is_beta: bo
 
 <tr><td style="padding:24px 24px 14px;border-bottom:3px solid {STYLES['accent']};background:{STYLES['header_bg']};border-radius:6px 6px 0 0;">
   <div style="display:flex;justify-content:space-between;align-items:center;">
-    <h1 style="margin:0;font-family:Arial,sans-serif;color:#FFFFFF;font-size:22px;letter-spacing:1px;">
-      {COCO_ICON} CoCo Skill Pulse
+    <h1 style="margin:0;font-family:Arial,sans-serif;color:#FFFFFF;font-size:22px;letter-spacing:1px;display:flex;align-items:center;gap:10px;">
+      {COCO_ICON} CoCo Skills Pulse
     </h1>
     <div style="display:inline-flex;border-radius:4px;overflow:hidden;border:1px solid #71D3DC;">
       <a href="index.html" style="padding:4px 10px;font-family:Arial,sans-serif;font-size:11px;font-weight:bold;text-decoration:none;{'background:#71D3DC;color:#11567F;' if not is_beta else 'background:transparent;color:#71D3DC;'}">Stable</a>
@@ -385,7 +460,7 @@ def render_email_html(data: dict, history: list[dict] | None = None, is_beta: bo
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Build CoCo Skill Pulse report")
+    parser = argparse.ArgumentParser(description="Build CoCo Skills Pulse report")
     parser.add_argument("--beta", action="store_true", help="Build report from beta channel data (reads data/beta/, writes docs/beta.html)")
     args = parser.parse_args()
 
