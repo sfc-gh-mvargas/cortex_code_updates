@@ -1,0 +1,24 @@
+{
+  "detected_date": "2026-05-02",
+  "from_version": null,
+  "to_version": "1.0.77",
+  "cli_version": "1.0.77",
+  "channel": "stable",
+  "changes": [
+    {
+      "plugin_name": "code-review",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "plugin_name": "data",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "plugin_name": "databricks",
+      "action": "NEW",
+      "detail": null
+    }
+  ]
+}
