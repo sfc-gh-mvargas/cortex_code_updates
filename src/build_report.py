@@ -425,7 +425,7 @@ def render_current_entry(data: dict, is_beta: bool = False, is_plugins: bool = F
         if is_plugins:
             heading = "Plugin Changes"
         elif is_beta:
-            heading = "Latest changes (Beta versions)"
+            heading = "Latest changes"
         else:
             heading = "Latest Changes"
         tracking_note = f'<p style="margin:4px 0 0;font-family:Arial,sans-serif;font-size:10px;color:{STYLES["muted"]};">Tracking started on v1.0.76</p>' if is_beta else ""
