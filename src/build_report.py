@@ -215,7 +215,7 @@ def load_cdc_entries(data_dir: Path, name_key: str = "skill_name") -> list[dict]
         with open(cdc_file) as f:
             cdc = json.load(f)
         cdc_date = cdc.get("detected_date", "")
-        to_version = cdc.get("to_version", "")
+        to_version = cdc.get("to_version", "") or cdc.get("cli_version", "")
         added = []
         removed = []
         modified = []
