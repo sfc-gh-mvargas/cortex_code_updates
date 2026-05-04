@@ -35,6 +35,33 @@ jobs:
           fi
           cortex --version
 
+      - name: Verify ~/.local/share/cortex is populated (stable)
+        run: |
+          CORTEX_DIR="$HOME/.local/share/cortex"
+          if [ ! -d "$CORTEX_DIR" ]; then
+            echo "ERROR: $CORTEX_DIR does not exist"
+            exit 1
+          fi
+          VERSION_DIRS=$(find "$CORTEX_DIR" -mindepth 1 -maxdepth 1 -type d | head -5)
+          if [ -z "$VERSION_DIRS" ]; then
+            echo "ERROR: $CORTEX_DIR has no version directories"
+            exit 1
+          fi
+          echo "Found version directories:"
+          echo "$VERSION_DIRS"
+          SKILLS_FOUND=false
+          for dir in $VERSION_DIRS; do
+            if [ -d "$dir/bundled_skills" ]; then
+              SKILL_COUNT=$(find "$dir/bundled_skills" -mindepth 1 -maxdepth 1 -type d | wc -l)
+              echo "  $dir/bundled_skills: $SKILL_COUNT skills"
+              SKILLS_FOUND=true
+            fi
+          done
+          if [ "$SKILLS_FOUND" = false ]; then
+            echo "ERROR: No bundled_skills directory found in any version folder"
+            exit 1
+          fi
+
       - name: Run ingestion (stable)
         run: uv run python src/ingest_skills.py
 
@@ -45,6 +72,29 @@ jobs:
         run: |
           curl -LsS https://ai.snowflake.com/static/cc-scripts/install.sh | CORTEX_CHANNEL=beta sh
           cortex --version
+
+      - name: Verify ~/.local/share/cortex is populated (beta)
+        run: |
+          CORTEX_DIR="$HOME/.local/share/cortex"
+          VERSION_DIRS=$(find "$CORTEX_DIR" -mindepth 1 -maxdepth 1 -type d | head -5)
+          if [ -z "$VERSION_DIRS" ]; then
+            echo "ERROR: $CORTEX_DIR has no version directories after beta install"
+            exit 1
+          fi
+          echo "Version directories after beta install:"
+          echo "$VERSION_DIRS"
+          SKILLS_FOUND=false
+          for dir in $VERSION_DIRS; do
+            if [ -d "$dir/bundled_skills" ]; then
+              SKILL_COUNT=$(find "$dir/bundled_skills" -mindepth 1 -maxdepth 1 -type d | wc -l)
+              echo "  $dir/bundled_skills: $SKILL_COUNT skills"
+              SKILLS_FOUND=true
+            fi
+          done
+          if [ "$SKILLS_FOUND" = false ]; then
+            echo "ERROR: No bundled_skills directory found after beta install"
+            exit 1
+          fi
 
       - name: Ensure beta baseline exists
         run: |
