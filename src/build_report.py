@@ -218,9 +218,14 @@ def load_cdc_entries(data_dir: Path, name_key: str = "skill_name") -> list[dict]
         to_version = cdc.get("to_version", "") or cdc.get("cli_version", "")
         subskills_map: dict[str, list] = {}
         to_snapshot_path = data_dir / f"skills_v{to_version}.json"
+        if not to_snapshot_path.exists():
+            to_snapshot_path = data_dir / f"plugins_v{to_version}.json"
         if to_snapshot_path.exists():
             with open(to_snapshot_path) as f:
-                subskills_map = {s["name"]: s.get("subskills", []) for s in json.load(f).get("skills", [])}
+                snap_data = json.load(f)
+            items = snap_data.get("skills", []) or snap_data.get("plugins", [])
+            for s in items:
+                subskills_map[s["name"]] = s.get("subskills", []) or s.get("skills", [])
         added = []
         removed = []
         modified = []
@@ -302,7 +307,7 @@ def _expandable_desc(desc: str, subskills: list | None = None) -> str:
             return f' <span style="color:{STYLES["muted"]};font-size:11px;">{short}</span>'
         return (
             f'<span style="display:inline;margin-left:6px;" class="skill-desc">'
-            f'<span class="sd-toggle" style="cursor:pointer;color:{STYLES["muted"]};font-size:11px;">'
+            f'<span class="sd-toggle" onclick="this.parentElement.classList.toggle(&apos;open&apos;)" style="cursor:pointer;color:{STYLES["muted"]};font-size:11px;">'
             f'<span class="sd-short">{short}</span>'
             f' <span class="sd-plus" style="color:{STYLES["accent"]};font-weight:bold;font-size:14px;">+</span>'
             f'<span class="sd-full" style="display:none;">{desc}</span>'
@@ -311,7 +316,7 @@ def _expandable_desc(desc: str, subskills: list | None = None) -> str:
         )
     return (
         f'<div style="margin:2px 0 2px 6px;" class="skill-desc">'
-        f'<span class="sd-toggle" style="cursor:pointer;color:{STYLES["muted"]};font-size:11px;">'
+        f'<span class="sd-toggle" onclick="this.parentElement.classList.toggle(&apos;open&apos;)" style="cursor:pointer;color:{STYLES["muted"]};font-size:11px;">'
         f'<span class="sd-short">{short}</span>'
         f' <span class="sd-plus" style="color:{STYLES["accent"]};font-weight:bold;font-size:14px;">+</span>'
         f'<span class="sd-full" style="display:none;">{desc}</span>'
@@ -338,7 +343,7 @@ def _expandable_diff(old_desc: str, new_desc: str) -> str:
     diff_html = " ".join(diff_parts)
     return (
         f'<span style="display:inline;margin-left:6px;" class="skill-desc">'
-        f'<span class="sd-toggle" style="cursor:pointer;color:{STYLES["muted"]};font-size:11px;">'
+        f'<span class="sd-toggle" onclick="this.parentElement.classList.toggle(&apos;open&apos;)" style="cursor:pointer;color:{STYLES["muted"]};font-size:11px;">'
         f'<span class="sd-short">{short}</span>'
         f' <span class="sd-plus" style="color:{STYLES["accent"]};font-weight:bold;font-size:14px;">+</span>'
         f'<span class="sd-full" style="display:none;font-size:11px;">{diff_html}</span>'
@@ -504,12 +509,6 @@ def render_email_html(data: dict, history: list[dict] | None = None, is_beta: bo
 .skill-desc.open .sd-full{{display:inline !important}}
 .skill-desc.open .sd-plus{{display:none}}
 </style>
-<script>
-document.addEventListener('click',function(e){{
-  var t=e.target.closest('.sd-toggle');
-  if(t){{var p=t.closest('.skill-desc');if(p)p.classList.toggle('open');}}
-}});
-</script>
 </head>
 <body style="margin:0;padding:0;background:{STYLES['bg']};">
 <table width="100%" cellpadding="0" cellspacing="0" style="background:{STYLES['bg']};">
