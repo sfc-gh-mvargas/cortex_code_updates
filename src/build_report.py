@@ -60,7 +60,7 @@ def load_change_history(data_dir: Path) -> list[dict]:
             "version": base_data.get("cli_version", "1.0.58"),
             "skill_count_before": 0,
             "skill_count_after": len(base_skills),
-            "added": [{"name": s["name"], "description": s.get("description", "")} for s in base_skills],
+            "added": [{"name": s["name"], "description": s.get("description", ""), "subskills": s.get("subskills", [])} for s in base_skills],
             "removed": [],
             "modified": [],
         })
@@ -95,7 +95,7 @@ def load_change_history(data_dir: Path) -> list[dict]:
             "version": to_version,
             "skill_count_before": prev_count,
             "skill_count_after": len(skills_map),
-            "added": [{"name": c["skill_name"], "description": skills_map.get(c["skill_name"], {}).get("description", "")} for c in added],
+            "added": [{"name": c["skill_name"], "description": skills_map.get(c["skill_name"], {}).get("description", ""), "subskills": skills_map.get(c["skill_name"], {}).get("subskills", [])} for c in added],
             "removed": [{"name": c["skill_name"], "description": ""} for c in removed],
             "modified": [{"name": c["skill_name"], "description": c.get("detail", "")} for c in modified],
         })
@@ -216,13 +216,18 @@ def load_cdc_entries(data_dir: Path, name_key: str = "skill_name") -> list[dict]
             cdc = json.load(f)
         cdc_date = cdc.get("detected_date", "")
         to_version = cdc.get("to_version", "") or cdc.get("cli_version", "")
+        subskills_map: dict[str, list] = {}
+        to_snapshot_path = data_dir / f"skills_v{to_version}.json"
+        if to_snapshot_path.exists():
+            with open(to_snapshot_path) as f:
+                subskills_map = {s["name"]: s.get("subskills", []) for s in json.load(f).get("skills", [])}
         added = []
         removed = []
         modified = []
         for change in cdc.get("changes", []):
             action = change.get("action")
             item_name = change.get(name_key, change.get("skill_name", change.get("plugin_name", "")))
-            entry = {"name": item_name, "detail": change.get("detail"), "description": desc_map.get(item_name, "")}
+            entry = {"name": item_name, "detail": change.get("detail"), "description": desc_map.get(item_name, ""), "subskills": subskills_map.get(item_name, [])}
             if change.get("detail") == "description_changed" and to_version in diff_map:
                 pair = diff_map[to_version].get(item_name)
                 if pair:
@@ -268,18 +273,51 @@ def _bullet(color: str, text: str) -> str:
     )
 
 
-def _expandable_desc(desc: str) -> str:
+def _render_subskills_html(subskills: list, depth: int = 0) -> str:
+    if not subskills:
+        return ""
+    items = ""
+    for ss in subskills:
+        name = ss.get("name", "")
+        desc = ss.get("description", "") or ""
+        ellipsis = "\u2026" if len(desc) > 70 else ""
+        short_desc = f' <span style="color:{STYLES["muted"]};font-size:10px;">{desc[:70]}{ellipsis}</span>' if desc else ""
+        nested = _render_subskills_html(ss.get("subskills", []), depth + 1)
+        items += (
+            f'<li style="margin:2px 0;font-family:Arial,sans-serif;font-size:11px;">'
+            f'<code style="background:#F0F0F0;padding:1px 4px;border-radius:2px;font-size:10px;">{name}</code>'
+            f'{short_desc}'
+            f'{nested}'
+            f'</li>'
+        )
+    indent = 8 + depth * 8
+    return f'<ul style="list-style:none;margin:4px 0 0 {indent}px;padding:0;border-left:2px solid {STYLES["border"]};padding-left:6px;">{items}</ul>'
+
+
+def _expandable_desc(desc: str, subskills: list | None = None) -> str:
+    subskills = subskills or []
     short = (desc[:80] + "\u2026") if len(desc) > 80 else desc
-    if len(desc) <= 80:
-        return f' <span style="color:{STYLES["muted"]};font-size:11px;">{short}</span>'
+    if not subskills:
+        if len(desc) <= 80:
+            return f' <span style="color:{STYLES["muted"]};font-size:11px;">{short}</span>'
+        return (
+            f'<span style="display:inline;margin-left:6px;" class="skill-desc">'
+            f'<span class="sd-toggle" style="cursor:pointer;color:{STYLES["muted"]};font-size:11px;">'
+            f'<span class="sd-short">{short}</span>'
+            f' <span class="sd-plus" style="color:{STYLES["accent"]};font-weight:bold;font-size:14px;">+</span>'
+            f'<span class="sd-full" style="display:none;">{desc}</span>'
+            f'</span>'
+            f'</span>'
+        )
     return (
-        f'<details style="display:inline;margin-left:6px;" class="skill-desc">'
-        f'<summary style="cursor:pointer;color:{STYLES["muted"]};font-size:11px;display:inline;list-style:none;">'
+        f'<div style="margin:2px 0 2px 6px;" class="skill-desc">'
+        f'<span class="sd-toggle" style="cursor:pointer;color:{STYLES["muted"]};font-size:11px;">'
         f'<span class="sd-short">{short}</span>'
         f' <span class="sd-plus" style="color:{STYLES["accent"]};font-weight:bold;font-size:14px;">+</span>'
         f'<span class="sd-full" style="display:none;">{desc}</span>'
-        f'</summary>'
-        f'</details>'
+        f'</span>'
+        f'<div class="sd-content">{_render_subskills_html(subskills)}</div>'
+        f'</div>'
     )
 
 
@@ -299,13 +337,13 @@ def _expandable_diff(old_desc: str, new_desc: str) -> str:
             diff_parts.append(f'<span style="background:#E8F9FA;color:{STYLES["add"]};font-weight:bold;">{" ".join(new_desc.split()[j1:j2])}</span>')
     diff_html = " ".join(diff_parts)
     return (
-        f'<details style="display:inline;margin-left:6px;" class="skill-desc">'
-        f'<summary style="cursor:pointer;color:{STYLES["muted"]};font-size:11px;display:inline;list-style:none;">'
+        f'<span style="display:inline;margin-left:6px;" class="skill-desc">'
+        f'<span class="sd-toggle" style="cursor:pointer;color:{STYLES["muted"]};font-size:11px;">'
         f'<span class="sd-short">{short}</span>'
         f' <span class="sd-plus" style="color:{STYLES["accent"]};font-weight:bold;font-size:14px;">+</span>'
         f'<span class="sd-full" style="display:none;font-size:11px;">{diff_html}</span>'
-        f'</summary>'
-        f'</details>'
+        f'</span>'
+        f'</span>'
     )
 
 
@@ -314,9 +352,10 @@ def _render_skill_list(added: list, removed: list, modified: list) -> str:
     for s in added:
         name = s["name"] if isinstance(s, dict) else s
         desc = s.get("description") or "" if isinstance(s, dict) else ""
+        subskills = s.get("subskills") or [] if isinstance(s, dict) else []
         label = f'<code style="background:#E8F9FA;padding:1px 5px;border-radius:3px;font-size:11px;">{name}</code>'
-        if desc:
-            label += _expandable_desc(desc)
+        if desc or subskills:
+            label += _expandable_desc(desc, subskills)
         items += _bullet(STYLES["add"], label)
     for s in removed:
         name = s["name"] if isinstance(s, dict) else s
@@ -360,7 +399,7 @@ def render_history_section(history: list[dict], is_beta: bool = False) -> str:
     version_badge = f'<span style="color:{STYLES["accent"]};font-size:11px;font-weight:bold;">[v{version}]</span> ' if version else ""
 
     skill_items = "".join(
-        _bullet(STYLES["add"], s["name"] + (_expandable_desc(s["description"]) if s.get("description") else ""))
+        _bullet(STYLES["add"], s["name"] + (_expandable_desc(s.get("description", ""), s.get("subskills")) if (s.get("description") or s.get("subskills")) else ""))
         for s in added
     )
     skill_list = f'<ul style="margin:8px 0 0;padding-left:18px;list-style:none;">{skill_items}</ul>' if skill_items else ""
@@ -459,11 +498,18 @@ def render_email_html(data: dict, history: list[dict] | None = None, is_beta: bo
 <html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
 <style>
-.skill-desc[open] .sd-short{{display:none}}
-.skill-desc[open] .sd-full{{display:inline !important}}
-.skill-desc[open] .sd-plus{{display:none}}
-.skill-desc summary::marker,.skill-desc summary::-webkit-details-marker{{display:none}}
+.skill-desc .sd-content{{display:none}}
+.skill-desc.open .sd-content{{display:block}}
+.skill-desc.open .sd-short{{display:none}}
+.skill-desc.open .sd-full{{display:inline !important}}
+.skill-desc.open .sd-plus{{display:none}}
 </style>
+<script>
+document.addEventListener('click',function(e){{
+  var t=e.target.closest('.sd-toggle');
+  if(t){{var p=t.closest('.skill-desc');if(p)p.classList.toggle('open');}}
+}});
+</script>
 </head>
 <body style="margin:0;padding:0;background:{STYLES['bg']};">
 <table width="100%" cellpadding="0" cellspacing="0" style="background:{STYLES['bg']};">

@@ -5,7 +5,11 @@ import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 
+import yaml
+
+
 BASE_DATA_DIR = Path(__file__).parent.parent / "data"
+CORTEX_DIR = Path("~/.local/share/cortex").expanduser()
 
 SNAPSHOT_PATTERN = re.compile(r"^plugins_v([\d.]+)\.json$")
 
@@ -21,50 +25,106 @@ def clean_version(version: str) -> str:
     return version.split("+")[0]
 
 
-def parse_plugin_list() -> list[dict]:
-    result = subprocess.run(["cortex", "plugin", "list"], capture_output=True, text=True)
-    output = result.stdout + result.stderr
+def find_version_path(version_clean: str) -> Path | None:
+    for d in CORTEX_DIR.iterdir():
+        if d.is_dir() and d.name.startswith(version_clean):
+            return d
+    return None
 
-    plugins = []
-    current: dict | None = None
 
-    header_pattern = re.compile(r"^\s{2}(\S+)\s+v([\d.]+)\s+\[([^\]]+)\]")
+def get_version_date(version_path: Path) -> datetime:
+    cortex_bin = version_path / "cortex"
+    src = cortex_bin if cortex_bin.exists() else version_path
+    return datetime.fromtimestamp(src.stat().st_mtime, tz=timezone.utc)
 
-    for line in output.splitlines():
-        header_match = header_pattern.match(line)
-        if header_match:
-            if current:
-                plugins.append(current)
-            name = header_match.group(1)
-            version = header_match.group(2)
-            flags = [f.strip() for f in header_match.group(3).split(",")]
-            status = "enabled" if "enabled" in flags else "disabled"
-            source = next((f for f in flags if f in ("bundled", "managed", "external")), "unknown")
-            current = {
-                "name": name,
-                "version": version,
-                "status": status,
-                "source": source,
-                "description": "",
-                "path": "",
-                "components": "",
-            }
+
+def parse_skill_md(skill_dir: Path) -> str | None:
+    skill_md = skill_dir / "SKILL.md"
+    if not skill_md.exists():
+        return None
+    content = skill_md.read_text(encoding="utf-8")
+    match = re.search(r"^---\s*\n(.*?)\n---", content, re.DOTALL)
+    if not match:
+        return None
+    try:
+        frontmatter = yaml.safe_load(match.group(1))
+        desc = frontmatter.get("description", "")
+        if isinstance(desc, str):
+            return desc.strip()
+    except yaml.YAMLError:
+        pass
+    return None
+
+
+def get_subskills_dfs(skill_dir: Path) -> list[dict]:
+    subskills = []
+    for entry in sorted(skill_dir.iterdir()):
+        if not entry.is_dir():
             continue
+        if not (entry / "SKILL.md").exists():
+            continue
+        description = parse_skill_md(entry)
+        subskills.append({
+            "name": entry.name,
+            "description": description,
+            "path": str(entry),
+            "subskills": get_subskills_dfs(entry),
+        })
+    return subskills
 
-        if current:
-            stripped = line.strip()
-            if stripped.startswith("Path:"):
-                current["path"] = stripped[len("Path:"):].strip()
-            elif stripped.startswith("Source:"):
-                current["source"] = stripped[len("Source:"):].strip()
-            elif stripped.startswith("Components:"):
-                current["components"] = stripped[len("Components:"):].strip()
-            elif stripped and not stripped.startswith("Discovered") and not current["description"]:
-                current["description"] = stripped
 
-    if current:
-        plugins.append(current)
+def _read_plugin_json(plugin_dir: Path) -> dict | None:
+    for meta_dir in (".claude-plugin", ".cortex-plugin"):
+        candidate = plugin_dir / meta_dir / "plugin.json"
+        if candidate.exists():
+            try:
+                with open(candidate) as f:
+                    return json.load(f)
+            except (json.JSONDecodeError, OSError):
+                pass
+    return None
 
+
+def _get_plugin_skills(plugin_dir: Path) -> list[dict]:
+    skills_dir = plugin_dir / "skills"
+    if not skills_dir.exists():
+        return []
+    skills = []
+    for skill_dir in sorted(skills_dir.iterdir()):
+        if not skill_dir.is_dir():
+            continue
+        description = parse_skill_md(skill_dir)
+        skills.append({
+            "name": skill_dir.name,
+            "description": description,
+            "path": str(skill_dir),
+            "subskills": get_subskills_dfs(skill_dir),
+        })
+    return skills
+
+
+def get_plugins_from_version(version_path: Path) -> list[dict]:
+    plugins = []
+    for source_label, subdir in [("bundled", "bundled_plugins"), ("external", "bundled_external_plugins")]:
+        plugins_dir = version_path / subdir
+        if not plugins_dir.exists():
+            continue
+        for plugin_dir in sorted(plugins_dir.iterdir()):
+            if not plugin_dir.is_dir():
+                continue
+            meta = _read_plugin_json(plugin_dir)
+            if meta is None:
+                continue
+            plugins.append({
+                "name": meta.get("name", plugin_dir.name),
+                "version": meta.get("version", ""),
+                "status": "enabled",
+                "source": source_label,
+                "description": meta.get("description", ""),
+                "path": str(plugin_dir),
+                "components": "",
+                "skills": _get_plugin_skills(plugin_dir),
+            })
     return plugins
 
 
@@ -140,6 +200,13 @@ def main():
         print(f"Snapshot already exists: {snapshot_path.name}. Nothing to do.")
         return
 
+    version_path = find_version_path(version_clean)
+    if version_path is None:
+        print(f"ERROR: No local version folder found for {version_clean} in {CORTEX_DIR}")
+        return
+
+    print(f"Reading from: {version_path.name}")
+
     if not args.beta:
         beta_dir = BASE_DATA_DIR / "plugins" / "beta"
         prev_version, previous = get_previous_snapshot(beta_dir, cli_version)
@@ -154,19 +221,20 @@ def main():
     else:
         print(f"First snapshot for version {version_clean}")
 
-    plugins = parse_plugin_list()
+    plugins = get_plugins_from_version(version_path)
     print(f"Discovered {len(plugins)} plugins")
-
     for p in plugins:
-        print(f"  [{p['source']}] {p['name']} v{p['version']} ({p['status']})")
+        skill_count = len(p.get("skills", []))
+        print(f"  [{p['source']}] {p['name']} v{p['version']} ({skill_count} skills)")
 
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    version_dt = get_version_date(version_path)
+    version_date = version_dt.strftime("%Y-%m-%d")
     cdc = compute_cdc(plugins, previous)
 
     snapshot = {
         "cli_version": cli_version,
-        "captured_at": datetime.now(timezone.utc).isoformat(),
-        "ingestion_date": today,
+        "captured_at": version_dt.isoformat(),
+        "ingestion_date": version_date,
         "plugin_count": len(plugins),
         "channel": channel,
         "plugins": plugins,
@@ -182,9 +250,8 @@ def main():
         else:
             cdc_filename = f"cdc_v{version_clean}.json"
         cdc_path = data_dir / cdc_filename
-        cdc_path = data_dir / cdc_filename
         cdc_payload = {
-            "detected_date": today,
+            "detected_date": version_date,
             "from_version": prev_version,
             "to_version": version_clean,
             "cli_version": cli_version,
@@ -207,7 +274,7 @@ def main():
         new_plugins_filename = f"new_plugins_v{version_clean}.json"
     new_plugins_path = data_dir / new_plugins_filename
     new_plugins_payload = {
-        "date_of": today,
+        "date_of": version_date,
         "from_version": prev_version,
         "to_version": version_clean,
         "cli_version": cli_version,

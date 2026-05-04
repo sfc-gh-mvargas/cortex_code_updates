@@ -9,6 +9,7 @@ import yaml
 
 
 BASE_DATA_DIR = Path(__file__).parent.parent / "data"
+CORTEX_DIR = Path("~/.local/share/cortex").expanduser()
 
 SNAPSHOT_PATTERN = re.compile(r"^skills_v([\d.]+)\.json$")
 
@@ -24,45 +25,27 @@ def clean_version(version: str) -> str:
     return version.split("+")[0]
 
 
-def parse_skill_list() -> list[dict]:
-    result = subprocess.run(["cortex", "skill", "list"], capture_output=True, text=True)
-    output = result.stdout + result.stderr
-
-    skills = []
-    current_section = None
-    section_pattern = re.compile(r"^\s+\[(BUNDLED|REMOTE|EXTERNAL)\]")
-    skill_pattern = re.compile(r"^\s+-\s+(\S+):\s+(.+)$")
-
-    for line in output.splitlines():
-        section_match = section_pattern.match(line)
-        if section_match:
-            current_section = section_match.group(1)
-            continue
-
-        if current_section:
-            skill_match = skill_pattern.match(line)
-            if skill_match:
-                name = skill_match.group(1)
-                path = skill_match.group(2).strip()
-                skills.append({
-                    "name": name,
-                    "type": current_section,
-                    "path": path,
-                })
-
-    return skills
+def find_version_path(version_clean: str) -> Path | None:
+    for d in CORTEX_DIR.iterdir():
+        if d.is_dir() and d.name.startswith(version_clean):
+            return d
+    return None
 
 
-def read_skill_description(skill_path: str) -> str | None:
-    skill_md = Path(skill_path) / "SKILL.md"
+def get_version_date(version_path: Path) -> datetime:
+    cortex_bin = version_path / "cortex"
+    src = cortex_bin if cortex_bin.exists() else version_path
+    return datetime.fromtimestamp(src.stat().st_mtime, tz=timezone.utc)
+
+
+def parse_skill_md(skill_dir: Path) -> str | None:
+    skill_md = skill_dir / "SKILL.md"
     if not skill_md.exists():
         return None
-
     content = skill_md.read_text(encoding="utf-8")
-    match = re.search(r'^---\s*\n(.*?)\n---', content, re.DOTALL)
+    match = re.search(r"^---\s*\n(.*?)\n---", content, re.DOTALL)
     if not match:
         return None
-
     try:
         frontmatter = yaml.safe_load(match.group(1))
         desc = frontmatter.get("description", "")
@@ -71,6 +54,43 @@ def read_skill_description(skill_path: str) -> str | None:
     except yaml.YAMLError:
         pass
     return None
+
+
+def get_subskills_dfs(skill_dir: Path) -> list[dict]:
+    subskills = []
+    for entry in sorted(skill_dir.iterdir()):
+        if not entry.is_dir():
+            continue
+        if not (entry / "SKILL.md").exists():
+            continue
+        description = parse_skill_md(entry)
+        subskills.append({
+            "name": entry.name,
+            "description": description,
+            "path": str(entry),
+            "subskills": get_subskills_dfs(entry),
+        })
+    return subskills
+
+
+def get_skills_from_version(version_path: Path) -> list[dict]:
+    bundled_dir = version_path / "bundled_skills"
+    if not bundled_dir.exists():
+        return []
+    skills = []
+    for skill_dir in sorted(bundled_dir.iterdir()):
+        if not skill_dir.is_dir():
+            continue
+        name = skill_dir.name
+        description = parse_skill_md(skill_dir)
+        skills.append({
+            "name": name,
+            "type": "BUNDLED",
+            "path": str(skill_dir),
+            "description": description,
+            "subskills": get_subskills_dfs(skill_dir),
+        })
+    return skills
 
 
 def get_previous_snapshot(data_dir: Path, current_version: str) -> tuple[str | None, list[dict] | None]:
@@ -136,6 +156,13 @@ def main():
         print(f"Snapshot already exists: {snapshot_path.name}. Nothing to do.")
         return
 
+    version_path = find_version_path(version_clean)
+    if version_path is None:
+        print(f"ERROR: No local version folder found for {version_clean} in {CORTEX_DIR}")
+        return
+
+    print(f"Reading from: {version_path.name}")
+
     prev_version, previous = get_previous_snapshot(data_dir, cli_version)
 
     if prev_version is None:
@@ -147,25 +174,17 @@ def main():
     else:
         print(f"First snapshot for version {version_clean}")
 
-    skills = parse_skill_list()
-    print(f"Discovered {len(skills)} skills")
+    skills = get_skills_from_version(version_path)
+    bundled_count = len(skills)
+    print(f"Discovered {bundled_count} BUNDLED skills")
 
-    for skill in skills:
-        desc = read_skill_description(skill["path"])
-        skill["description"] = desc
-
-    bundled_count = sum(1 for s in skills if s["type"] == "BUNDLED")
-    remote_count = sum(1 for s in skills if s["type"] == "REMOTE")
-    external_count = sum(1 for s in skills if s["type"] == "EXTERNAL")
-    print(f"  BUNDLED: {bundled_count}, REMOTE: {remote_count}, EXTERNAL: {external_count}")
-
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    version_dt = get_version_date(version_path)
     cdc = compute_cdc(skills, previous)
 
     snapshot = {
         "cli_version": cli_version,
-        "captured_at": datetime.now(timezone.utc).isoformat(),
-        "ingestion_date": today,
+        "captured_at": version_dt.isoformat(),
+        "ingestion_date": version_dt.strftime("%Y-%m-%d"),
         "skill_count": len(skills),
         "channel": channel,
         "skills": skills,
@@ -175,6 +194,8 @@ def main():
         json.dump(snapshot, f, indent=2)
     print(f"Wrote snapshot to {snapshot_path}")
 
+    version_date = version_dt.strftime("%Y-%m-%d")
+
     if cdc:
         if prev_version:
             cdc_filename = f"cdc_v{prev_version}_v{version_clean}.json"
@@ -182,7 +203,7 @@ def main():
             cdc_filename = f"cdc_v{version_clean}.json"
         cdc_path = data_dir / cdc_filename
         cdc_payload = {
-            "detected_date": today,
+            "detected_date": version_date,
             "from_version": prev_version,
             "to_version": version_clean,
             "cli_version": cli_version,
@@ -194,7 +215,6 @@ def main():
         print(f"CDC: {len(cdc)} changes written to {cdc_path}")
         for c in cdc:
             print(f"  {c['action']}: {c['skill_name']} {c['detail'] or ''}")
-
     else:
         print("CDC: No changes detected")
 
@@ -206,7 +226,7 @@ def main():
         new_skills_filename = f"new_skills_v{version_clean}.json"
     new_skills_path = data_dir / new_skills_filename
     new_skills_payload = {
-        "date_of": today,
+        "date_of": version_date,
         "from_version": prev_version,
         "to_version": version_clean,
         "cli_version": cli_version,

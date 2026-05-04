@@ -3,7 +3,7 @@
   "from_version": null,
   "to_version": "1.0.77",
   "cli_version": "1.0.77",
-  "channel": "stable",
+  "channel": "beta",
   "changes": [
     {
       "plugin_name": "data",
