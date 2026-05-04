@@ -207,11 +207,7 @@ def main():
 
     print(f"Reading from: {version_path.name}")
 
-    if not args.beta:
-        beta_dir = BASE_DATA_DIR / "plugins" / "beta"
-        prev_version, previous = get_previous_snapshot(beta_dir, cli_version)
-    else:
-        prev_version, previous = get_previous_snapshot(data_dir, cli_version)
+    prev_version, previous = get_previous_snapshot(data_dir, cli_version)
 
     if prev_version is None:
         print("WARNING: No previous snapshot found — CDC will mark everything as NEW.")
