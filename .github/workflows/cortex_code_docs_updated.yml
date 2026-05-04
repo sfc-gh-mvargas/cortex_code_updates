@@ -68,6 +68,12 @@ jobs:
       - name: Generate CDC docs (stable)
         run: uv run python src/build_report.py
 
+      - name: Run ingestion (plugins)
+        run: uv run python src/ingest_plugins.py
+
+      - name: Generate CDC docs (plugins)
+        run: uv run python src/build_report.py --plugins
+
       - name: Install Cortex Code CLI (beta)
         run: |
           curl -LsS https://ai.snowflake.com/static/cc-scripts/install.sh | CORTEX_CHANNEL=beta sh
@@ -110,12 +116,6 @@ jobs:
 
       - name: Generate CDC docs (beta)
         run: uv run python src/build_report.py --beta
-
-      - name: Run ingestion (plugins)
-        run: uv run python src/ingest_plugins.py
-
-      - name: Generate CDC docs (plugins)
-        run: uv run python src/build_report.py --plugins
 
       - name: Ensure plugins beta baseline exists
         run: |
