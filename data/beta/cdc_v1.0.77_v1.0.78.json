@@ -1,0 +1,14 @@
+{
+  "detected_date": "2026-05-05",
+  "from_version": "1.0.77",
+  "to_version": "1.0.78",
+  "cli_version": "1.0.78",
+  "channel": "beta",
+  "changes": [
+    {
+      "skill_name": "cortex-ai-function-studio",
+      "action": "NEW",
+      "detail": null
+    }
+  ]
+}
