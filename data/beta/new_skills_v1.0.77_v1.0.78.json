@@ -1,0 +1,14 @@
+{
+  "date_of": "2026-05-05",
+  "from_version": "1.0.77",
+  "to_version": "1.0.78",
+  "cli_version": "1.0.78",
+  "channel": "beta",
+  "new_skills": [
+    {
+      "name": "cortex-ai-function-studio",
+      "description": "Create, evaluate, and optimize custom AI functions using Snowflake Cortex AI Complete. Supports text, image, and document inputs. Use when: building LLM-powered functions, evaluating AI function performance, tuning prompts, selecting models, checking async job status. Triggers: ai function builder, custom ai function, user defined ai function, build my own llm function, evaluate ai function, tune ai function, optimize ai function, demo ai function, resume ai function job, image classification, document analysis, multimodal ai function."
+    }
+  ],
+  "count": 1
+}
