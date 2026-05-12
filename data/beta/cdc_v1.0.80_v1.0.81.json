@@ -1,0 +1,39 @@
+{
+  "detected_date": "2026-05-12",
+  "from_version": "1.0.80",
+  "to_version": "1.0.81",
+  "cli_version": "1.0.81",
+  "channel": "beta",
+  "changes": [
+    {
+      "skill_name": "iceberg",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "snowflake-apps",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "team-workflow",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "build-react-app",
+      "action": "DELETED",
+      "detail": null
+    },
+    {
+      "skill_name": "ctx-workflow",
+      "action": "DELETED",
+      "detail": null
+    },
+    {
+      "skill_name": "developing-with-streamlit",
+      "action": "DELETED",
+      "detail": null
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "date_of": "2026-05-12",
+  "from_version": "1.0.80",
+  "to_version": "1.0.81",
+  "cli_version": "1.0.81",
+  "channel": "beta",
+  "new_skills": [
+    {
+      "name": "snowflake-apps",
+      "description": "Build and deploy web applications on Snowflake. Use for ALL app requests: create, scaffold, build, deploy, publish, develop, test, operate, monitor, or troubleshoot a Snowflake App. A Snowflake App is a JS/Node web application (typically Next.js) deployed to SPCS via SnowCLI app commands (`snow app` preferred, `snow __app` fallback for older CLI versions). This is NOT a Streamlit app or Native App. Triggers: build me an app, new app, scaffold, react app, next.js app, dashboard, data app, deploy my app, push to snowflake, ship it, deploy failed, fix deploy, run locally, develop, app logs, app status, restart app."
+    },
+    {
+      "name": "team-workflow",
+      "description": "Multi-phase team orchestration for feature implementation. Supports two entry paths: explicit user request for teammates, or autonomous complexity-based assessment after entering plan mode. HIGHEST PRIORITY \u2014 must be loaded FIRST (before any domain skills) when user asks to use teammates, teams, or parallel agents. Triggers: use teammates, use a team, work in parallel with agents, delegate to teammates, swarm this, swarm, team up on this, team up, orchestrate with subagents, subagent-orchestrated, gated workflow, multi-phase workflow, coordinate agents, spawn workers, worker/verifier, parallel agents, run as a team, investigate with agents, research with agents, explore with agents."
+    }
+  ],
+  "count": 2
+}
