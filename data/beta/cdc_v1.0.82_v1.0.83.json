@@ -1,0 +1,14 @@
+{
+  "detected_date": "2026-05-13",
+  "from_version": "1.0.82",
+  "to_version": "1.0.83",
+  "cli_version": "1.0.83",
+  "channel": "beta",
+  "changes": [
+    {
+      "skill_name": "cortex-ai-functions",
+      "action": "DELETED",
+      "detail": null
+    }
+  ]
+}
