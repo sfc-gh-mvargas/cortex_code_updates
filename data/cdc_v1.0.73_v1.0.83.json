@@ -1,0 +1,119 @@
+{
+  "detected_date": "2026-05-13",
+  "from_version": "1.0.73",
+  "to_version": "1.0.83",
+  "cli_version": "1.0.83",
+  "channel": "stable",
+  "changes": [
+    {
+      "skill_name": "alert",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "billing",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "cortex-ai-function-studio",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "data-cleanrooms",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "data-governance",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "declarative-sharing",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "developing-with-streamlit-in-snowflake",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "iceberg",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "marketplace-search",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "native-app-provider",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "semantic-view",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "skill_development",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "snowflake-apps",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "snowflake-postgres",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "snowpipe-streaming",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "spark-migration",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "team-workflow",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "warehouse",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "build-react-app",
+      "action": "DELETED",
+      "detail": null
+    },
+    {
+      "skill_name": "cortex-ai-functions",
+      "action": "DELETED",
+      "detail": null
+    },
+    {
+      "skill_name": "ctx-workflow",
+      "action": "DELETED",
+      "detail": null
+    },
+    {
+      "skill_name": "developing-with-streamlit",
+      "action": "DELETED",
+      "detail": null
+    }
+  ]
+}

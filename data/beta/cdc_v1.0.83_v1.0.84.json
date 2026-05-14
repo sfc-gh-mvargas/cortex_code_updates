@@ -1,0 +1,14 @@
+{
+  "detected_date": "2026-05-13",
+  "from_version": "1.0.83",
+  "to_version": "1.0.84",
+  "cli_version": "1.0.84",
+  "channel": "beta",
+  "changes": [
+    {
+      "skill_name": "storage-lifecycle-policy",
+      "action": "NEW",
+      "detail": null
+    }
+  ]
+}

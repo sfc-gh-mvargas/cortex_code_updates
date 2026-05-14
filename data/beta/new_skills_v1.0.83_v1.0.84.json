@@ -1,0 +1,14 @@
+{
+  "date_of": "2026-05-13",
+  "from_version": "1.0.83",
+  "to_version": "1.0.84",
+  "cli_version": "1.0.84",
+  "channel": "beta",
+  "new_skills": [
+    {
+      "name": "storage-lifecycle-policy",
+      "description": "Create, manage, and monitor Snowflake storage lifecycle policies. Use when: creating expiration or archival policies, attaching policies to tables, monitoring policy execution, retrieving archived data, managing data retention, reducing storage costs, saving on table storage. Triggers: storage lifecycle, lifecycle policy, archive data, expire data, COOL tier, COLD tier, data retention, archival storage, CREATE STORAGE LIFECYCLE POLICY, FROM ARCHIVE OF, ARCHIVE_FOR_DAYS, storage cost optimization, table is large, table is expensive, save on storage."
+    }
+  ],
+  "count": 1
+}
