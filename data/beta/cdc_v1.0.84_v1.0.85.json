@@ -1,0 +1,49 @@
+{
+  "detected_date": "2026-05-16",
+  "from_version": "1.0.84",
+  "to_version": "1.0.85",
+  "cli_version": "1.0.85",
+  "channel": "beta",
+  "changes": [
+    {
+      "skill_name": "billing",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "cost-intelligence",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "data-quality",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "developing-with-streamlit-in-snowflake",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "document-intelligence",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "find-skill",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "get-marketplace-listing-details",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "lineage",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    }
+  ]
+}

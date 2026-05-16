@@ -1,0 +1,22 @@
+{
+  "date_of": "2026-05-16",
+  "from_version": "1.0.84",
+  "to_version": "1.0.85",
+  "cli_version": "1.0.85",
+  "channel": "beta",
+  "new_skills": [
+    {
+      "name": "document-intelligence",
+      "description": "Use Snowflake Cortex AI Functions for text/image analytics. Use when: classifying content, extracting entities, sentiment analysis, summarizing text, translating, filtering, embedding, parsing documents, redacting PII, aggregating data, document intelligence workflows, content insight workflows, fine-tuning arctic-extract for domain-specific extraction. Triggers: AI_CLASSIFY, AI_COMPLETE, AI_EXTRACT, AI_FILTER, AI_SENTIMENT, AI_SUMMARIZE, AI_TRANSLATE, AI_EMBED, AI_AGG, AI_REDACT, AI_PARSE_DOCUMENT, classify text, data, documents, extract from text, extract text from document, extract text from PDF, extract text from image, extracting, invoices, sentiment, summarize, translate, which AI function, cortex function, process documents, label content, analyze text, OCR, read PDF, read document, get text from PDF, get text from document, pull text from file, extract data from files, extract from my files, process my files, my files, my documents, read my documents, get data from document, file extraction, document processing, file processing, get information from documents, analyze files, parse files, data from PDF, invoice processing, contract extraction, receipt extraction, form extraction, extract fields, document data, file data, stage files, files on stage, PDF extraction, image extraction, document OCR, scan documents, digitize documents, fine-tune, fine-tuning, custom model, train arctic-extract, improve extraction accuracy, domain-specific extraction, FINETUNE, better extraction results."
+    },
+    {
+      "name": "find-skill",
+      "description": "Find, add, check, or update Cortex Code catalog skills before using them. Use when the user asks to discover available skills, install a catalog skill, make an uninstalled `/skill` or `$skill` usable, search the skill marketplace/catalog, check whether installed skills have updates, or update skills from the catalog, stage, GitHub, or tarball sources. Do not use this for public Snowflake Marketplace datasets or apps; use marketplace-search for third-party data/product listings."
+    },
+    {
+      "name": "get-marketplace-listing-details",
+      "description": "Present detailed information about a single Snowflake Marketplace listing (data share, native app, private/targeted, or request-only) and explain why it is useful given the user's existing Snowflake data and current conversation. Use when the user asks about ONE specific listing by title or by global name (e.g. \"tell me about GZ2FQZ711TU\", \"what's in the Consumer Pricing listing\", \"describe this marketplace listing\", \"details on listing X\"). Do NOT use for marketplace search results spanning multiple listings \u2014 use `marketplace-listing-formatting` instead."
+    }
+  ],
+  "count": 3
+}
