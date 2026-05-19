@@ -1,0 +1,69 @@
+{
+  "detected_date": "2026-05-19",
+  "from_version": "1.0.83",
+  "to_version": "1.0.87",
+  "cli_version": "1.0.87",
+  "channel": "stable",
+  "changes": [
+    {
+      "skill_name": "billing",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "cost-intelligence",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "data-cleanrooms",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "data-quality",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "developing-with-streamlit-in-snowflake",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "document-intelligence",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "find-skill",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "get-marketplace-listing-details",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "iceberg",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "lineage",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "snowflake-postgres",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "storage-lifecycle-policy",
+      "action": "NEW",
+      "detail": null
+    }
+  ]
+}
