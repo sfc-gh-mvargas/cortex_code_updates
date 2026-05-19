@@ -1,0 +1,14 @@
+{
+  "detected_date": "2026-05-18",
+  "from_version": "1.0.85",
+  "to_version": "1.0.86",
+  "cli_version": "1.0.86",
+  "channel": "beta",
+  "changes": [
+    {
+      "skill_name": "data-cleanrooms",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    }
+  ]
+}
