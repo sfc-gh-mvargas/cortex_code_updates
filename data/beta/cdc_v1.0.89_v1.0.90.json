@@ -1,0 +1,14 @@
+{
+  "detected_date": "2026-05-20",
+  "from_version": "1.0.89",
+  "to_version": "1.0.90",
+  "cli_version": "1.0.90",
+  "channel": "beta",
+  "changes": [
+    {
+      "skill_name": "data-sharing",
+      "action": "NEW",
+      "detail": null
+    }
+  ]
+}
