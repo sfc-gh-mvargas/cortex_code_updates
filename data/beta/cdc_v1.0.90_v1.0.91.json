@@ -1,0 +1,24 @@
+{
+  "detected_date": "2026-05-21",
+  "from_version": "1.0.90",
+  "to_version": "1.0.91",
+  "cli_version": "1.0.91",
+  "channel": "beta",
+  "changes": [
+    {
+      "skill_name": "cortex-agent",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "cortex-code-guide",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "marketplace-search",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    }
+  ]
+}

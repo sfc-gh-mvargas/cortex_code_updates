@@ -1,0 +1,1921 @@
+{
+  "cli_version": "1.0.91",
+  "captured_at": "2026-05-21T17:55:01+00:00",
+  "ingestion_date": "2026-05-21",
+  "skill_count": 56,
+  "channel": "beta",
+  "skills": [
+    {
+      "name": "access-troubleshooter",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/access-troubleshooter",
+      "description": "Debug authorization and permission issues in Snowflake. Use when: access denied, insufficient privileges, permission errors,  role issues, missing grants, privilege analysis, least-privilege role creation, find authorizing roles. Triggers: access denied, insufficient privileges, permission error, authorization failed, can't access, missing permission, grant needed, role recommendation, SQL access control error, does not exist or not authorized, EXPLAIN_PRIVILEGES, SYSTEM$ANALYZE_ROLE_ACCESS, SYSTEM$SUGGEST_ROLE_GRANTS.",
+      "subskills": []
+    },
+    {
+      "name": "ai-data-share",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/ai-data-share",
+      "description": "Make a listing or data share AI-Ready. Use when: creating semantic views for listings, creating cortex agents for data shares, making data AI-ready. Triggers: AI-ready listing, share agent, data share semantic view, marketplace AI.",
+      "subskills": []
+    },
+    {
+      "name": "alert",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/alert",
+      "description": "Snowflake alert management - create, alter, suspend, resume, and troubleshoot alerts. Use when: user wants to create a new alert, modify an existing alert, set up monitoring, suspend or resume alerts, or investigate why an alert is firing/failing/not delivering. Triggers: create alert, new alert, add alert, alter alert, modify alert, change alert, suspend alert, resume alert, monitor with alert, set up alert, alert condition, troubleshoot alert, debug alert, investigate alert, alert firing, alert failed, alert not firing, why did my alert trigger, CONDITION_FAILED, ACTION_FAILED, notification not delivered.",
+      "subskills": [
+        {
+          "name": "alert-create-alter",
+          "description": "Create and alter Snowflake alerts with condition queries. Use when: user wants to create a new alert, modify an existing alert, set up monitoring for a product. Triggers: create alert, new alert, add alert, alter alert, modify alert, change alert, alert condition, monitor with alert.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/alert/alert-create-alter",
+          "subskills": []
+        },
+        {
+          "name": "alert-troubleshoot",
+          "description": "Troubleshoot a Snowflake alert that is firing, failing, or not delivering. Inspects the alert's condition/action, recent ALERT_HISTORY + NOTIFICATION_HISTORY rows, and event-table records around the incident time, then renders a Vital Signals Dashboard (alert-object checklist + execution sparkline + notification strip + severity histogram, plus a Product Vital Signs panel that surfaces the monitored product's native health signals when the product is identifiable). Identifies the monitored product from the condition query, then delegates to the product's troubleshoot skill (Dynamic Tables, Openflow) or falls back to generic condition-and-execution analysis. Triggers: alert firing, alert failed, alert not firing, why did my alert trigger, alert error, CONDITION_FAILED, ACTION_FAILED, ACTION_SKIPPED, alert notification not delivered, debug alert, investigate alert, alert troubleshooting, alert misfiring, alert noisy, alert silent.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/alert/alert-troubleshoot",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "attach-ai-products-to-share",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/attach-ai-products-to-share",
+      "description": "Attach AI products to Snowflake shares. Use when: adding semantic views, cortex agents, or cortex search services to a share. Triggers: share semantic view, share agent, share cortex search. Invoke this skill to add AI products to a share as a step of sharing AI products or creating a listing to share an AI product.",
+      "subskills": []
+    },
+    {
+      "name": "billing",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/billing",
+      "description": "Org-level Snowflake billing in dollars/currency. Use for: dollar spend by service type, monthly spend trends, which services cost the most money, remaining balance, contract termination date, contract expiration date, contract start date, contract details, rate comparison, reconciliation. Consumption invoices: ODSS_INVOICE_DOCUMENTS, outstanding invoice, overdue invoice, unpaid invoice. Not for credit-based analytics (cost-intelligence) or warehouse DDL (warehouse). Key distinction: dollars/currency \u2192 billing, credits only \u2192 cost-intelligence.",
+      "subskills": [
+        {
+          "name": "billing-queries",
+          "description": "Org-level spend in dollars/currency via SNOWFLAKE.ORGANIZATION_USAGE. Use for: dollar spend by service type (which services cost the most money), monthly spend trends, top accounts by spend, on-demand vs capacity balance, contract start/end/termination dates, effective rates, billing reconciliation. Views: USAGE_IN_CURRENCY_DAILY, REMAINING_BALANCE_DAILY, CONTRACT_ITEMS, RATE_SHEET_DAILY. Key: any question about cost/spend in money (not credits) routes here, including service type breakdowns.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/billing/billing-queries",
+          "subskills": []
+        },
+        {
+          "name": "odss-invoices",
+          "description": "**[REQUIRED]** Use for Snowflake consumption invoice questions (non-marketplace): consumption invoice, my consumption invoice, Snowflake consumption charges invoice, non-marketplace invoice, ODSS_INVOICE_DOCUMENTS, BILLING.ODSS_INVOICE_DOCUMENTS, show me my invoices, show me my outstanding invoices, show me my overdue invoices, unpaid invoice, outstanding invoice, overdue invoice, what do I owe, invoice from last month, what is on my invoice, can you explain me the invoice. NOTE: do NOT use for marketplace consumer invoices, marketplace provider invoices, or billing documents.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/billing/odss-invoices",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "cortex-agent",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-agent",
+      "description": "**[REQUIRED]** Use for ALL requests that mention agents: list, show, create, build, set up, edit, modify, update, delete, drop, remove, download, export, debug, fix, troubleshoot, optimize, improve, evaluate, analyze, commit, version, or alias a (Cortex) agent. Also use when user wants to: chat with, talk to, converse with, send messages to, have a conversation with an agent, or run a lite/objectless agent. Also use when request mentions: VERSION$, SHOW VERSIONS, commit LIVE version, set alias, set default version, versioned run, ALTER AGENT. Also use when debugging Snowflake Intelligence with a request ID (SI is powered by Cortex Agents). This is the REQUIRED entry point - even if the request seems simple. DO NOT attempt to manage (Cortex) agents manually - always invoke this skill first.",
+      "subskills": [
+        {
+          "name": "adhoc-testing-for-cortex-agent",
+          "description": "Interactive testing of Cortex Agents. Use this when you want to test specific questions, debug responses, and explore agent behavior through hands-on exploration. For persisting results to formal evaluation datasets, use the dataset-curation skill.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-agent/adhoc-testing-for-cortex-agent",
+          "subskills": []
+        },
+        {
+          "name": "agent-observability-report",
+          "description": "Generate comprehensive observability reports for Cortex Agents using AI_OBSERVABILITY_EVENTS. Works in any Snowflake deployment. Use when: user wants agent analytics, usage stats, performance metrics, error analysis, feedback summary, or token economics. Triggers: agent observability, agent report, agent analytics, agent usage, agent metrics, agent performance, agent monitoring.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-agent/agent-observability-report",
+          "subskills": []
+        },
+        {
+          "name": "agent-system-of-record",
+          "description": "Establish a consistent protocol for tracking agent optimization work by organizing per-agent workspaces, versioned configuration snapshots, evaluation outputs, and a running optimization log.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-agent/agent-system-of-record",
+          "subskills": []
+        },
+        {
+          "name": "agent-versioning",
+          "description": "Cortex Agent versioning: commit versions, set aliases, set default version, run versioned agents. Use when: commit LIVE version, VERSION$, SHOW VERSIONS, set alias, default version, versioned run API, ALTER AGENT COMMIT, drop version. NOT for creating new agents (use create-cortex-agent) or modifying LIVE spec (use edit-cortex-agent).",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-agent/agent-versioning",
+          "subskills": []
+        },
+        {
+          "name": "best-practices",
+          "description": "This skill contains best practices on how to write good system prompt/instructions. This is useful for tasks such as designing a prompt to automatically generate tool descriptions for semantic models in Snowflake Intelligence.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-agent/best-practices",
+          "subskills": []
+        },
+        {
+          "name": "chat-with-agent",
+          "description": "Interactive chat with a Cortex Agent. Supports object-based and lite (objectless) agent runs, single-turn and multi-turn conversations via threads. Use when: user wants to talk to an agent, have a conversation, send messages, chat, ask follow-up questions.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-agent/chat-with-agent",
+          "subskills": []
+        },
+        {
+          "name": "cortex-chart-customization",
+          "description": "Generate a <chart_customization> block for Cortex Agents or Semantic Models. Use when: a user wants to customize chart appearance, enforce brand colors, set fonts, fix axis ranges, control sort order, apply number formatting, or enforce chart types. Triggers: \"set up chart customization\", \"brand colors for charts\", \"always use bar chart\", \"format y-axis as dollars\", \"set font\", \"chart theme\", \"dark background charts\", \"enforce chart style\", \"viz policy\", \"vega template for charts\".",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-agent/cortex-chart-customization",
+          "subskills": []
+        },
+        {
+          "name": "create-cortex-agent",
+          "description": "Create and administer Cortex Agents. Use for: creating agents, adding tools/skills, managing access grants, and agent administration. Covers the full agent creation workflow including tool selection, REST API creation, verification, optimization, and post-creation admin (granting access, troubleshooting).",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-agent/create-cortex-agent",
+          "subskills": []
+        },
+        {
+          "name": "dataset-curation",
+          "description": "Create and manage evaluation datasets for Cortex Agents. Use this to build datasets from scratch, from production data, or to add questions to existing datasets. Outputs datasets in the format required by Snowflake Agent Evaluations.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-agent/dataset-curation",
+          "subskills": [
+            {
+              "name": "dataset-curation-expand",
+              "description": "Add questions to an existing evaluation source table or dataset. Use when: expand coverage, add rows, refresh registration, grow eval dataset, fill gaps.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-agent/dataset-curation/dataset-curation-expand",
+              "subskills": []
+            },
+            {
+              "name": "dataset-curation-production",
+              "description": "Create an evaluation dataset from real production queries in observability logs. Use when: build dataset from production data, real queries, observability logs, actual agent usage.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-agent/dataset-curation/dataset-curation-production",
+              "subskills": []
+            },
+            {
+              "name": "dataset-curation-scratch",
+              "description": "Create a new evaluation dataset from scratch for a Cortex Agent. Use when the user wants to design evaluation questions manually, build an eval dataset from scratch, or there is no production log source.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-agent/dataset-curation/dataset-curation-scratch",
+              "subskills": []
+            }
+          ]
+        },
+        {
+          "name": "debug-single-query-for-cortex-agent",
+          "description": "Interactively debug specific agent query failures to identify and fix routing, SQL, or response issues. Use when investigating why a specific query fails or produces incorrect results, either from live testing or production event logs.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-agent/debug-single-query-for-cortex-agent",
+          "subskills": []
+        },
+        {
+          "name": "delete-cortex-agent",
+          "description": "Delete (DROP) an existing Cortex Agent. Use for: delete agent, drop agent, remove agent, destroy agent, clean up agent. Backs up the agent spec before dropping to enable recovery.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-agent/delete-cortex-agent",
+          "subskills": []
+        },
+        {
+          "name": "edit-cortex-agent",
+          "description": "Edit an existing Cortex Agent's configuration (instructions, tools, comment, models, etc.) using REST API. Use for: edit agent, modify agent, update agent, change agent instructions, add tools to agent, remove tools from agent.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-agent/edit-cortex-agent",
+          "subskills": []
+        },
+        {
+          "name": "evaluate-cortex-agent",
+          "description": "Run formal evaluations on Cortex Agents using Snowflake's native Agent Evaluations. Use this to benchmark agent performance, measure accuracy metrics (answer_correctness, logical_consistency, custom LLM-judged metrics), and compare before/after improvements.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-agent/evaluate-cortex-agent",
+          "subskills": []
+        },
+        {
+          "name": "investigate-cortex-agent-evals",
+          "description": null,
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-agent/investigate-cortex-agent-evals",
+          "subskills": []
+        },
+        {
+          "name": "list-cortex-agents",
+          "description": "List Cortex Agents in a Snowflake account, database, or schema. Use for: list agents, show agents, what agents exist, find agents.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-agent/list-cortex-agents",
+          "subskills": []
+        },
+        {
+          "name": "manage-agent-threads",
+          "description": "Manage Cortex Agent conversation threads. Create, list, describe, update, and delete threads. Use when: user wants to create a thread, list threads, view thread messages, rename a thread, delete a thread, manage conversation history.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-agent/manage-agent-threads",
+          "subskills": []
+        },
+        {
+          "name": "optimize-cortex-agent",
+          "description": "This goes through a workflow to guide AI assistants through optimizing Snowflake Cortex Agents for production readiness through systematic evaluation, improvement, and generalization. The process uses AI reasoning combined with human domain expertise to achieve significant accuracy improvements.\nUse this workflow when:\n- Preparing an agent for production deployment\n- Agent has known accuracy or performance issues\n- Need to validate agent behavior systematically\n- Want to ensure agent generalizes beyond test cases",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-agent/optimize-cortex-agent",
+          "subskills": []
+        },
+        {
+          "name": "optimize-cortex-search-service",
+          "description": null,
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-agent/optimize-cortex-search-service",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "cortex-ai-function-studio",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-ai-function-studio",
+      "description": "Create, evaluate, and optimize custom AI functions using Snowflake Cortex AI Complete. Supports text, image, and document inputs. Use when: building LLM-powered functions, evaluating AI function performance, tuning prompts, selecting models, checking async job status. Triggers: ai function builder, custom ai function, user defined ai function, build my own llm function, evaluate ai function, tune ai function, optimize ai function, demo ai function, resume ai function job, image classification, document analysis, multimodal ai function.",
+      "subskills": [
+        {
+          "name": "create",
+          "description": "Create a new custom AI function. Supports table-based or manual input specification, single or variant outputs. Direct AI_COMPLETE calls or additional pre- and post-processing.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-ai-function-studio/create",
+          "subskills": []
+        },
+        {
+          "name": "demos",
+          "description": "Interactive demos for custom AI functions. Use when: demo, example, walkthrough, show me, how does this work, try it, hands-on, tutorial.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-ai-function-studio/demos",
+          "subskills": [
+            {
+              "name": "classification",
+              "description": "Quick Start demo: Build a toxicity classifier and evaluate it \u2014 the fastest way to experience the core create \u2192 evaluate workflow.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-ai-function-studio/demos/classification",
+              "subskills": []
+            },
+            {
+              "name": "insurance-claim-routing",
+              "description": "Interactive demo: Generate pseudo-labels from a strong teacher model, build a cheap student function, and evaluate accuracy. Showcases pseudo-labeling and teacher-student distillation.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-ai-function-studio/demos/insurance-claim-routing",
+              "subskills": []
+            },
+            {
+              "name": "legal-doc-extraction",
+              "description": "Interactive demo: Build a legal contract field extractor and create a weighted composite metric that scores 4 fields independently. Showcases custom evaluation metrics for multi-field AI functions.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-ai-function-studio/demos/legal-doc-extraction",
+              "subskills": []
+            },
+            {
+              "name": "pdf-field-extraction",
+              "description": "Interactive demo: Extract structured fields from SEC 10-K filing PDFs using multimodal AI, create a custom composite metric for per-field scoring, and evaluate extraction accuracy with per-field analysis.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-ai-function-studio/demos/pdf-field-extraction",
+              "subskills": []
+            },
+            {
+              "name": "policy-conditioned-routing",
+              "description": "Interactive demo: Build a policy-conditioned ticket router where a seed prompt performs poorly, then watch prompt optimization close the accuracy gap through prompt evolution and Pareto cost/quality analysis. The canonical demo for prompt optimization.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-ai-function-studio/demos/policy-conditioned-routing",
+              "subskills": []
+            },
+            {
+              "name": "redaction",
+              "description": "Interactive demo [Experimental]: Build a PII redaction function using [research preview] Agent Research mode \u2014 the agent searches the web for techniques, proposes SQL UDF architectures with pre/post-processing, and you pick the approach. Then optimize the full function body.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-ai-function-studio/demos/redaction",
+              "subskills": []
+            }
+          ]
+        },
+        {
+          "name": "evaluate",
+          "description": "Evaluate an AI function's performance against a labeled dataset using a Python stored procedure.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-ai-function-studio/evaluate",
+          "subskills": []
+        },
+        {
+          "name": "optimize",
+          "description": "Optimize an AI function through automated function body optimization, including prompts, model references, and SQL pre/post-processing.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-ai-function-studio/optimize",
+          "subskills": []
+        },
+        {
+          "name": "synthetic-data",
+          "description": "Generate synthetic data or pseudo-label input-only tables for AI function evaluation and optimization. Triggers: generate data, synthetic data, test data, create test cases, make training data, pseudo label, label my input-only table.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-ai-function-studio/synthetic-data",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "cortex-code-guide",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-code-guide",
+      "description": "Cortex Code CoCo capabilities reference guide. Trigger phrases: what can you do, help me, capabilities, features, tools, commands, settings, shortcuts, how to use, getting started, quick start, reference, guide, what tools, available commands, slash commands, keyboard shortcuts, MCP, plugins, skills, agents, connections, SQL, dbt, notebooks, scheduling, cron, teams, multi-agent, worktree, voice, search, tgrep, semantic search, web search, memory, plan mode, bypass mode, hooks, profiles, sessions, context window, diff, data diff, semantic model, cortex analyst, semantic view",
+      "subskills": []
+    },
+    {
+      "name": "cortex-secrets",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cortex-secrets",
+      "description": "MUST consult whenever any command needs a credential, secret, API key, token, or password \u2014 whether discovered from an error, source code, --help output, or any other signal. MUST also consult when the user shares, pastes, or includes a secret value directly in their message. Also use when: the user asks about /secrets, storing credentials, secret scopes, or consent modes. Triggers: secret, secrets, /secrets, API key, credential, token, password, authentication, unauthorized, 401, 403, forbidden, EACCES, permission denied, access denied, missing key, invalid token, auth error, connection refused, login failed, .env, environment variable, env var, keychain, export SECRET, cortex secret list, inline secret injection, pasted secret, shared secret, my key is, my password is, my token is, here is my, use it to.",
+      "subskills": []
+    },
+    {
+      "name": "cost-intelligence",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/cost-intelligence",
+      "description": "Account-level cost analytics via SNOWFLAKE.ACCOUNT_USAGE. Credit usage by warehouse, user, service. Budgets, spending limits, custom budgets. Resource monitors, credit quotas, suspend triggers. Anomaly detection, costs, chargeback, storage, serverless, containers, data transfer, top user spend, query cost grouping. Cortex AI cost or usage including Cortex Agents, Snowflake Intelligence, AI function, Cortex Code, Cortex Search, Cortex Analyst, model training/fine-tuning, and provisioned throughput. Cost insights, waste reduction, savings. Not for org-wide currency spend or multi-account billing (billing/organization-management) or warehouse DDL (warehouse).",
+      "subskills": []
+    },
+    {
+      "name": "data-cleanrooms",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/data-cleanrooms",
+      "description": "Use for ALL requests related to Snowflake Data Clean Rooms (DCR): clean room, cleanroom, DCR, collaboration(s), view/list collaborations, join/review collaboration, invitation, data offering(s), template(s), register, share table, run analysis, run activation, audience overlap, activation, export segment, create collaboration, create cleanroom, measure overlap, manage templates, add template, remove template, approve template, reject template, auto-approval, link data offering, unlink data offering, share data with runner, revoke data access, link local data offering, unlink local data offering, tear down, leave, drop collaboration, delete collaboration. Covers browsing, joining, registering, running analysis/activation, creating collaborations, managing templates, managing data offerings, and leaving/tearing down collaborations via the DCR Collaboration API.",
+      "subskills": [
+        {
+          "name": "browse",
+          "description": "Browse Clean Room Environment - explore collaborations, data offerings, and templates. Triggers: view collaborations, show clean rooms, view templates, registered offerings.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/data-cleanrooms/browse",
+          "subskills": []
+        },
+        {
+          "name": "create",
+          "description": "Create a new DCR collaboration or clean room - gather collaborators, configure analysis runners, build collaboration spec, and initialize. Triggers: create collaboration, create cleanroom, new collaboration, set up clean room, initiate collaboration, create dcr.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/data-cleanrooms/create",
+          "subskills": []
+        },
+        {
+          "name": "manage-data-offerings",
+          "description": "Link and unlink data offerings in DCR collaborations - make registered data available to analysis runners or revoke access, or link/unlink local data offerings for Standard edition accounts. Triggers: link_data_offering, unlink_data_offering, link_local_data_offering, unlink_local_data_offering",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/data-cleanrooms/manage-data-offerings",
+          "subskills": []
+        },
+        {
+          "name": "manage-templates",
+          "description": "Manage templates in existing DCR collaborations: add, remove, view templates, approve/reject template update requests, and toggle auto-approval. Triggers: add template to collaboration, add template, share template, remove template, view templates, manage templates in collaboration, approve template request, reject template request, view template requests, view update requests, enable template auto approval, disable template auto approval, manage update requests.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/data-cleanrooms/manage-templates",
+          "subskills": []
+        },
+        {
+          "name": "register",
+          "description": "Register data offerings and templates for use in DCR collaborations. Triggers: register data offering, register template, share table, create template.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/data-cleanrooms/register",
+          "subskills": []
+        },
+        {
+          "name": "review-join",
+          "description": "Review and Join Collaborations - review invitations, check status, and join collaborations. Triggers: join collaboration, review invitation, accept invitation.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/data-cleanrooms/review-join",
+          "subskills": []
+        },
+        {
+          "name": "run",
+          "description": "Run analysis or activation templates on DCR collaborations. Triggers: run analysis, run template, audience overlap, measure overlap, compare audiences, activation, run activation, activate, export segment.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/data-cleanrooms/run",
+          "subskills": [
+            {
+              "name": "activation",
+              "description": "Run activation templates - standard audience overlap activation or custom sql_activation templates.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/data-cleanrooms/run/activation",
+              "subskills": []
+            },
+            {
+              "name": "analysis",
+              "description": "Run analysis templates - standard audience overlap or custom sql_analysis templates. No segment export.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/data-cleanrooms/run/analysis",
+              "subskills": []
+            }
+          ]
+        },
+        {
+          "name": "teardown-leave",
+          "description": "Provides APIs and step-by-step guidance to tear down or leave DCR collaborations with complete cleanup of all local resources. Triggers: tear down, leave, drop, delete, clean room, DCR, collaboration",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/data-cleanrooms/teardown-leave",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "data-governance",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/data-governance",
+      "description": "**[REQUIRED]** for all Snowflake data governance tasks. Routes to six sub-skills: (1) horizon-catalog \u2014 access history, users, roles, grants, permissions, query history, compliance, catalog; (2) data-policy \u2014 [REQUIRED] masking, row access, projection, aggregation, join, and tokenization policies, tag-based masking, protect sensitive data, column/TIMESTAMP masking, the 2-stage UI create flow triggered by `/data-governance Create a new <policy type> policy for me`; (3) sensitive-data-classification \u2014 [REQUIRED for ALL classification] PII, classify, data classification, manual/automatic classification, Classification Profile, auto_tag, custom classifiers, regex, semantic/privacy category, IDENTIFIER, QUASI_IDENTIFIER, SENSITIVE, SYSTEM$CLASSIFY, DATA_CLASSIFICATION_LATEST, GDPR/CCPA/PCI; (4) governance-maturity-score \u2014 governance posture, maturity score, assessment, recommendations; (5) observability-maturity-score \u2014 data observability, DMF coverage, quality monitoring maturity, lineage usage, observability assessment; (6) object-contacts \u2014 [REQUIRED] assign data steward, create contact, object contact, contact report, who owns this table, SET CONTACT, data stewardship. MUST be used for classification or masking tasks \u2014 do not answer from general knowledge. horizon-catalog is the fallback. Triggers: governance, access history, permissions, grants, roles, audit, compliance, catalog, masking policy, row access policy, projection policy, aggregation policy, join policy, JOIN_REQUIRED, tokenization policy, tokenize at write time, external tokenization, FPE, PII, sensitive data, classification, run classification, SYSTEM$CLASSIFY, classifier, classification profile, DATA_CLASSIFICATION_LATEST, detect PII, GDPR, CCPA, PCI, tag sensitive columns, governance maturity score, governance posture, how well governed, data observability, observability maturity, DMF coverage, lineage usage, observability assessment, data steward, object contact, assign contact, who owns this table, contact report, SET CONTACT, /data-governance Create a new policy.",
+      "subskills": []
+    },
+    {
+      "name": "data-products",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/data-products",
+      "description": "Create organizational listings to share data products via Internal Marketplace. Triggers: create data product, share to internal marketplace, publish to internal marketplace, share to other accounts, share with other accounts, organization listing, org listing, share across accounts, internal marketplace, cross-account sharing, share my agent to other accounts.\nWHEN TO USE THIS SKILL: - User wants to share with OTHER ACCOUNTS \u2192 Use this skill - User mentions \"internal marketplace\" or \"data product\" (even for same account) \u2192 Use this skill\nWHEN TO USE RBAC INSTEAD (not this skill): - User wants to share with roles in SAME account only - User does NOT mention \"internal marketplace\" or \"data product\" or \"listing\" - Example: \"share this table with ANALYST role\" \u2192 Use GRANT, not this skill\nWHEN NOT TO USE THIS SKILL: - User wants to migrate an EXISTING direct share to an org listing \u2192 Use the direct-share-to-org-listing-migration skill instead - User wants to migrate an EXISTING personalized listing to an org listing \u2192 Use the personalized-listing-to-org-listing-migration skill instead - User wants to migrate an EXISTING private data exchange (PDX) listing to an org listing \u2192 Use the pdx-listing-to-org-listing-migration skill instead\nKEY: If user says \"share via internal marketplace\" or \"as a data product\" even for same-account roles, use this skill. Otherwise, same-account = regular RBAC grants.",
+      "subskills": [
+        {
+          "name": "certification",
+          "description": "Recommend the best Snowflake table(s) to answer a user's data question by searching candidate objects and scoring them on trust signals: semantic view backing (including verified queries), dashboard/Streamlit dependency usage, daily refresh patterns, service role ownership, schema placement, freshness, and structural quality. Triggers: which table should I use, find the best table, recommend a table, certified object, what table has, where can I find data about, trusted table, best source for. Use when: user asks a data question and multiple candidate tables could answer it, or user wants to know which table is the most trustworthy source for a given metric/concept.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/data-products/certification",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "data-quality",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/data-quality",
+      "description": "Monitor, analyze, and enforce data quality using Snowflake DMFs. Schema-level and per-table DMF attachment, health scoring, incident investigation, circuit breakers, table comparison, dataset popularity, ad-hoc assessment, prompt quality scoring, and per-group monitoring via WITHIN GROUP clause.",
+      "subskills": []
+    },
+    {
+      "name": "data-sharing",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/data-sharing",
+      "description": "Snowflake secure data sharing: create direct shares, external marketplace listings, debug grant failures. Triggers: create share, share data, share table, share database, outbound share, data sharing, share with account, direct share, external listing, marketplace listing, debug share, share not working, grant failed, consumer can't access, share troubleshooting, why can't they see my data, share error, permission denied on share, share external data, share iceberg table, iceberg data sharing, share S3 data, share Azure data, share GCS data, share without moving data, data outside snowflake, iceberg listing, move data to snowflake and share, replicate and share, openflow and share, load data then share.\nWHEN TO USE THIS SKILL: - User wants to share data (generic intent \u2014 will ask who they want to share with) - User wants to create direct shares with specific accounts - User wants to create external listings (Snowflake Marketplace) - User needs to debug why a share isn't working\nWHEN TO USE org-listing workflow INSTEAD: - User mentions \"internal marketplace\", \"organization listing\", or \"data product\" - User wants to share within their Snowflake organization",
+      "subskills": []
+    },
+    {
+      "name": "dbt-projects-on-snowflake",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/dbt-projects-on-snowflake",
+      "description": "ONLY for dbt projects deployed INTO Snowflake as native objects via the `snow dbt` CLI, OR for authoring dbt models using Snowflake-native features (e.g., semantic_view materialization via dbt_semantic_view package). NOT for normal dbt development. Invoke ONLY when the user explicitly mentions: `snow dbt` commands (deploy, execute, list), `EXECUTE DBT PROJECT` SQL, a deployed dbt project object (e.g., DB.SCHEMA.MY_PROJECT), `ALTER/DROP/DESCRIBE/SHOW DBT PROJECT` SQL, scheduling a deployed dbt project with CREATE TASK, generating documentation/catalog/lineage for a deployed project, OR authoring Snowflake-specific dbt materializations (semantic_view, dbt_semantic_view), OR adding a semantic view to an existing dbt project. Do NOT invoke for standard dbt workflows: dbt run, dbt build, dbt test, dbt seed, dbt init, dbt compile, dbt debug, dbt snapshot, dbt deps, dbt clean, dbt retry, dbt ls, profiles.yml, dbt_project.yml, model editing, source freshness, Jinja/macro development, CI/CD pipelines, or any dbt command run from a terminal. The key distinction: this skill is about dbt-as-a-Snowflake-object (snow dbt deploy), not dbt-as-a-CLI-tool (dbt run). Triggers: snow dbt, snow dbt deploy, snow dbt execute, snow dbt list, EXECUTE DBT PROJECT, deployed dbt project, ALTER DBT PROJECT, DROP DBT PROJECT, DESCRIBE DBT PROJECT, SHOW DBT PROJECTS, VERSION$, external-access-integration, dbt project object, migrate, prepare for snowflake, docs generate deployed, documentation deployed project, data catalog deployed, lineage deployed project, generate documentation for deployed, semantic_view materialization, dbt_semantic_view, semantic view in dbt project, add semantic view to dbt, dbt project semantic view, analytical access dbt project.",
+      "subskills": [
+        {
+          "name": "deploy",
+          "description": "Deploy dbt projects to Snowflake",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/dbt-projects-on-snowflake/deploy",
+          "subskills": []
+        },
+        {
+          "name": "execute",
+          "description": "Execute dbt commands on Snowflake (run, test, build, seed, snapshot, show). Triggers: run, test, build, seed, execute, snapshot, show, preview, deployed object, deployed project, run in deployed, using the deployed, except, exclude, all models except, data quality tests, run tests, seed CSV, load seed, load CSV, seed data, CSV data, preview model, preview output, show output, dbt show.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/dbt-projects-on-snowflake/execute",
+          "subskills": []
+        },
+        {
+          "name": "manage",
+          "description": "Manage dbt projects in Snowflake (list, rename, drop, describe, add version)",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/dbt-projects-on-snowflake/manage",
+          "subskills": []
+        },
+        {
+          "name": "migrate",
+          "description": "Migrate dbt projects to run on Snowflake. Triggers: migrate, env_var, environment variable, convert to var, migration, prepare for snowflake.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/dbt-projects-on-snowflake/migrate",
+          "subskills": []
+        },
+        {
+          "name": "monitoring",
+          "description": "Monitor dbt project executions: get logs, locate artifacts, download archives, query execution history, debug failures. Triggers: dbt logs, execution logs, get logs, retrieve logs, run history, execution history, query_id, artifacts, manifest.json, dbt archive, download artifacts, debug failure, why failed, error logs, investigate failure, project failed, investigate why, debug dbt, failed dbt project, deployed project failed.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/dbt-projects-on-snowflake/monitoring",
+          "subskills": []
+        },
+        {
+          "name": "schedule",
+          "description": "**[REQUIRED]** Schedule dbt project execution via Snowflake Tasks. Invoke FIRST for: CREATE TASK for dbt, schedule dbt runs, cron for dbt, run dbt every X hours/minutes, dbt automation, task chain, dependent tasks, run after task X. Critical: Uses special SQL syntax (EXECUTE DBT PROJECT) not standard dbt CLI.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/dbt-projects-on-snowflake/schedule",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "dcm",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/dcm",
+      "description": "Use for **ALL** requests that mention: create, build, set up, debug, fix, troubleshoot, optimize, improve, evaluate, or analyze a DCM project. This is the **REQUIRED** entry point - even if the request seems simple. DO NOT attempt to create DCM projects manually or search for DCM documentation - always invoke this skill first. This skill guides users through creating, auditing, evaluating, and debugging workflows for DCM (Database Change Management) projects. Triggers: DCM, DCM project, Database Change Management, snow dcm, manifest.yml with DEFINE, infrastructure-as-code, three-tier role pattern, database roles, DEFINE TABLE, DEFINE SCHEMA.",
+      "subskills": [
+        {
+          "name": "create-project",
+          "description": "Create new DCM projects from scratch. Triggers: new project, create dcm project, set up dcm, start from scratch, build infrastructure",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/dcm/create-project",
+          "subskills": []
+        },
+        {
+          "name": "deploy-project",
+          "description": "Safe deployment workflow for DCM projects. Triggers: deploy dcm, apply changes, push to snowflake, run deployment",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/dcm/deploy-project",
+          "subskills": []
+        },
+        {
+          "name": "modify-project",
+          "description": "Modify existing DCM projects. Triggers: modify dcm, update project, add table, edit definitions, download project sources, import existing objects",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/dcm/modify-project",
+          "subskills": []
+        },
+        {
+          "name": "purge-project",
+          "description": "Drops all Snowflake objects managed by a DCM project. DANGEROUS: irreversible data loss. Triggers: purge project, drop all objects in project, user confirms purge after drop-project prompt",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/dcm/purge-project",
+          "subskills": []
+        },
+        {
+          "name": "roles-and-grants",
+          "description": "Best practices for roles and grants in DCM projects. Triggers: dcm roles, dcm grants, warehouse grant error, permission model, database role limitations",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/dcm/roles-and-grants",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "declarative-sharing",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/declarative-sharing",
+      "description": "**[REQUIRED]** Use for **ALL** declarative sharing and application packages with TYPE=DATA, (i.e data apps). Share data products across Snowflake accounts with versioning. Default choice when user wants to share data with another account. Also use when converting an existing data share to declarative sharing, or when a consumer wants to migrate from a data share to a declarative app. Triggers: declarative, data product, native app, data app, data application, share, sharing, another account, cross account, cross region, application package, manifest, marketplace, listing, publish, share a table, share data, manifest from share, share to manifest, generate manifest from share, inspect share, share to yaml, introspect share, convert share, migrate share, existing share, secure share to declarative, upgrade share, future-proof share, multiple shares, combine shares, merge shares, multiple data shares, consumer migration, migrate from share, upgrade share to app, replace share with app, share to app migration, drop-in replacement, switch from share to app",
+      "subskills": []
+    },
+    {
+      "name": "deploy-to-spcs",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/deploy-to-spcs",
+      "description": "Deploy containerized apps to Snowpark Container Services. Use when: deploying Docker apps, creating SPCS services, pushing images to Snowflake registry, granting role access to SPCS service endpoints. Triggers: SPCS, Snowpark Container Services, deploy to Snowflake, container deployment, grant access to service, grant role access, service role, consumer access, SPCS service, service endpoints.",
+      "subskills": []
+    },
+    {
+      "name": "developing-with-streamlit-in-snowflake",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/developing-with-streamlit-in-snowflake",
+      "description": "Use for Streamlit development tasks with a Snowflake angle: Snowflake-connected dashboards, Streamlit-in-Snowflake (SiS) deployment to warehouse / SPCS / Workspaces, applying Snowflake branding, st.connection('snowflake'), troubleshooting a local `streamlit run` against Snowflake (wrong role/user/database, 'Database not authorized', PAT-bound USE ROLE failure, stale st.connection cache), and operating an already-deployed STREAMLIT object (ALTER STREAMLIT SET QUERY_WAREHOUSE, RENAME, DROP, GRANT, SHOW STREAMLITS). Also use for general Streamlit authoring (widgets, layouts, caching, theming, custom components) \u2014 this skill routes general OSS questions to version-matched content from a detected Streamlit \u22651.57 install, or to a bundled OSS snapshot when no install is available. Triggers: streamlit, st., dashboard, app.py, theme, beautify, style, CSS, color, background, button, custom component, st.components, snowflake dashboard, monitor snowflake, streamlit on snowflake, streamlit in snowflake, SiS, scaffold, snowflake theme, st.connection snowflake, snow streamlit deploy, deploy this streamlit, redeploy, alter streamlit, show streamlits, drop streamlit, rename streamlit app, change query warehouse, streamlit app down, streamlit run wrong role, database not authorized, SNOWFLAKE_DEFAULT_CONNECTION_NAME.",
+      "subskills": [
+        {
+          "name": "developing-with-streamlit",
+          "description": "**[REQUIRED]** Use for ALL Streamlit tasks: creating, editing, debugging, beautifying, styling, theming, or optimizing Streamlit applications. Also required for building custom components (inline or packaged), using st.components.v2, or any HTML/JS/CSS component work. Triggers: streamlit, st., dashboard, app.py, beautify, style, CSS, color, background, theme, button, widget styling, custom component, st.components, packaged component, pyproject.toml, asset_dir, CCv2, HTML/JS component.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/developing-with-streamlit-in-snowflake/developing-with-streamlit",
+          "subskills": []
+        },
+        {
+          "name": "sf",
+          "description": "Use for any Streamlit task where Snowflake is in scope \u2014 building a dashboard for Snowflake data, connecting to Snowflake from Streamlit, deploying to SiS (warehouse, SPCS, or Workspaces) via `snow streamlit deploy`, troubleshooting a local `streamlit run` against Snowflake, post-deploy lifecycle (ALTER STREAMLIT, RENAME, DROP, GRANT USAGE), or applying Snowflake branding to a Streamlit app. Provides copyable starters: Snowflake-connected dashboard templates (metrics, compute, stock-peers) and the Snowflake-branded theme. Triggers: 'streamlit dashboard for snowflake', 'snowflake dashboard', 'monitor snowflake', 'streamlit on snowflake', 'streamlit in snowflake', 'SiS', 'dashboard template', 'starter app', 'scaffold', 'snowflake theme', 'st.connection snowflake', 'snow streamlit deploy', 'deploy this streamlit app', 'publish streamlit', 'redeploy', 'alter streamlit', 'show streamlits', 'drop streamlit', 'rename streamlit app', 'change query warehouse', 'streamlit app down', 'streamlit run wrong role', 'SNOWFLAKE_DEFAULT_CONNECTION_NAME', 'PAT use role'. Does NOT cover general Streamlit authoring with no Snowflake angle (parent skill routes those to the OSS sub-skill) or Workspaces-specific runtime guidance (see streamlit-in-workspaces).",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/developing-with-streamlit-in-snowflake/sf",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "document-intelligence",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/document-intelligence",
+      "description": "Use Snowflake Cortex AI Functions for text/image analytics. Use when: classifying content, extracting entities, sentiment analysis, summarizing text, translating, filtering, embedding, parsing documents, redacting PII, aggregating data, document intelligence workflows, content insight workflows, fine-tuning arctic-extract for domain-specific extraction. Triggers: AI_CLASSIFY, AI_COMPLETE, AI_EXTRACT, AI_FILTER, AI_SENTIMENT, AI_SUMMARIZE, AI_TRANSLATE, AI_EMBED, AI_AGG, AI_REDACT, AI_PARSE_DOCUMENT, classify text, data, documents, extract from text, extract text from document, extract text from PDF, extract text from image, extracting, invoices, sentiment, summarize, translate, which AI function, cortex function, process documents, label content, analyze text, OCR, read PDF, read document, get text from PDF, get text from document, pull text from file, extract data from files, extract from my files, process my files, my files, my documents, read my documents, get data from document, file extraction, document processing, file processing, get information from documents, analyze files, parse files, data from PDF, invoice processing, contract extraction, receipt extraction, form extraction, extract fields, document data, file data, stage files, files on stage, PDF extraction, image extraction, document OCR, scan documents, digitize documents, fine-tune, fine-tuning, custom model, train arctic-extract, improve extraction accuracy, domain-specific extraction, FINETUNE, better extraction results.",
+      "subskills": [
+        {
+          "name": "fine-tuning",
+          "description": "Fine-tune the arctic-extract model to improve AI_EXTRACT accuracy on domain-specific documents. Use when: AI_EXTRACT results are consistently poor on a specific document type, scale_factor 4.0 is insufficient, you have 20+ labeled examples. Triggers: fine-tune, fine-tuning, custom model, train arctic-extract, improve extraction accuracy, domain-specific extraction, better extraction results, FINETUNE, SNOWFLAKE.CORTEX.FINETUNE.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/document-intelligence/fine-tuning",
+          "subskills": []
+        },
+        {
+          "name": "pipeline-builder",
+          "description": "Extract, parse, analyze and classify documents using Snowflake Cortex AI. Routes to AI_EXTRACT (structured fields), AI_PARSE_DOCUMENT (full text), AI_COMPLETE (visual analysis). Triggers: extract data from files, process documents, my files, my documents, PDF, image, invoice, contract, receipt, form, OCR, parse document, read document, get text, extract fields, document processing, file extraction, stage files, classify document.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/document-intelligence/pipeline-builder",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "dynamic-tables",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/dynamic-tables",
+      "description": "**[REQUIRED]** Use for **ALL** Snowflake Dynamic Table operations: creating, optimizing, monitoring, troubleshooting, and pipeline diagnostics. This is the required entry point for any dynamic table related tasks (DT is an acronym for dynamic table). Triggers: dynamic table, data pipeline, incremental pipeline, DT pipeline, incremental refresh, target lag, UPSTREAM_FAILED, refresh failing, full refresh instead of incremental, DT health, create DT, debug DT, pipeline timeline, Gantt chart, why was DT skipped, trace pipeline, critical path, why was DT skipped.",
+      "subskills": [
+        {
+          "name": "create",
+          "description": "Create new Snowflake dynamic tables with proper configuration",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/dynamic-tables/create",
+          "subskills": []
+        },
+        {
+          "name": "dt-alerting",
+          "description": "Set up monitoring and alerting for dynamic table refreshes using event tables. Use when: monitoring DT health, alerting on refresh failures, tracking upstream failures. Triggers: DT alerts, dynamic table monitoring, refresh failures, event table for DTs.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/dynamic-tables/dt-alerting",
+          "subskills": []
+        },
+        {
+          "name": "monitor",
+          "description": "Monitor health, status, and refresh performance of Snowflake dynamic tables. Use when: checking DT status, viewing refresh history, assessing target lag compliance, DT health check. Triggers: check status, refresh history, is it healthy, target lag, DT state, DT health, trend, drift, week over week, before after tuning.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/dynamic-tables/monitor",
+          "subskills": []
+        },
+        {
+          "name": "optimize",
+          "description": "Optimize Snowflake dynamic table performance and cost",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/dynamic-tables/optimize",
+          "subskills": []
+        },
+        {
+          "name": "permissions",
+          "description": "Troubleshoot dynamic table failures because of permissions/privilege issues. Use when: DT refresh fails with insufficient privileges, scheduled refresh stops working, manual refresh returns permission error. Triggers: dynamic table permissions, DT privilege error, refresh failed, insufficient privileges dynamic table.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/dynamic-tables/permissions",
+          "subskills": []
+        },
+        {
+          "name": "pipeline-diagnostics",
+          "description": "Diagnose DT pipeline execution using OpenTelemetry traces from the event table. Visualize pipeline timelines as Gantt charts, diagnose UPSTREAM_FAILED and skip reasons, trace root causes via span links, and identify critical paths. Triggers: pipeline timeline, Gantt chart, UPSTREAM_FAILED, why was DT skipped, trace pipeline, critical path, execution timeline, pipeline execution, pipeline visualization, what happened in pipeline, DT pipeline trace, what was affected, slowest DT, pipeline bottleneck.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/dynamic-tables/pipeline-diagnostics",
+          "subskills": []
+        },
+        {
+          "name": "task-to-dt",
+          "description": "Convert streams and tasks pipelines to dynamic tables. Use when: replacing stream+task patterns, simplifying ETL orchestration, migrating from imperative to declarative data pipelines. Triggers: convert tasks to dynamic tables, migrate tasks, replace tasks with DTs.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/dynamic-tables/task-to-dt",
+          "subskills": []
+        },
+        {
+          "name": "troubleshoot",
+          "description": "Diagnose and fix dynamic table refresh failures, full-refresh-instead-of-incremental issues, stale/lagging data, suspended DTs, and pipeline errors. Triggers: DT broken, refresh failing, DT error, DT stuck, DT lag, DT suspended, why full refresh, incremental not working.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/dynamic-tables/troubleshoot",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "error-tables-ops",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/error-tables-ops",
+      "description": "Assess, enable, monitor, and manage Error Tables (DML Error Logging) across your Snowflake account. Use when: error tables, error logging, ERROR_TABLE, DML errors, which tables should I enable, which tables have error logging, analyze errors, error table storage, error table retention, clean up errors, monitor errors, error table health, error table report, set up alerting, failed DML queries, string truncation, NOT NULL violation, numeric overflow, check constraint violation, constraint failed.",
+      "subskills": []
+    },
+    {
+      "name": "event-table",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/event-table",
+      "description": "Manage Snowflake event tables and telemetry configuration. Use when: viewing/configuring event tables, checking telemetry setup, getting/setting telemetry levels, querying event table data, understanding telemetry formats. Triggers: event table, get event table, show event table, current event table, event table setup, event table configuration, telemetry, telemetry setup, telemetry configuration, telemetry levels, get telemetry, show telemetry, check telemetry, log level, trace level, metric level, logging setup, tracing setup, observability setup, event table format, telemetry format, log format, trace format, metric format.",
+      "subskills": [
+        {
+          "name": "event-table-get-setup",
+          "description": "Get/show current Snowflake event table configuration and telemetry levels. Read-only inspection of observability setup. Use when: viewing event table setup, getting current event table, checking telemetry levels, showing log/trace/metric levels. Triggers: get event table, show event table, current event table, which event table, show telemetry levels, get telemetry, check telemetry, telemetry levels, show log level, show trace level, show metric level.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/event-table/event-table-get-setup",
+          "subskills": []
+        },
+        {
+          "name": "event-table-modify-setup",
+          "description": "Set up or verify Snowflake event table configuration and telemetry levels (LOG_LEVEL, LOG_EVENT_LEVEL, TRACE_LEVEL, METRIC_LEVEL). Use when: viewing event table setup, getting event table configuration, checking telemetry setup, getting telemetry levels, setting log/trace/metric/event levels, configuring observability. Triggers: event table, event table setup, event table configuration, get event table, show event table, current event table, which event table, telemetry, telemetry setup, telemetry configuration, telemetry levels, get telemetry, show telemetry, check telemetry, log level, log event level, trace level, metric level, logging setup, tracing setup, observability setup.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/event-table/event-table-modify-setup",
+          "subskills": []
+        },
+        {
+          "name": "event-table-telemetry-format",
+          "description": "Parse and explain telemetry formats (logs, metrics, traces, events) from Snowflake products in event tables. Use when: user asks about event table schema, telemetry format, log/trace/metric structure, or needs SQL to query telemetry data. Triggers: event table format, telemetry format, log format, trace format, metric format, telemetry schema, parse telemetry, query event table.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/event-table/event-table-telemetry-format",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "find-skill",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/find-skill",
+      "description": "Find, add, check, or update Cortex Code catalog skills before using them. Use when the user asks to discover available skills, install a catalog skill, make an uninstalled `/skill` or `$skill` usable, search the skill marketplace/catalog, check whether installed skills have updates, or update skills from the catalog, stage, GitHub, or tarball sources. Do not use this for public Snowflake Marketplace datasets or apps; use marketplace-search for third-party data/product listings.",
+      "subskills": []
+    },
+    {
+      "name": "get-marketplace-listing-details",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/get-marketplace-listing-details",
+      "description": "Present detailed information about a single Snowflake Marketplace listing (data share, native app, private/targeted, or request-only) and explain why it is useful given the user's existing Snowflake data and current conversation. Use when the user asks about ONE specific listing by title or by global name (e.g. \"tell me about GZ2FQZ711TU\", \"what's in the Consumer Pricing listing\", \"describe this marketplace listing\", \"details on listing X\"). Do NOT use for marketplace search results spanning multiple listings \u2014 use `marketplace-listing-formatting` instead.",
+      "subskills": []
+    },
+    {
+      "name": "iceberg",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/iceberg",
+      "description": "Use for **ALL** Iceberg table requests in Snowflake. This is the **REQUIRED** entry point for catalog integrations, catalog-linked databases, external volumes, auto-refresh issues, Horizon IRC diagnostics, and Snowflake Intelligence. DO NOT work with Iceberg manually - invoke this skill first. Triggers: iceberg, iceberg table, apache iceberg, catalog integration, REST catalog, ICEBERG_REST, glue, AWS glue, glue IRC, lake formation, unity catalog, databricks, polaris, opencatalog, open catalog, onelake, OneLake, microsoft fabric, fabric, fabric lakehouse, onelake REST, SAP, SAP BDC, SAP Business Data Cloud, delta sharing, delta share, databricks delta sharing, query delta sharing tables, bearer token catalog integration, connect to delta sharing server, CLD, catalog-linked database, linked catalog, auto-discover tables, sync tables, LINKED_CATALOG, external volume, storage access, S3, Azure blob, GCS, IAM role, trust policy, Access Denied, 403 error, ALLOW_WRITES, storage permissions, auto-refresh, autorefresh, stale data, refresh stuck, delta direct, snowflake intelligence, text-to-SQL iceberg, query iceberg natural language, horizon IRC, horizon IRC setup, horizon IRC not working, test horizon IRC, diagnose horizon IRC, debug horizon IRC, horizon IRC connection, horizon IRC endpoint, horizon REST catalog, PAT authentication horizon.",
+      "subskills": [
+        {
+          "name": "auto-refresh",
+          "description": "Debug auto-refresh issues for Iceberg and Delta Direct tables in Snowflake. Use when: auto-refresh stuck, stale data, refresh not working, iceberg table not syncing, delta direct issues. Triggers: auto-refresh, autorefresh, iceberg refresh, delta direct, catalog integration, stale data, refresh stuck.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/iceberg/auto-refresh",
+          "subskills": []
+        },
+        {
+          "name": "catalog-linked-database",
+          "description": "Setup, verify, and troubleshoot catalog-linked databases (CLD) for REST-based Iceberg catalogs. Triggers: create catalog linked database, setup CLD, CREATE DATABASE LINKED_CATALOG, auto-discover iceberg tables, catalog sync status, auto refresh iceberg, table not initialized, troubleshoot CLD, CLD health, sync iceberg tables.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/iceberg/catalog-linked-database",
+          "subskills": [
+            {
+              "name": "create",
+              "description": "Create and execute catalog-linked database SQL",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/iceberg/catalog-linked-database/create",
+              "subskills": []
+            },
+            {
+              "name": "setup",
+              "description": "Gather configuration options for catalog-linked database setup",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/iceberg/catalog-linked-database/setup",
+              "subskills": []
+            },
+            {
+              "name": "verify",
+              "description": "Verify catalog-linked database sync status and table health",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/iceberg/catalog-linked-database/verify",
+              "subskills": []
+            }
+          ]
+        },
+        {
+          "name": "cld-snowflake-intelligence",
+          "description": "Surface Iceberg tables from Catalog-Linked Databases (CLD) in Snowflake Intelligence. Use when: query iceberg with natural language, use snowflake intelligence with CLD, surface CLD tables in intelligence, text-to-SQL for iceberg, create agent to talk to CLD data, build conversational interface for iceberg tables.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/iceberg/cld-snowflake-intelligence",
+          "subskills": []
+        },
+        {
+          "name": "external-volume",
+          "description": "Use for **ALL** requests related to debugging, troubleshooting, or diagnosing Iceberg external volume issues. This skill provides systematic workflows for diagnosing storage access failures, IAM/permission issues, trust policy misconfigurations, and connectivity problems across AWS S3, Azure Blob Storage, and Google Cloud Storage. Invoke this skill when users report errors creating Iceberg tables, external volume verification failures, or storage access denied errors. Triggers: external volume, iceberg volume, storage access, S3 storage, Azure storage, GCS storage, write errors, ALLOW_WRITES, cannot write, writes not allowed, storage permissions, IAM role, trust policy, Access Denied, 403 error, create iceberg table error, external volume verification, iceberg write failure, storage location.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/iceberg/external-volume",
+          "subskills": []
+        },
+        {
+          "name": "horizon-irc-diagnose",
+          "description": "Diagnose and debug Horizon IRC \u2014 Snowflake's native Polaris-based Iceberg REST Catalog. This skill is specifically for Horizon IRC (Snowflake Polaris) only. Do NOT use for AWS Glue, Databricks Unity Catalog, or OpenCatalog. Triggers: test horizon IRC, debug horizon IRC, horizon IRC setup, diagnose horizon IRC, polaris setup, polaris catalog connectivity, PAT authentication horizon, horizon IRC not working, can't list namespaces horizon, table not visible horizon IRC.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/iceberg/horizon-irc-diagnose",
+          "subskills": [
+            {
+              "name": "authn-errors",
+              "description": "Debug Horizon IRC PAT authentication failures. Invoked when Step 2 (POST /v1/oauth/tokens) fails.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/iceberg/horizon-irc-diagnose/authn-errors",
+              "subskills": []
+            },
+            {
+              "name": "authz-errors",
+              "description": "Debug Horizon IRC authorization failures. Invoked when Step 3 (GET /v1/<DB>/namespaces) fails with 403 or 404.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/iceberg/horizon-irc-diagnose/authz-errors",
+              "subskills": []
+            },
+            {
+              "name": "connectivity-errors",
+              "description": "Debug Horizon IRC transport-level connectivity failures. Invoked when Step 1 receives no HTTP response at all.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/iceberg/horizon-irc-diagnose/connectivity-errors",
+              "subskills": []
+            },
+            {
+              "name": "storage-creds-errors",
+              "description": "Debug Horizon IRC storage credential failures. Invoked from table-access-errors when Step 4 or SQL validation indicates a storage/credential issue.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/iceberg/horizon-irc-diagnose/storage-creds-errors",
+              "subskills": []
+            },
+            {
+              "name": "table-access-errors",
+              "description": "Debug Horizon IRC table access failures. Invoked when Step 4 (GET /v1/<DB>/namespaces/<SCHEMA>/tables/<TABLE>) fails.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/iceberg/horizon-irc-diagnose/table-access-errors",
+              "subskills": []
+            },
+            {
+              "name": "test",
+              "description": "Run end-to-end Horizon IRC diagnostic test",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/iceberg/horizon-irc-diagnose/test",
+              "subskills": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "integrations",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/integrations",
+      "description": "Create, replace, alter, drop, describe, and show Snowflake integrations. Covers API, catalog, external access, notification, security, and storage integration types. Use when the user wants to manage integrations or asks about integration SQL commands.",
+      "subskills": [
+        {
+          "name": "alter-api-integration",
+          "description": "Modify properties of an existing API integration (AWS API Gateway, Azure API Management, Google Cloud API Gateway, or Git repository)",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/integrations/alter-api-integration",
+          "subskills": []
+        },
+        {
+          "name": "alter-catalog-integration",
+          "description": "Modify properties of an existing catalog integration for Apache Iceberg tables",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/integrations/alter-catalog-integration",
+          "subskills": []
+        },
+        {
+          "name": "alter-external-access-integration",
+          "description": "Modify properties of an existing external access integration used for network access from UDF or procedure handlers",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/integrations/alter-external-access-integration",
+          "subskills": []
+        },
+        {
+          "name": "alter-integration",
+          "description": "Modify properties of an existing integration (generic). Use a type-specific ALTER command when available",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/integrations/alter-integration",
+          "subskills": []
+        },
+        {
+          "name": "alter-notification-integration",
+          "description": "Modify properties of an existing notification integration (cloud messaging, email, or webhook)",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/integrations/alter-notification-integration",
+          "subskills": []
+        },
+        {
+          "name": "alter-security-integration",
+          "description": "Modify properties of an existing security integration (SCIM, SAML2, Snowflake OAuth, External OAuth, External API Authentication, or AWS IAM Authentication)",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/integrations/alter-security-integration",
+          "subskills": []
+        },
+        {
+          "name": "alter-storage-integration",
+          "description": "Modify properties of an existing storage integration. Change allowed/blocked locations, rotate IAM roles, enable/disable, manage tags and comments. Triggers: ALTER STORAGE INTEGRATION, modify storage integration, change allowed locations, rotate IAM role, disable integration, update storage integration, add tag to integration, UNSET, blocked locations.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/integrations/alter-storage-integration",
+          "subskills": []
+        },
+        {
+          "name": "create-api-integration",
+          "description": "Create a new API integration for AWS API Gateway, Azure API Management, Google Cloud API Gateway, or Git repositories",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/integrations/create-api-integration",
+          "subskills": []
+        },
+        {
+          "name": "create-catalog-integration",
+          "description": "Create a new catalog integration for Apache Iceberg tables (AWS Glue, Object Store, Snowflake Open Catalog, Apache Iceberg REST, or SAP Business Data Cloud)",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/integrations/create-catalog-integration",
+          "subskills": []
+        },
+        {
+          "name": "create-external-access-integration",
+          "description": "Create a new external access integration for network access to external locations from a UDF or procedure handler",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/integrations/create-external-access-integration",
+          "subskills": []
+        },
+        {
+          "name": "create-integration",
+          "description": "Create a new integration (generic overview). Use a type-specific CREATE command when available",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/integrations/create-integration",
+          "subskills": []
+        },
+        {
+          "name": "create-notification-integration",
+          "description": "Create a new notification integration for cloud message queuing services (Azure Event Grid, Google Pub/Sub, Amazon SNS), email services, or webhooks",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/integrations/create-notification-integration",
+          "subskills": []
+        },
+        {
+          "name": "create-security-integration",
+          "description": "Create a new security integration (SCIM, SAML2, Snowflake OAuth, External OAuth, External API Authentication, or AWS IAM Authentication) for interfacing with third-party identity and authentication services",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/integrations/create-security-integration",
+          "subskills": []
+        },
+        {
+          "name": "create-storage-integration",
+          "description": "Create a storage integration for external cloud storage (Amazon S3, Google Cloud Storage, Microsoft Azure, Microsoft Fabric OneLake). Guides through provider selection, IAM trust setup, and access verification. Triggers: CREATE STORAGE INTEGRATION, connect S3, connect GCS, connect Azure, connect OneLake, external stage setup, storage integration, IAM role, STORAGE_ALLOWED_LOCATIONS, STORAGE_AWS_ROLE_ARN, AZURE_TENANT_ID, USE_PRIVATELINK_ENDPOINT.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/integrations/create-storage-integration",
+          "subskills": []
+        },
+        {
+          "name": "describe-catalog-integration",
+          "description": "Describe the properties of a specific catalog integration",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/integrations/describe-catalog-integration",
+          "subskills": []
+        },
+        {
+          "name": "describe-integration",
+          "description": "Describe the properties of a specific integration of any type",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/integrations/describe-integration",
+          "subskills": []
+        },
+        {
+          "name": "describe-notification-integration",
+          "description": "Describe the properties of a specific notification integration",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/integrations/describe-notification-integration",
+          "subskills": []
+        },
+        {
+          "name": "drop-catalog-integration",
+          "description": "Remove a catalog integration from the Snowflake account",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/integrations/drop-catalog-integration",
+          "subskills": []
+        },
+        {
+          "name": "drop-integration",
+          "description": "Remove any type of integration from the Snowflake account. Syntax: DROP <type> INTEGRATION <name>",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/integrations/drop-integration",
+          "subskills": []
+        },
+        {
+          "name": "show-catalog-integrations",
+          "description": "List catalog integrations in the account with their metadata and properties",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/integrations/show-catalog-integrations",
+          "subskills": []
+        },
+        {
+          "name": "show-delegated-authorizations",
+          "description": "List active delegated authorizations for a user, integration, or the entire account",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/integrations/show-delegated-authorizations",
+          "subskills": []
+        },
+        {
+          "name": "show-integrations",
+          "description": "List integrations in the account, optionally filtered by type. Syntax: SHOW <type> INTEGRATIONS",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/integrations/show-integrations",
+          "subskills": []
+        },
+        {
+          "name": "show-notification-integrations",
+          "description": "List notification integrations in the account",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/integrations/show-notification-integrations",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "interactive",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/interactive",
+      "description": "**[REQUIRED]** Use for **ALL** Snowflake Interactive Table and Interactive Warehouse operations. Triggers: interactive table, interactive warehouse, low-latency queries, high-concurrency dashboard, TARGET_LAG for interactive.",
+      "subskills": [
+        {
+          "name": "clustering",
+          "description": "Recommend optimal clustering keys for Snowflake interactive tables by understanding the customer's workload, analyzing query patterns, and applying Snowflake's clustering heuristics. This skill is ONLY for interactive tables \u2014 never use for standard tables. Triggers: clustering key selection for interactive tables, pick clustering columns for interactive tables, optimize clustering for interactive tables, help choose cluster by for interactive tables, interactive table clustering, what should I cluster by for interactive tables, convert existing tables to interactive tables, Define DDL for interactive table creation with CREATE INTERACTIVE TABLE Command",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/interactive/clustering",
+          "subskills": []
+        },
+        {
+          "name": "create",
+          "description": "Create Snowflake interactive tables (static, dynamic). Triggers: create interactive table, make interactive, convert to interactive, static interactive, dynamic interactive.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/interactive/create",
+          "subskills": []
+        },
+        {
+          "name": "getting-started",
+          "description": "Getting started with interactive tables - convert existing tables, estimate sizing, pick clustering keys. Triggers: getting started with interactive, convert to interactive, migrate to interactive, set up interactive, first time interactive.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/interactive/getting-started",
+          "subskills": []
+        },
+        {
+          "name": "query",
+          "description": "Query patterns, JOINs, and benchmarking for Snowflake interactive tables. Triggers: query interactive, SELECT from interactive, join interactive tables, dashboard query, optimize interactive query, benchmark interactive, measure performance, compare performance, test latency.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/interactive/query",
+          "subskills": []
+        },
+        {
+          "name": "troubleshoot",
+          "description": "Troubleshoot errors and performance issues with interactive tables/warehouses. Triggers: interactive error, query timeout, table not found, warehouse issue, debug interactive, fix interactive.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/interactive/troubleshoot",
+          "subskills": []
+        },
+        {
+          "name": "update-delete",
+          "description": "UPDATE/DELETE operations for interactive tables via standard + dynamic pattern. Triggers: update interactive table, delete from interactive, modify interactive data, soft delete interactive.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/interactive/update-delete",
+          "subskills": []
+        },
+        {
+          "name": "warehouse",
+          "description": "Create and manage Snowflake interactive warehouses. Triggers: create interactive warehouse, add tables to warehouse, remove tables, resume warehouse, suspend warehouse, manage interactive warehouse.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/interactive/warehouse",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "investigation",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/investigation",
+      "description": "Comprehensive Snowflake security investigation and threat detection. Use for: login anomalies, IP analysis, brute force detection, impossible travel, data exfiltration, bulk exports, unauthorized sharing, privilege escalation, RBAC violations, suspicious grants, backdoor accounts. This is the REQUIRED entry point for all security investigations. Routes to specialized sub-skills for focused analysis.",
+      "subskills": [
+        {
+          "name": "exfiltration-detection",
+          "description": "Detect data exfiltration attempts in Snowflake. Use when: investigating bulk data exports, suspicious UNLOAD/COPY activity, external stage transfers, GET commands, presigned URL generation, unusual stage creation, data sharing activity, new applications, OAuth integrations, security integration changes, external functions, or native apps. Supports both ACCOUNT_USAGE and ORGANIZATION_USAGE. Triggers: exfiltration, data theft, bulk export, UNLOAD, COPY INTO, GET command, presigned URL, external stage, data leak, data sharing, CREATE SHARE, listing, marketplace, OAuth, integration, native app, external function, connector, application installed, app changed.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/investigation/exfiltration-detection",
+          "subskills": []
+        },
+        {
+          "name": "login-ip-anomaly",
+          "description": "Detect IP address anomalies in Snowflake LOGIN_HISTORY. Use when: login anomalies, suspicious IPs, brute force detection, impossible travel, IP sharing, failed login analysis, security audit of logins. Supports both ACCOUNT_USAGE and ORGANIZATION_USAGE.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/investigation/login-ip-anomaly",
+          "subskills": []
+        },
+        {
+          "name": "privilege-escalation",
+          "description": "Detect privilege escalation attempts in Snowflake. Use when: investigating unauthorized access, role changes, suspicious grants, ACCOUNTADMIN abuse, self-grants, new users, backdoor accounts, or RBAC violations. Supports both ACCOUNT_USAGE and ORGANIZATION_USAGE. Triggers: privilege escalation, role grant, ACCOUNTADMIN, SECURITYADMIN, SYSADMIN, grant to self, create user, alter user, create role, suspicious grant, backdoor, unauthorized access, RBAC audit, who granted, privilege abuse.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/investigation/privilege-escalation",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "key-and-secret-management",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/key-and-secret-management",
+      "description": "Use for **ALL** requests that mention Tri-Secret Secure, customer-managed key operations, or periodic data rekeying in Snowflake. Handles CMK status checks, registration, activation (standard, Postgres, private connectivity), deactivation, key rotation, change history, and periodic data rekeying. DO NOT attempt TSS, CMK, or periodic rekeying operations manually - invoke this skill first. Triggers: tri-secret secure, TSS, CMK, BYOK, encryption key, key rotation, CMK history, activate CMK, deactivate CMK, periodic rekeying, periodic data rekeying, PERIODIC_DATA_REKEYING, data rekey, enable rekeying, disable rekeying.",
+      "subskills": [
+        {
+          "name": "tri-secret-secure",
+          "description": "Manage Tri-Secret Secure (TSS) encryption with customer-managed keys (CMK) in Snowflake. Use for: checking CMK status, registering CMK, activating TSS, configuring TSS for Postgres, enabling private connectivity for TSS, deactivating TSS, rekeying CMK, viewing TSS change history. Triggers: tri-secret secure, TSS, customer-managed key, CMK, encryption key, BYOK, bring your own key, CMK info, activate CMK, register CMK, deactivate CMK, TSS history, change history, CMK history, tri-secret secure history.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/key-and-secret-management/tri-secret-secure",
+          "subskills": [
+            {
+              "name": "change-history",
+              "description": "",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/key-and-secret-management/tri-secret-secure/change-history",
+              "subskills": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "lineage",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/lineage",
+      "description": "Snowflake table/column lineage: impact analysis, root cause, data discovery, provenance, trust. Triggers: 'what depends on', 'what will break', 'blast radius', 'who uses', 'deprecate', 'before I change', 'affected users', 'downstream', 'cascade', 'root cause', 'trace upstream', 'where does this come from', 'feeds this table', 'sources of', 'column lineage', 'where does [column] come from', 'what uses [column]', 'trace [column]', 'is this trustworthy', 'which table should I use', 'recommend dataset', 'provenance', 'certify', 'verify source'. For value-level data quality (wrong values, failing DMFs) use the data-quality skill first, then this skill to trace upstream. Always read `reference/snowflake-apis.md` before writing GET_LINEAGE SQL \u2014 it has the correct namespace, argument order, and output column names.",
+      "subskills": []
+    },
+    {
+      "name": "machine-learning",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning",
+      "description": "**[REQUIRED]** For **ALL** data science and machine learning tasks. This skill should ALWAYS be loaded in even if only a portion of the workflow is related to machine learning. Use when: analyzing data, training models, deploying models to Snowflake, registering models, working with ML workflows, running ML jobs on Snowflake compute, model registry, model service, model inference, log model, deploy pickle file, experiment tracking, model monitoring, ML observability, tracking drift, model performance analysis, distributed training, XGBoost, LightGBM, PyTorch, DPF, distributed partition function, many model training, hyperparameter tuning, HPO, compute pools, train at scale, feature store, feature views, entities, training datasets, online features, pipeline orchestration, DAG, task graph, schedule training, datasets, dataset versioning, DataConnector, ML lineage, model lineage, GET_LINEAGE, trace lineage, forecast, forecasting, time series, anomaly detection, outlier, predict, predictions, backtest, classify, classification, regression, clustering, build a model, create a model, sklearn, scikit-learn, tensorflow, ML, mlops, ray, GPU, deep learning, neural network, explain model, SHAP, Shapley, feature importance, model explainability, interpret model, preprocessing, preprocessor, scaling, encoding, imputation, normalize, transform data before training, preprocessing pipeline. Routes to specialized sub-skills.",
+      "subskills": [
+        {
+          "name": "batch-inference-jobs",
+          "description": "Run batch inference on models in Snowflake Model Registry. Covers BOTH approaches: (1) Native SQL batch using run() on warehouses for SQL pipelines/dbt, and (2) Job-based batch using run_batch() on SPCS compute pools for large-scale/unstructured data. Triggers: batch inference, bulk predictions, run_batch, run(), offline scoring, score dataset, batch predictions on table, image inference, audio transcription, multimodal.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/batch-inference-jobs",
+          "subskills": [
+            {
+              "name": "non-template",
+              "description": "Batch inference on media files (images, audio, video) using InputSpec for explicit file-to-bytes conversion. Use for Whisper, ViT, and custom image/audio models.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/batch-inference-jobs/non-template",
+              "subskills": []
+            },
+            {
+              "name": "task-integration",
+              "description": "Compose batch inference jobs inside a Snowflake Task DAG using BatchInferenceTask. Use for scheduled/recurring batch inference, multi-step DAGs that include batch inference, and downstream tasks that read the inference output. Triggers: schedule batch inference, batch inference task, BatchInferenceTask, batch inference DAG, run_batch in a DAG, downstream task on inference output, nightly batch inference.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/batch-inference-jobs/task-integration",
+              "subskills": []
+            },
+            {
+              "name": "template",
+              "description": "Batch inference with multimodal LLMs using OpenAI chat message format. Stage paths in messages are auto-resolved. Use for Qwen-VL, TinyLlama, and other vLLM-based chat models.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/batch-inference-jobs/template",
+              "subskills": []
+            }
+          ]
+        },
+        {
+          "name": "datasets",
+          "description": "Snowflake Datasets for ML workflows. Use when: creating versioned datasets, listing datasets, loading data into PyTorch/TensorFlow, DataConnector, dataset management. Triggers: create dataset, version dataset, list datasets, load dataset, DataConnector, to_tf_dataset, to_torch_dataset, snow://dataset, SHOW DATASETS.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/datasets",
+          "subskills": []
+        },
+        {
+          "name": "debug-inference",
+          "description": "Debug model inference issues for both warehouse and SPCS. Covers dtype errors, nullable signature problems, service failures, OOM, container issues. Use when: inference error, mv.run fails, TypeError, np.radians error, service not starting, OOM, container crash.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/debug-inference",
+          "subskills": []
+        },
+        {
+          "name": "distributed-training",
+          "description": "Distributed ML training on Snowpark Container Services. Routes to specialized sub-skills for estimators, many-model training, custom processing, and hyperparameter tuning.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/distributed-training",
+          "subskills": [
+            {
+              "name": "dpf",
+              "description": "General-purpose distributed processing with DPF. Custom distributed workloads, multiple outputs per partition, ML and other processing.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/distributed-training/dpf",
+              "subskills": []
+            },
+            {
+              "name": "estimators",
+              "description": "Distributed model training with XGBEstimator, LightGBMEstimator, and PyTorchDistributor. Train one large model across multiple nodes/GPUs.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/distributed-training/estimators",
+              "subskills": []
+            },
+            {
+              "name": "mmt",
+              "description": "Train and run inference on one model per data partition using ManyModelTraining and ManyModelInference. Auto-serialization, get_model(), and distributed inference.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/distributed-training/mmt",
+              "subskills": []
+            },
+            {
+              "name": "tuner",
+              "description": "Distributed hyperparameter tuning with Ray Tune on Snowpark Container Services. Supports RandomSearch, GridSearch, and BayesOpt algorithms.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/distributed-training/tuner",
+              "subskills": []
+            }
+          ]
+        },
+        {
+          "name": "experiment-tracking",
+          "description": "Track ML experiments in Snowflake. Use when: logging metrics, logging parameters, tracking training runs, comparing model runs, or setting up experiment tracking for reproducibility.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/experiment-tracking",
+          "subskills": []
+        },
+        {
+          "name": "feature-store",
+          "description": "**[REQUIRED]** Use for **ALL** Snowflake Feature Store operations: creating feature stores, registering entities/features, building feature views, feature pipelines, training dataset generation, online feature serving, preprocessing, inference feature views, feature lineage, auditing, monitoring, migration from other platforms, and CI/CD promotion. DO NOT attempt feature store work manually - invoke this skill first. Triggers: feature store, feature view, entity, feature pipeline, spine, point-in-time, online features, feature engineering, generate_dataset, retrieve_feature_values, FeatureStore, FeatureView, Entity, CreationMode, snowflake.ml.feature_store, feature freshness, feature serving, feature reuse, training/serving skew, audit feature view, validate features, feature lineage, which models use, inference feature view, model inference, preprocessing, aggregation API, promote features, migrate feature store, temporal features.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/feature-store",
+          "subskills": [
+            {
+              "name": "create",
+              "description": "Create Snowflake Feature Store, register entities, create feature views, temporal features, and aggregation API.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/feature-store/create",
+              "subskills": []
+            },
+            {
+              "name": "lineage",
+              "description": "Feature lineage analysis (which models consume which features) and creating inference feature views from model signatures.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/feature-store/lineage",
+              "subskills": []
+            },
+            {
+              "name": "migrate",
+              "description": "Migrate to Snowflake Feature Store from Feast, Tecton, or custom feature store platforms.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/feature-store/migrate",
+              "subskills": []
+            },
+            {
+              "name": "monitor",
+              "description": "Monitor, audit, validate, and promote Snowflake Feature Store: health checks, refresh history, freshness, suspend/resume, cost, validation checklist, environment promotion.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/feature-store/monitor",
+              "subskills": []
+            },
+            {
+              "name": "online",
+              "description": "Enable and use Snowflake Feature Store online serving for low-latency feature retrieval, with production application patterns.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/feature-store/online",
+              "subskills": []
+            },
+            {
+              "name": "pipelines",
+              "description": "Build and manage Snowflake Feature Store pipelines \u2014 managed (Dynamic Table), external (dbt, custom), and inference.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/feature-store/pipelines",
+              "subskills": []
+            },
+            {
+              "name": "training",
+              "description": "Generate training datasets from Snowflake Feature Store with point-in-time correct feature retrieval, preprocessing, and Model Registry integration.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/feature-store/training",
+              "subskills": []
+            }
+          ]
+        },
+        {
+          "name": "inference-logs",
+          "description": "View and analyze captured inference data from model services with Auto-Capture enabled. Use when: querying INFERENCE_TABLE, viewing inference logs, analyzing request/response data, debugging inference history, checking captured predictions. Triggers: inference logs, inference table, captured inference, autocapture data, view inference history, inference requests, inference responses.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/inference-logs",
+          "subskills": []
+        },
+        {
+          "name": "ml-development",
+          "description": "**[REQUIRED]** for ALL data science, machine learning, data analysis, and statistical tasks. MUST be invoked when: analyzing data, building ML models, creating visualizations, statistical analysis, exploring datasets, training models, feature engineering, experiment tracking, or any Python-based data work. DO NOT attempt data science tasks without this skill.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/ml-development",
+          "subskills": []
+        },
+        {
+          "name": "ml-jobs",
+          "description": "Transform local Python scripts into Snowflake ML Jobs. Use when: running ML workloads on Snowflake compute pools, GPU training, submitting Python scripts to run remotely, converting local scripts to ML jobs, distributed training. Triggers: ml job, submit job, run on compute pool, remote execution, GPU training.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/ml-jobs",
+          "subskills": []
+        },
+        {
+          "name": "ml-lineage",
+          "description": "Query and manage ML Lineage in Snowflake. Use when: tracing model training data, finding downstream models, debugging missing lineage, capturing lineage for external models. Triggers: what trained this model, model lineage, dataset lineage, GET_LINEAGE, trace lineage, no lineage showing, lineage not captured, which models use this dataset.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/ml-lineage",
+          "subskills": []
+        },
+        {
+          "name": "ml-pipeline-orchestration",
+          "description": "Create and deploy ML pipelines using Snowflake Task Graphs (DAGs). Use when: orchestrating ML workflows, scheduling training/inference, converting notebooks to production DAGs, automating model retraining, building task graphs. Triggers: pipeline, DAG, task graph, schedule training, orchestrate, productionize, automate retraining.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/ml-pipeline-orchestration",
+          "subskills": []
+        },
+        {
+          "name": "model-monitor",
+          "description": "Set up and manage ML Observability for Snowflake Model Registry models. Use when: creating model monitors, tracking drift, viewing performance metrics, managing monitor lifecycle. Triggers: model monitor, ML observability, monitor model, drift detection, model performance, track predictions, add monitoring, enable monitoring, start monitoring, observability.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/model-monitor",
+          "subskills": []
+        },
+        {
+          "name": "model-registry",
+          "description": "Deploy models to Snowflake Model Registry and route to inference deployment. Use when: registering serialized models, deploying trained models, logging models, logging Hugging Face models, explaining model predictions, SHAP values, feature importance. Triggers: model registry, deploy model, register model, log model, model to snowflake, hugging face, huggingface, transformers pipeline, explain model, SHAP, Shapley, feature importance, model explainability, interpret model.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/model-registry",
+          "subskills": [
+            {
+              "name": "hugging-face-models",
+              "description": "Deploy Hugging Face models to Snowflake Model Registry. Use when: Logging Hugging Face models. Triggers: log model, model to snowflake, hugging face, huggingface, transformers pipeline.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/model-registry/hugging-face-models",
+              "subskills": []
+            },
+            {
+              "name": "partitioned-inference",
+              "description": "Partitioned inference with CustomModel and @partitioned_api decorator",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/model-registry/partitioned-inference",
+              "subskills": []
+            }
+          ]
+        },
+        {
+          "name": "preprocessing",
+          "description": "ML data preprocessing and feature transformation. Use when: preprocessing, scaling, encoding, imputation, normalize, handle missing values, StandardScaler, OneHotEncoder, LabelEncoder, MinMaxScaler, OrdinalEncoder, ray.data.preprocessors, transform data before training, preprocessing pipeline, Chain, map_batches, transform_batch.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/preprocessing",
+          "subskills": []
+        },
+        {
+          "name": "spcs-inference",
+          "description": "Deploy models from Snowflake Model Registry to Snowpark Container Services for real-time inference. Use when: creating inference services, SPCS deployment, REST endpoints for models, GPU inference. Triggers: create inference service, SPCS inference, inference endpoint, serve model, deploy to SPCS, model endpoint.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/machine-learning/spcs-inference",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "marketplace-search",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/marketplace-search",
+      "description": "Search the public Snowflake Marketplace for third-party datasets, data shares, Native Apps, and Connected Apps using the `cortex search marketplace` CLI. Invoke this skill PROACTIVELY any time the user expresses intent to find, use, or obtain a third-party dataset, app, or external data product. For example \"do you have weather data\", \"find a stock price dataset\", \"I need consumer spending data\", \"is there a Salesforce / HubSpot / Stripe connector\", \"what demographic data can I get for California\", \"anything for ESG ratings\", \"find a marketplace listing for X\", \"what is <third-party product>\", \"what's the alternate source to X\", \"what about <third-party product>\", \"find me <third-party product> stuff\", \"find me a table about <external/third-party data>\", \"where is <third-party> data stored\", or even just a BARE third-party product/brand name on its own (e.g. \"Tomorrow.io\", \"Fishbowl\", \"DV360\", \"Snowflake managed MCP servers\"). When the user names ANY third-party product, vendor, brand, or external service \u2014 even as a fragment, even if framed as a catalog question (\"find me a table about X\", \"what's the database for X data\") \u2014 invoke this skill AS YOUR FIRST ACTION. Do NOT search the internal catalog first and fall back to marketplace only if the catalog comes up empty. The word \"external\" in any query (e.g. \"external job-boards\", \"external data source\") is a DISPOSITIVE signal \u2014 invoke this skill immediately even if the query sounds like a catalog search. **Erring toward over-firing is preferred over missing a marketplace opportunity.** If you are about to tell the user \"I don't have that data\" or \"you'll need to bring your own data\", STOP and invoke this skill first \u2014 the public marketplace likely has it.\nAlso invoke for **generic data-category searches** even when no brand is named: \"email data\", \"marketing data\", \"paid media datasets\", \"portfolio holdings\", \"intent data\", \"[type] data for reporting\", \"help me find [data type] data\", \"where can I find [data type]\". Also invoke for **marketplace exploration** (\"most downloaded marketplace listing\", \"what products are available in the marketplace\") and **app or managed-service availability** (\"managed MCP servers\", \"MCP servers in Snowflake\", \"is there a connector for X\").\nALSO invoke this skill BEFORE writing any code, fetching from external APIs (e.g. clinicaltrials.gov, BLS, FRED, World Bank), or building dashboards/reports against third-party data sources \u2014 search the marketplace FIRST to see if the data is already available there as a share, even if the user explicitly named an external source. The marketplace listing is almost always preferable to a custom API integration.\nDo NOT use this skill for ONE specific listing referenced by global name (e.g. GZ2FQZ711TU) or exact title \u2014 use `get-marketplace-listing-details`. Do NOT use it when marketplace search results are already in hand and only need formatting. Do NOT use it for searching the user's own internal Snowflake catalog (tables, views, schemas, functions, semantic views) \u2014 use `cortex search object`. Do NOT use it for generic reference data or lookup tables that a user would typically generate or already hold internally (e.g. \"find me a fiscal month calendar\", \"find me a calendar table\", \"create a date dimension\") \u2014 these are generation or catalog tasks, not marketplace searches. Exception: if the same request includes an explicit third-party or vendor qualifier (e.g. \"find me a third-party vendor fiscal calendar\", \"find me a Workday fiscal calendar\"), the brand/external signal takes priority and this skill should fire. Do NOT use it for Snowflake product documentation or how-to questions \u2014 use `cortex search docs`.\nWhen ambiguous between marketplace and a sibling tool, prefer marketplace \u2014 it's cheap and missing a relevant listing is expensive \u2014 UNLESS the user has clearly moved past discovery, i.e. asks for: *integration syntax with a named mechanism* (\"how to use MCP to connect to Salesforce from Snowflake to fetch field descriptions\", \"how to use <X> to connect/fetch/integrate...\") \u2014 these are docs questions even when a third-party brand is named; *catalog inventory with no external qualifier* (\"what is X tables\", with no \"external\" / \"from <vendor>\" / \"third-party\" hint), a *specific identifier value* (\"what is the [code/symbol/SM ID] for [identifier]\"), or an *educational deep-dive with explicit depth markers* (\"explain X in detail\", \"to a beginner\", \"full overview\"). In those cases the user already knows what they want; a marketplace search won't help.",
+      "subskills": []
+    },
+    {
+      "name": "migration-guide",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/migration-guide",
+      "description": null,
+      "subskills": []
+    },
+    {
+      "name": "native-app-consumer",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/native-app-consumer",
+      "description": "**[REQUIRED]** for ALL Snowflake Native App consumer tasks: installing apps from listings as a consumer, configuring installed apps (granting privileges, approving specifications, reviewing references), managing maintenance policies, understanding native app cost and credit usage, adding native apps to budgets. Triggers: native app, install native app, configure native app, approve spec, decline spec, maintenance policy, maintenance window, upgrade schedule, control upgrades, app cost, app budget, app spending, native app cost, native app credits, how much does my app cost.",
+      "subskills": [
+        {
+          "name": "app-cost",
+          "description": "",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/native-app-consumer/app-cost",
+          "subskills": []
+        },
+        {
+          "name": "configure-app",
+          "description": "Review and configure an installed Snowflake Native App as a consumer: grant requested privileges, approve or decline app specifications, and review object references. Can be used right after installation or independently on an already-installed app. Triggers: configure native app, review app privileges, grant app privileges, app specifications, approve spec, decline spec, app references, review app.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/native-app-consumer/configure-app",
+          "subskills": []
+        },
+        {
+          "name": "enable-logging",
+          "description": "",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/native-app-consumer/enable-logging",
+          "subskills": []
+        },
+        {
+          "name": "install-app",
+          "description": "Install a Snowflake Native App from a Marketplace listing as a consumer: find the listing, check privileges, review auto-granted privileges, customize installation options, and install the app. Triggers: install native app, install from listing.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/native-app-consumer/install-app",
+          "subskills": []
+        },
+        {
+          "name": "manage-maintenance-policy",
+          "description": "Create, apply, and manage consumer-controlled maintenance policies for Snowflake Native Apps: define maintenance windows with cron schedules to control when app upgrades happen. Triggers: maintenance policy, maintenance window, upgrade schedule, control upgrades, upgrade timing, app maintenance, manage upgrades, set maintenance window, create maintenance policy, change maintenance schedule, when upgrades happen.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/native-app-consumer/manage-maintenance-policy",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "native-app-provider",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/native-app-provider",
+      "description": "Use for **ALL** Snowflake Native App Framework tasks: creating app packages, writing manifest files, writing setup scripts, sharing data, testing, versioning, publishing, configuring telemetry and health status reporting, monitoring app health and lifecycle events, setting up event sharing, and debugging apps. Also use for **ALL** SPCS (Snowpark Container Services) work within native apps: adding containers, upgrading container services, building and pushing images, writing service specs, configuring compute pools, and managing service lifecycle. This is the **REQUIRED** entry point for any native app work. DO NOT attempt native app development manually - invoke this skill first. Triggers: native app, app package, application package, manifest.yml, setup script, CREATE APPLICATION, Snowflake marketplace, listing, native app framework, build native app, walk me through, guide me, get started, add version, register version, add patch, release channel, release directive, publish app, publish version, upgrade consumers, telemetry, health status, SYSTEM$REPORT_HEALTH_STATUS, log_level, trace_level, event definitions, event sharing, APPLICATION_STATE, lifecycle events, monitor app, debug app, observability, add streamlit, streamlit dashboard, add dashboard, streamlit UI, add UI to native app, native app streamlit, streamlit frontend, get_active_session, default_streamlit, SPCS native app, container native app, native app containers, native app SPCS, add containers, container_services, grant_callback, specification file, version_initializer, restricted caller, RCR, restricted callers rights, EXECUTE AS RESTRICTED CALLER, GRANT CALLER, caller rights, caller grants, restricted_callers_rights, access consumer data, consumer's role, caller's privileges, consumer's privileges.",
+      "subskills": [
+        {
+          "name": "add-containers",
+          "description": "Add Snowpark Container Services (SPCS) to a Snowflake Native App: configure container images, compute pools, service specifications, grant callbacks, and service lifecycle management. Focuses on SPCS nuances specific to Native Apps versus standalone SPCS. Triggers: container, SPCS, Snowpark Container Services, compute pool, service spec, container_services, grant_callback, service endpoint, add containers, specification file, specification template, container native app, default_web_endpoint, uses_gpu, upgrade service, version_initializer, SPCS upgrade, ALTER SERVICE, SYSTEM$WAIT_FOR_SERVICES, services, service job.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/native-app-provider/add-containers",
+          "subskills": []
+        },
+        {
+          "name": "add-streamlit-warehouse",
+          "description": "Warehouse runtime sub-skill: adds a Streamlit UI to a Snowflake Native App using environment.yml and the Snowflake Anaconda channel.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/native-app-provider/add-streamlit-warehouse",
+          "subskills": []
+        },
+        {
+          "name": "app-version-release",
+          "description": "Manage versions, patches, and release channels for a Snowflake Native App package. Register versions, add patches, publish to release channels, set release directives, and upgrade consumers. Triggers: version, patch, release channel, publish app, register version, release directive, upgrade consumers, deregister version.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/native-app-provider/app-version-release",
+          "subskills": []
+        },
+        {
+          "name": "configure-event-sharing",
+          "description": "Configure event sharing for a Native App \u2014 centralized event routing tables (CET), legacy per-region event accounts, telemetry event definitions in the manifest, provider event tables, and querying shared consumer telemetry. Triggers: event sharing, event routing table, event account, CET, CREATE EVENT ROUTING TABLE, ALTER ORGANIZATION SET EVENT ROUTING TABLE, SYSTEM$SET_EVENT_SHARING_ACCOUNT_FOR_REGION, cross-region events, shared telemetry.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/native-app-provider/configure-event-sharing",
+          "subskills": []
+        },
+        {
+          "name": "configure-telemetry-event-and-health-update",
+          "description": "Configure telemetry levels, event definitions, health status reporting, and object-level telemetry overrides for a Snowflake Native App. Covers manifest telemetry settings, SYSTEM$REPORT_HEALTH_STATUS, and per-object logging overrides. Triggers: health status, health monitoring, logging, tracing, telemetry, event definitions, log_level, trace_level, metric_level, SYSTEM$REPORT_HEALTH_STATUS, configure telemetry, health update, health check.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/native-app-provider/configure-telemetry-event-and-health-update",
+          "subskills": []
+        },
+        {
+          "name": "debug-app",
+          "description": "Debug a Snowflake Native App in a developer account: session debug mode, disable IP redaction, inspect all app objects, view app query history, and troubleshoot setup script issues. Triggers: debug app, debug mode, session debug, inspect objects, query history, redaction, DISABLE_APPLICATION_REDACTION, SYSTEM$BEGIN_DEBUG_APPLICATION, debug setup script, see all objects, view app queries, reproduce consumer issues.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/native-app-provider/debug-app",
+          "subskills": []
+        },
+        {
+          "name": "deploy-test",
+          "description": "Deploy and test a Snowflake Native App: create application package, upload files to stage, install locally, use development/debug modes, upgrade, and verify functionality. Triggers: deploy app, upload to stage, test app, install app, debug app, development mode, debug mode, upgrade app, test locally, create application, create package.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/native-app-provider/deploy-test",
+          "subskills": []
+        },
+        {
+          "name": "monitor-app-telemetry-event-and-status",
+          "description": "Query and monitor Snowflake Native App health status, lifecycle events, and telemetry from the provider side. Covers APPLICATION_STATE view, lifecycle event queries, and health/upgrade tracking. Triggers: APPLICATION_STATE, monitor app, query health, check app status, lifecycle events, upgrade tracking, audit trail, consumer health, app monitoring, health status query.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/native-app-provider/monitor-app-telemetry-event-and-status",
+          "subskills": []
+        },
+        {
+          "name": "request-account-privilege",
+          "description": "Configure the account-level privileges a Snowflake Native App requests from consumers. Collects user intent, updates the manifest file, and handles auto-granted vs manual-grant privileges. Always enforces manifest_version: 2. Triggers: privilege, auto-grant, manifest privileges, app permissions, privilege configuration, consumer privileges, missing privileges, request privileges, configure privileges.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/native-app-provider/request-account-privilege",
+          "subskills": []
+        },
+        {
+          "name": "request-external-access-integration",
+          "description": "Configure External Access Integrations (EAI) for a Snowflake Native App. Handles both approaches: (1) consumer-owned EAI via references, and (2) app-created EAI via privileges + app specifications. Includes paired secret/OAuth configuration, network rules, configuration callbacks, and the wrapper pattern. Triggers: external access integration, EAI, external API, network rule, app spec EAI, consumer EAI, external access, egress, outbound API, host_ports, allowed_network_rules, configuration_callback.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/native-app-provider/request-external-access-integration",
+          "subskills": []
+        },
+        {
+          "name": "request-listing",
+          "description": "Configure a Listing (data sharing) app specification for a Snowflake Native App. Handles the CREATE DATABASE, CREATE SHARE, and CREATE LISTING privileges, share creation, external listing setup, and app specification generation for sharing data back with provider or third-party accounts. Triggers: listing, share data back, CREATE SHARE, CREATE LISTING, data sharing, compliance reporting, telemetry, shareback, target accounts, cross-region sharing, auto-fulfillment.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/native-app-provider/request-listing",
+          "subskills": []
+        },
+        {
+          "name": "request-object-access",
+          "description": "Configure a Snowflake Native App to request access to consumer-owned objects (tables, views, warehouses, secrets, etc.) using the references mechanism. Generates manifest reference definitions and register callback procedures. Triggers: object reference, consumer table, consumer object, access consumer, register_callback, SYSTEM$REFERENCE, request reference, bind object, reference definition, consumer warehouse, consumer secret, consumer view, access existing object.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/native-app-provider/request-object-access",
+          "subskills": []
+        },
+        {
+          "name": "request-security-integration",
+          "description": "Configure a Security Integration app specification for a Snowflake Native App. Handles the CREATE SECURITY INTEGRATION privilege, OAuth setup (CLIENT_CREDENTIALS, AUTHORIZATION_CODE, JWT_BEARER), and app specification generation. Triggers: security integration, OAuth, API authentication, CLIENT_CREDENTIALS, AUTHORIZATION_CODE, JWT_BEARER, OAuth token endpoint, OAuth scopes, CREATE SECURITY INTEGRATION.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/native-app-provider/request-security-integration",
+          "subskills": []
+        },
+        {
+          "name": "setup-app",
+          "description": "Prepare local files for a new Snowflake Native App: write manifest.yml, setup script, and README. No SQL execution \u2014 deployment is handled by deploy-test. Triggers: create native app, new app, write manifest, setup script, prepare app files, scaffold app.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/native-app-provider/setup-app",
+          "subskills": []
+        },
+        {
+          "name": "shared-data",
+          "description": "Share data content with consumers in a Snowflake Native App: tables inside the package, data from external databases via REFERENCE_USAGE. Triggers: share data, share table, secure view, grant data, REFERENCE_USAGE, shared content, proxy view, share database, share views, data content.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/native-app-provider/shared-data",
+          "subskills": []
+        },
+        {
+          "name": "use-rcr",
+          "description": "Add Restricted Caller Rights (RCR) to a Snowflake Native App to access consumer-owned objects or perform account-level operations. Triggers: restricted caller, RCR, EXECUTE AS RESTRICTED CALLER, GRANT CALLER, caller rights, access consumer data, consumer data from app, restricted_callers_rights, caller grants, consumer's role, caller's privileges, consumer's privileges.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/native-app-provider/use-rcr",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "network-security",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/network-security",
+      "description": "Recommend, evaluate, and migrate Snowflake network policies using built-in security procedures. Use when: generating network policy recommendations from access history, evaluating candidate policies before deployment, migrating existing policies to use Snowflake-managed SaaS rules, creating hybrid policies combining custom rules with SaaS rules. Triggers: recommend network policy, evaluate network policy, candidate policy, migrate policy, SaaS rules, hybrid policy.",
+      "subskills": []
+    },
+    {
+      "name": "notification",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/notification",
+      "description": "Router for Snowflake notification skills. Routes to integration creation/management, content formatting, or sending. Triggers: notification, notification integration, email notification, webhook, slack, teams, pagerduty, send notification, notification content.",
+      "subskills": [
+        {
+          "name": "notification-content",
+          "description": "Generate notification content for SYSTEM$SEND_SNOWFLAKE_NOTIFICATION from a query_id or message body. Selects the appropriate template based on integration type (email, slack, teams, pagerduty, default) and produces the formatted SQL content block. Triggers: notification content, webhook content, email content, slack message, teams message, pagerduty alert, format alert results for notifications, html email, webhook payload, SYSTEM$SEND_SNOWFLAKE_NOTIFICATION content.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/notification/notification-content",
+          "subskills": []
+        },
+        {
+          "name": "notification-integration",
+          "description": "Create and manage Snowflake notification integrations for email and webhooks (Slack, Teams, PagerDuty). Handles secret creation, grants, and integration lifecycle. Triggers: create notification integration, email integration, webhook integration, slack integration, teams integration, pagerduty integration, manage integration, alter integration, drop integration.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/notification/notification-integration",
+          "subskills": []
+        },
+        {
+          "name": "notification-send",
+          "description": "Send notifications. Takes content and an integration name, wraps the content appropriately, and executes the send call. Triggers: send notification, send email, send slack message, send teams message, send pagerduty alert, SYSTEM$SEND_SNOWFLAKE_NOTIFICATION, call notification.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/notification/notification-send",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "openflow",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/openflow",
+      "description": "Openflow data integration operations. Openflow is a Snowflake NiFi-based product for data replication and transformation. Use for connector deployment, configuration, diagnostics, and custom flows.",
+      "subskills": []
+    },
+    {
+      "name": "organization-management",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/organization-management",
+      "description": "Snowflake organization management \u2014 accounts, org users, org insights, org spending, org security, globalorgadmin. ORGANIZATION_USAGE views, cross-account analytics, org-wide metrics. Use when the user asks about: 30 day summary of my organization, 30-day summary, 30 day summary, accounts in my organization, list accounts, how many accounts, account editions, account regions, account inventory, organization users, organization user groups, executive summary of my org, org overview, org spending, org cost, org security posture, org reliability, org auth posture, org hub, org usage views, trust center, MFA readiness, login failures, warehouse credits, storage trends, edition distribution, who has globalorgadmin, what is globalorgadmin, globalorgadmin role, orgadmin role, organization administrator, org admin, enable orgadmin, disable orgadmin, org admin permissions, account admins, ORGANIZATION_USAGE, org-level, cross-account, org-wide.",
+      "subskills": [
+        {
+          "name": "account-lifecycle",
+          "description": "Account lifecycle management \u2014 CREATE and ALTER accounts in your organization. Use when: create account, create new account, provision account, alter account, modify account settings, change account parameters, account edition, upgrade edition, downgrade edition, change edition to business critical, account region, create account in different region, account naming conventions, account parameters, set account parameters, resource monitor, network policy, authentication policy, contact management.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/organization-management/account-lifecycle",
+          "subskills": []
+        },
+        {
+          "name": "accounts",
+          "description": "Snowflake account inventory, editions, and role analytics across your organization. Use when the user asks about: what accounts are in my org, list all accounts, show me our accounts, how many accounts do we have, account inventory, what edition is each account on, which accounts are enterprise, which accounts are standard, which accounts are business critical, edition distribution, edition breakdown, accounts by region, accounts by edition, account status, inactive accounts, suspended accounts, reader accounts, managed accounts, who has globalorgadmin, who has accountadmin, account admins, how many admins, account roles, account locator, account URL, service level, tell me about my accounts.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/organization-management/accounts",
+          "subskills": []
+        },
+        {
+          "name": "client-redirect",
+          "description": "Client redirect and connection management \u2014 redirect client connections for disaster recovery and account migration. Use when: connection url, client redirect, create connection, primary connection, secondary connection, failover setup, disaster recovery, account migration, business continuity, connection vs account locator, redirect client connections, promote connection, connection url structure, connection naming, drop connection, show connections, failover scenario.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/organization-management/client-redirect",
+          "subskills": []
+        },
+        {
+          "name": "globalorgadmin",
+          "description": "GLOBALORGADMIN and ORGADMIN role reference \u2014 when to use each role, how to set them up, how to check grants, how to enable or disable ORGADMIN in accounts. Use when the user asks about: GLOBALORGADMIN, ORGADMIN, organization administrator, org admin role, who has globalorgadmin, how to get globalorgadmin, enable orgadmin, disable orgadmin, organization admin setup, org admin permissions, what can globalorgadmin do, difference between orgadmin and globalorgadmin, organization account roles, create organization account, delegate organization privileges.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/organization-management/globalorgadmin",
+          "subskills": []
+        },
+        {
+          "name": "org-db",
+          "description": "Organization Database (Org DB) management \u2014 centralized organization tags, tag replication, ORGANIZATION$DB. Use when the user asks about: organization database, org db, organization tags, org tags, centralized tags, replicated tags, ORGANIZATION$DB, tag replication across accounts, create org tag, apply org tag, show org tags, org-level tags, cross-account tags, define once use everywhere.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/organization-management/org-db",
+          "subskills": [
+            {
+              "name": "org-db-discovery",
+              "description": "Discover and verify Organization Database status, view org DB metadata, check replication status. Use when the user asks about: what is org db, show organization database, org db status, view org db, check org db, ORGANIZATION$DB, is org db enabled, organization database replication, org db info.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/organization-management/org-db/org-db-discovery",
+              "subskills": []
+            },
+            {
+              "name": "org-tags",
+              "description": "Create and manage organization-level tags in ORGANIZATION$DB for centralized governance. Use when the user asks about: create org tag, organization tag, centralized tag, replicated tag, manage org tags, alter org tag, drop org tag, apply org tag to warehouse, apply org tag to database, tag resources with org tag, ORGANIZATION$DB.TAGS, allowed values for org tag, org tag replication.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/organization-management/org-db/org-tags",
+              "subskills": []
+            }
+          ]
+        },
+        {
+          "name": "org-hub",
+          "description": "Executive organization summaries, org-wide spending, reliability, and security insights. Use when the user asks about: 30 day summary of my organization, executive summary of my org, summarize my organization, org overview, org health, what's happening in my org, how much are we spending, org cost breakdown, cost drivers, spending trends, week over week changes, month over month, biggest spend, which accounts cost the most, reliability risks, security posture, auth posture, trust center violations, MFA readiness, login failure trends, warehouse credits, storage trends, account growth, edition mix, what needs attention, org hub, top insights, org analytics, cost trends, cost spikes, cost optimizations, compare service costs, fastest growing costs, service optimizations, contract utilization, forecast contract, violation trends, trust center coverage, MFA adoption, login failure patterns, auth method distribution, admin distribution, over-provisioned accounts, admin governance, security admin coverage, dormant users, dormant user risk, dormant user cleanup, query failure patterns, most failing queries, warehouse queued load, queue bottlenecks, peak queue times, warehouse load distribution, peak load periods, capacity planning, storage growth, storage consumers, storage optimization, top queries by cost, expensive queries, Organization Hub.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/organization-management/org-hub",
+          "subskills": []
+        },
+        {
+          "name": "org-usage-view",
+          "description": "ORGANIZATION_USAGE view discovery, access troubleshooting, and feature mapping. Use when the user asks about: which org usage views are available, which view should I use for billing, which view for security, why can't I query this view, what role do I need for org usage, organization usage views, org telemetry views, view access troubleshooting, feature to view mapping, what views are enabled.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/organization-management/org-usage-view",
+          "subskills": []
+        },
+        {
+          "name": "reader-accounts",
+          "description": "Reader accounts (managed accounts) \u2014 share data with consumers who are not Snowflake customers. Use when: reader account, managed account, create reader account, create managed account, provision reader account, share data with non-snowflake customer, share without subscription, drop reader account, delete reader account, alter managed account, reader account restrictions, what can reader accounts do, reader account credits, who pays for reader account, data sharing without licensing, reader account limit, show managed accounts, view reader accounts.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/organization-management/reader-accounts",
+          "subskills": []
+        },
+        {
+          "name": "replication-setup",
+          "description": "Account replication setup \u2014 enable replication and create replication groups for disaster recovery. Use when: enable replication, account replication, replication setup, enable account database replication, system global account set parameter, create replication group, primary replication group, secondary replication, replicate across accounts, cross-region replication, replication object types, business critical replication, replication edition requirements, failover group, replication refresh.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/organization-management/replication-setup",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "semantic-view",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/semantic-view",
+      "description": "Use for ALL requests that mention: create, build, debug, fix, troubleshoot, optimize, improve, or analyze a semantic view \u2014 AND for requests about VQR suggestions, verified queries, verified query representations, seeding/generating queries, suggesting metrics, suggesting filters, recommending metrics/filters/facts, importing Tableau (.twb/.twbx/.tds/.tdsx) or Power BI (.pbit/.pbix) files, or enriching a semantic view. This is the entry point - even if the request seems simple. DO NOT attempt to create, debug, or generate suggestions for semantic views manually - always invoke this skill first. This skill guides users through creation, setup, auditing, VQR suggestion generation, filter & metric suggestions, Tableau/Power BI imports, and SQL generation debugging workflows for semantic views with Cortex Analyst.",
+      "subskills": [
+        {
+          "name": "audit",
+          "description": "Comprehensive audit system for semantic views with multiple audit types including VQR testing (behavioral), SVA VQR compile validation (validate_verified_queries), best practices verification (with inconsistencies and duplicates detection), and custom criteria evaluation.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/semantic-view/audit",
+          "subskills": [
+            {
+              "name": "best_practices",
+              "description": "Verify semantic view compliance with established best practices including naming conventions, descriptions, metadata completeness, data quality standards, inconsistencies detection, and duplicates detection.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/semantic-view/audit/best_practices",
+              "subskills": []
+            },
+            {
+              "name": "custom_criteria",
+              "description": "Evaluate semantic view against user-defined validation rules and custom criteria specified in natural language.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/semantic-view/audit/custom_criteria",
+              "subskills": []
+            },
+            {
+              "name": "vqr_testing",
+              "description": "Systematically test semantic views by evaluating all verified queries without VQR hints. Identifies which queries fail to measure semantic view completeness.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/semantic-view/audit/vqr_testing",
+              "subskills": []
+            }
+          ]
+        },
+        {
+          "name": "creation",
+          "description": "Create new semantic views using FastGen system function for automated generation from SQL queries and table metadata. Falls back to manual approach if FastGen fails.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/semantic-view/creation",
+          "subskills": []
+        },
+        {
+          "name": "debug",
+          "description": "Debug and fix specific SQL generation issues in semantic views. Diagnoses root causes, applies targeted optimizations, and validates fixes. Use after semantic-view-setup skill when you have a failing question or VQR.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/semantic-view/debug",
+          "subskills": []
+        },
+        {
+          "name": "filters_and_metrics_suggestions",
+          "description": "Suggest filters, metrics, and facts for a semantic view by analyzing query history. Use this skill whenever the user wants to enrich a semantic view with metrics/measures, named filters, or computed facts. This includes requests like 'suggest metrics', 'suggest filters', 'add metrics to my view', 'what metrics should I add', 'enrich my semantic view', 'recommend filters', 'suggest facts', 'what measures should I define', or any mention of auto-generating, recommending, or populating metrics and filters.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/semantic-view/filters_and_metrics_suggestions",
+          "subskills": []
+        },
+        {
+          "name": "import_powerbi",
+          "description": "Import Power BI files (.pbit/.pbix) into Snowflake Semantic Views. Triggers: powerbi import, power bi import, convert powerbi, .pbit, .pbix, migrate dashboard, dax, m query. Always use this skill when the user mentions Power BI files even if they don't explicitly say 'import'.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/semantic-view/import_powerbi",
+          "subskills": []
+        },
+        {
+          "name": "import_tableau",
+          "description": "Import Tableau workbooks (.twb/.twbx) and datasources (.tds/.tdsx) into Snowflake Semantic Views. Triggers: tableau import, convert tableau, .twb, .twbx, .tds, .tdsx, migrate workbook, published datasource. Always use this skill when the user mentions Tableau files even if they don't explicitly say 'import'.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/semantic-view/import_tableau",
+          "subskills": []
+        },
+        {
+          "name": "optimization",
+          "description": "Library of optimization patterns for dimensions, metrics, filters, relationships, and custom instructions. Use when root cause analysis identifies gaps needing targeted fixes.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/semantic-view/optimization",
+          "subskills": []
+        },
+        {
+          "name": "patterns",
+          "description": "Catalog of 14 advanced Semantic View modeling patterns. Load when the user wants to: compare a metric to the same period last year/month (YoY, MoM, SPLY); build a rolling average / YTD / lag-N comparison metric; model a slowly-changing-dimension lookup with `valid_from`/`valid_to` or attribute an event to the dim row active at event time (as-of, 'address active at order time'); track a snapshot fact that must not sum across time (balance / inventory / headcount); model an accumulating-snapshot funnel across multiple milestone dates ('loan funnel', 'applied \u2192 reviewed \u2192 decided \u2192 funded'); route a metric through a specific FK when one fact has two FKs to the same dim (multi-path metrics); reuse the same physical dim under multiple roles; add a cross-entity derived metric ('% of total', 'net = gross \u2212 returns'); split shared dims across multiple fact tables; expose a private (`access_modifier: private_access`) fact used only inside the SV to derive a tier or other dimension; join on a key that doesn't exist as a physical column (computed-fact FK); steer Cortex Analyst with verified queries and `module_custom_instructions`; or diagnose a fan trap, 'multi-path relationship not supported' error, or numbers that look inflated. Also load when an audit or debug finding maps to one of these patterns.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/semantic-view/patterns",
+          "subskills": []
+        },
+        {
+          "name": "setup",
+          "description": "Initial setup for all semantic view workflows. Creates session directory structure and routes to appropriate workflow (creation or optimization).",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/semantic-view/setup",
+          "subskills": []
+        },
+        {
+          "name": "time_tracking",
+          "description": "Track and report execution time for workflow steps including setup, audit, debug, and validation. Only use when explicitly requested for performance analysis.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/semantic-view/time_tracking",
+          "subskills": []
+        },
+        {
+          "name": "upload",
+          "description": "Upload a semantic view YAML file to Snowflake database.schema",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/semantic-view/upload",
+          "subskills": []
+        },
+        {
+          "name": "validation",
+          "description": "Validate semantic model changes by comparing SQL execution results with exact match requirements. Used by audit and debug to verify optimizations produce correct results.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/semantic-view/validation",
+          "subskills": []
+        },
+        {
+          "name": "vqr_suggestions",
+          "description": "Generate verified query (VQR) suggestions for a semantic view by analyzing Cortex Analyst usage and Snowflake query history. Use this skill whenever the user wants to discover what questions people are asking, populate verified queries from real usage patterns, bootstrap VQRs for a new or existing semantic view, or understand which queries would benefit from verification. This includes requests like 'suggest VQRs', 'what are people asking', 'generate queries from history', 'recommend verified queries', or any mention of populating, seeding, or auto-generating VQRs. Even if the user just says something like 'add some queries' after creating a view, this is the right skill.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/semantic-view/vqr_suggestions",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "setup-snowflake-sso",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/setup-snowflake-sso",
+      "description": "Set up Single Sign-On (SSO) for Snowflake with your Identity Provider (IdP).\nSupports Microsoft Entra ID (Azure AD), Okta, and other SAML 2.0 providers including\nOneLogin, Ping Identity, Google Workspace, Auth0, Duo, JumpCloud, and more.\nIncludes advanced scenarios: Allowed Interfaces, Auto Redirect, and Snowflake Intelligence tile setup.",
+      "subskills": []
+    },
+    {
+      "name": "skill_development",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/skill_development",
+      "description": "Create, document, audit, or refactor skills for Cortex Code. Use when: creating new skills, capturing session work as skills, reviewing skills, refactoring large skills. Triggers: create skill, build skill, new skill, summarize session, capture workflow, audit skill, review skill, refactor skill, triage skills.",
+      "subskills": [
+        {
+          "name": "audit-skill",
+          "description": "Audit, lint, and triage skills against best practices. Use when: reviewing skills, checking quality, assessing skill directories, batch auditing. Triggers: audit skill, review skill, lint skill, triage skills, assess skills.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/skill_development/audit-skill",
+          "subskills": []
+        },
+        {
+          "name": "create-from-scratch",
+          "description": "Create new skills from scratch. Use when user wants to build a new skill with proper structure.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/skill_development/create-from-scratch",
+          "subskills": []
+        },
+        {
+          "name": "refactor-skill",
+          "description": "Restructure skills that are too large or complex. Use when: skill exceeds 500 lines, has too many branches, needs splitting. Triggers: refactor skill, restructure skill, decompose skill.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/skill_development/refactor-skill",
+          "subskills": []
+        },
+        {
+          "name": "summarize-session",
+          "description": "Capture current session as reusable skill. Use when: user wants to turn completed work into repeatable workflow. Triggers: summarize session, capture workflow, turn into skill.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/skill_development/summarize-session",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "snowflake-apps",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowflake-apps",
+      "description": "Build and deploy web applications on Snowflake. Use for ALL app requests: create, scaffold, build, deploy, publish, develop, test, operate, monitor, or troubleshoot a Snowflake App. A Snowflake App is a JS/Node web application (typically Next.js) deployed to SPCS via SnowCLI app commands (`snow app` preferred, `snow __app` fallback for older CLI versions). This is NOT a Streamlit app or Native App. Triggers: build me an app, new app, scaffold, react app, next.js app, dashboard, data app, deploy my app, push to snowflake, ship it, deploy failed, fix deploy, run locally, develop, app logs, app status, restart app.",
+      "subskills": [
+        {
+          "name": "create",
+          "description": "Create a new Snowflake App (Next.js) from scratch. Use when the user asks to create, build, scaffold, or start a new Snowflake App, dashboard, or data app.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowflake-apps/create",
+          "subskills": []
+        },
+        {
+          "name": "deploy",
+          "description": "Deploy an app to Snowflake. Summarises settings, gets approval, then builds and deploys remotely. Use when the user asks to deploy, publish, or push a Snowflake app.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowflake-apps/deploy",
+          "subskills": []
+        },
+        {
+          "name": "develop",
+          "description": "Local development, testing, and iteration for Snowflake Apps. Use when the user wants to run locally, test, add features, or iterate on an existing app.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowflake-apps/develop",
+          "subskills": []
+        },
+        {
+          "name": "operate",
+          "description": "Post-deploy operations for Snowflake Apps: logs, status, restart, scale, rollback. Use when the user wants to monitor, troubleshoot, or manage a running app.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowflake-apps/operate",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "snowflake-notebooks",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowflake-notebooks",
+      "description": "Create and edit Workspace notebooks (.ipynb files) for Snowflake. Use when: creating workspace notebooks, editing notebooks, debugging notebook issues, converting code to notebooks, multi-step workflows that combine SQL queries with Python code execution and visualization, step-by-step data analysis requiring both SQL and Python, interactive data exploration with code and charts. Do NOT use for: static SQL-only dashboards (use dashboard skill), Streamlit apps, standalone Python scripts, or stored procedures. Triggers: notebook, .ipynb, snowflake notebook, workspace notebook, create notebook, edit notebook, jupyter, ipynb file, notebook cell, SQL cell, step-by-step analysis with SQL and Python, data exploration with code and visualization, combine SQL and Python.",
+      "subskills": []
+    },
+    {
+      "name": "snowflake-postgres",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowflake-postgres",
+      "description": "**[REQUIRED]** Use for **ALL** requests involving Snowflake Postgres, and for general help working with any PostgreSQL database through standard PG tooling (psql, ~/.pg_service.conf, ~/.pgpass, pg_doctor diagnostics). Triggers: 'postgres', 'postgresql', 'pg', 'psql', 'create postgres instance', 'show postgres instances', 'suspend postgres', 'resume postgres', 'reset postgres credentials', 'rotate postgres password', 'import postgres connection', 'postgres network policy', 'postgres health check', 'pg_doctor', 'pg_lake', 'postgres iceberg', 'pg iceberg', 'read pg_lake in snowflake', 'pg to snowflake iceberg', 'catalog integration for pg_lake', 'expose pg_lake to snowflake', 'SNOWFLAKE_POSTGRES catalog', 'catalog linked database for pg_lake', 'query postgres iceberg from snowflake', 'postgres slow queries', 'cache hit', 'bloat', 'vacuum', 'dead rows', 'postgres locks', 'blocking queries', 'postgres disk usage', 'active postgres queries', 'postgres connection count', 'neon', 'supabase', 'rds postgres', 'aurora postgres', 'azure postgres', 'crunchy bridge', 'external postgres', 'my postgres', 'migrate postgres', 'pg migration', 'postgres to snowflake', 'logical replication setup', 'pg_dump migration', 'migration assessment', 'cutover plan', 'rollback plan', 'migrate from RDS', 'migrate from Aurora', 'migrate from Azure postgres', 'migrate from Cloud SQL', 'move my postgres', 'transfer postgres'. Do NOT use for generic Iceberg / catalog integration / storage integration / data lake requests \u2014 those are owned by the `iceberg` skill, EXCEPT for catalog integrations scoped to pg_lake (`CATALOG_SOURCE = SNOWFLAKE_POSTGRES`), which are handled here. Only handle Iceberg when it is scoped to pg_lake (Postgres-resident Iceberg tables or the pg_lake-specific catalog integration path).",
+      "subskills": [
+        {
+          "name": "connect",
+          "description": "Network policy setup and connectivity checks. Triggers: 'my IP', 'network policy', 'can't connect', 'add IP', 'import connection'.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowflake-postgres/connect",
+          "subskills": []
+        },
+        {
+          "name": "diagnose",
+          "description": "Run Postgres health diagnostics via pg_doctor.py. Triggers: 'health check', 'diagnose', 'diagnostics', 'insights', 'pg_doctor', 'cache hit', 'bloat', 'vacuum', 'dead rows', 'autovacuum', 'locks', 'blocking queries', 'blocked', 'waiting', 'long running', 'slow queries', 'query performance', 'outliers', 'unused indexes', 'table sizes', 'disk usage', 'storage', 'connections', 'connection count', 'how many connections', 'what's running', 'active queries'.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowflake-postgres/diagnose",
+          "subskills": []
+        },
+        {
+          "name": "manage",
+          "description": "Manage Snowflake Postgres instances: list, describe, create, suspend, resume.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowflake-postgres/manage",
+          "subskills": []
+        },
+        {
+          "name": "migrate",
+          "description": "Migrate PostgreSQL databases to Snowflake Postgres. **[REQUIRED]** Use for ALL pg migration tasks including: pg migration, migrate postgres, replicate to snowflake postgres, pg_dump migration, logical replication setup, migration assessment, data validation, cutover planning, rollback strategy, postgres sync, database move, pg transfer, copy postgres data. Triggers: migrate postgres, pg migration, postgres to snowflake, replication setup, migration readiness, cutover plan, rollback plan, move my postgres, sync databases, transfer postgres, copy from postgres, postgres dump, pg_restore, migrate from RDS, migrate from Aurora, migrate from Azure postgres, migrate from Cloud SQL.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowflake-postgres/migrate",
+          "subskills": [
+            {
+              "name": "assess",
+              "description": "Assess PostgreSQL database for migration readiness to Snowflake Postgres. Use for: migration assessment, readiness check, check blockers, complexity score, recommend method, can I migrate, pre-migration audit. Detects unsupported extensions, missing PKs, wal_level issues, complex factors (PostGIS, partitions, custom types) and produces an HTML report.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowflake-postgres/migrate/assess",
+              "subskills": []
+            },
+            {
+              "name": "cutover",
+              "description": "Step-by-step cutover runbook with timing, GO/NO-GO checkpoints, and rollback windows. Use for: cutover plan, go-live, switch over, migration day, cutover checklist, application switchover, sequence sync, post-migration cleanup.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowflake-postgres/migrate/cutover",
+              "subskills": []
+            },
+            {
+              "name": "dump-restore",
+              "description": "Offline PostgreSQL migration via pg_dump/pg_restore to Snowflake Postgres. Use for: pg_dump, pg_restore, dump and restore, offline migration, backup and restore, full database export, schema-only dump, COPY-based table migration. Requires a downtime window.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowflake-postgres/migrate/dump-restore",
+              "subskills": []
+            },
+            {
+              "name": "large-db",
+              "description": "Replica-assisted initial sync for very large PostgreSQL databases (500 GB+, especially 1 TB+). Use for: large database migration, terabyte migration, TB migration, replica sync, fast initial load, minimize source load, RDS S3 Parquet export, pg_lake-based migration, Aurora clone migration.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowflake-postgres/migrate/large-db",
+              "subskills": []
+            },
+            {
+              "name": "monitor",
+              "description": "Monitor replication health, lag, and migration progress. Use for: monitor replication, check lag, replication status, migration progress, WAL bloat, slot health, sync state, replication dashboard, replication slot inactive, subscription worker errors.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowflake-postgres/migrate/monitor",
+              "subskills": []
+            },
+            {
+              "name": "replicate",
+              "description": "Logical replication setup from PostgreSQL to Snowflake Postgres for near-zero downtime migration. Use for: logical replication, setup replication, live sync, near-zero downtime, publication, subscription, pglogical, CREATE SUBSCRIPTION, streaming replication, target-to-source connectivity.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowflake-postgres/migrate/replicate",
+              "subskills": []
+            },
+            {
+              "name": "resume",
+              "description": "Track migration progress and pause/resume/repeat phases. Use for: resume migration, migration status, where did I leave off, continue migration, pause migration, repeat phase, re-run validation, redo pg_dump, lost connection, migration state, recover after interruption.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowflake-postgres/migrate/resume",
+              "subskills": []
+            },
+            {
+              "name": "rollback",
+              "description": "Plan and execute rollback/failback if migration encounters critical issues. Use for: rollback plan, failback, reverse migration, abort migration, undo cutover, reverse replication, point-in-time recovery, dual-write strategy, rollback triggers, post-cutover recovery.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowflake-postgres/migrate/rollback",
+              "subskills": []
+            },
+            {
+              "name": "security",
+              "description": "Migrate PostgreSQL users, roles, and permissions to Snowflake Postgres. Use for: migrate users, migrate roles, migrate permissions, grants, security migration, RBAC, role memberships, default privileges, RLS policies, pg_dumpall --roles-only, vendor-specific role filtering (rds_*, azure_*, cloudsql_*, Neon platform roles).",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowflake-postgres/migrate/security",
+              "subskills": []
+            },
+            {
+              "name": "validate",
+              "description": "Validate data integrity after PostgreSQL to Snowflake Postgres migration. Use for: validate migration, data validation, compare data, verify migration, row count comparison, checksum validation, pgCompare, SnowConvert, sample data check, aggregation comparison, pre-cutover validation.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowflake-postgres/migrate/validate",
+              "subskills": []
+            }
+          ]
+        },
+        {
+          "name": "pg-lake",
+          "description": "pg_lake setup and usage on Snowflake Postgres instances: Postgres-resident Iceberg tables, POSTGRES_EXTERNAL_STORAGE integrations, COPY TO/FROM S3 from Postgres, moving data between Postgres and Snowflake. Triggers: 'pg_lake', 'postgres iceberg', 'pg iceberg', 'postgres to iceberg', 'iceberg from postgres', 'POSTGRES_EXTERNAL_STORAGE', 'postgres COPY to S3', 'postgres export to S3', 'move data postgres to snowflake'. Do NOT use for general Snowflake Iceberg (catalog integrations, external volumes, CLD) \u2014 those are handled by the top-level `iceberg` skill.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowflake-postgres/pg-lake",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "snowpark",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowpark",
+      "description": "**[REQUIRED]** Use for **ALL** requests involving Snowpark Python \u2014 writing pipelines, transforming data, loading files, deploying stored procedures/UDFs, OR observability. MUST invoke this skill even for seemingly simple tasks because Snowflake DataFrame semantics differ from Pandas in ways that silently produce wrong results (NULL handling, division by zero, GREATEST, datediff, type casting). Always load this skill BEFORE writing any Snowpark code. Triggers: Snowpark, Python, DataFrame, pipeline, ETL, ingest, transform, load data, CSV, Parquet, JSON, XML, join, aggregate, window function, UDF, UDTF, UDAF, Stored Procedure, deploy, snow snowpark CLI, DBAPI, JDBC, external database, pull data, event table, logging, tracing, trace events, profiler, debug UDF, debug procedure, observability, telemetry, slow procedure, alert on error, monitor.",
+      "subskills": []
+    },
+    {
+      "name": "snowpipe-streaming",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowpipe-streaming",
+      "description": "**[REQUIRED]** Use for ALL Snowpipe Streaming tasks: setup, configure, troubleshoot, monitor, optimize, or migrate streaming pipelines. Covers the High-Performance Architecture exclusively. Triggers: snowpipe streaming, streaming ingestion, low-latency ingestion, real-time ingestion, Snowpipe Streaming SDK, channel, insertRows, appendRows, streaming channel, PIPE object, streaming pipe, snowpipe v2, high-performance streaming, migrate classic streaming, troubleshoot streaming.",
+      "subskills": [
+        {
+          "name": "migrate",
+          "description": "Migrate from Snowpipe Streaming classic to High-Performance Architecture.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowpipe-streaming/migrate",
+          "subskills": []
+        },
+        {
+          "name": "monitor",
+          "description": "Monitor Snowpipe Streaming High-Performance Architecture pipeline health, channels, and costs.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowpipe-streaming/monitor",
+          "subskills": []
+        },
+        {
+          "name": "optimize",
+          "description": "Optimize Snowpipe Streaming High-Performance Architecture throughput, latency, and costs.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowpipe-streaming/optimize",
+          "subskills": []
+        },
+        {
+          "name": "setup",
+          "description": "Set up Snowpipe Streaming High-Performance Architecture pipelines from scratch.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowpipe-streaming/setup",
+          "subskills": []
+        },
+        {
+          "name": "troubleshoot",
+          "description": "Troubleshoot Snowpipe Streaming High-Performance Architecture pipeline issues.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/snowpipe-streaming/troubleshoot",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "spark-migration",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/spark-migration",
+      "description": "Run the SMA CLI to convert PySpark code to Snowpark, or generate dashboard and fix EWIs from existing SMA output. Supports both Snowpark API and Snowpark Connect (SCOS) conversion paths. Triggers: run sma, convert spark, migrate pyspark, sma conversion, migrate to snowpark, convert to snowpark, already ran sma, sma dashboard, fix ewis, stage conversion, snowpark connect, scos, scos migration, migrate to snowpark connect, migrate to scos.",
+      "subskills": [
+        {
+          "name": "sma-dashboard-generator",
+          "description": "Generate interactive SMA dashboard to track EWIs from conversion. Triggers: sma dashboard, ewi tracker, track EWIs, conversion issues.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/spark-migration/sma-dashboard-generator",
+          "subskills": []
+        },
+        {
+          "name": "snowflake-notebook-migration",
+          "description": "Migrates Databricks (DBX) notebooks to Snowflake Workspace notebooks. Preserves original code, only fixes incompatible patterns, flags unsupported features as migration notes. Use when: migrating Databricks notebooks, converting DBX notebooks to Snowflake, fixing Databricks-specific patterns. Triggers: migrate databricks, convert dbx, databricks to snowflake, dbx notebook, migrate notebook, databricks migration.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/spark-migration/snowflake-notebook-migration",
+          "subskills": []
+        },
+        {
+          "name": "snowpark-connect",
+          "description": "Snowpark Connect (SCOS) skills for migrating and validating PySpark and Spark Scala workloads on Snowflake.\nGenerates SMA-compatible reports (Issues.csv, InputFilesInventory.csv, ArtifactDependencyInventory.csv)\nusing EWI codes (SPRKCNTPY* for Python, SPRKCNTSCL* for Scala) for use with dvp-sma-dashboard-generator.\nUse when: migrating PySpark or Spark Scala to Snowpark Connect, validating SCOS migrations,\nanalyzing Spark compatibility, or working with Snowpark Connect for Spark.\nTriggers: snowpark connect, scos, pyspark migration, spark connect, scala spark migration,\nvalidate migration, pyspark compatibility, scala compatibility.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/spark-migration/snowpark-connect",
+          "subskills": [
+            {
+              "name": "migrate-pyspark-to-snowpark-connect",
+              "description": "Migrate PySpark and Databricks workloads to Snowflake SCOS (Snowpark Connect for Spark).\nUse when: converting Spark code to run on Snowflake, analyzing PySpark compatibility,\nupdating imports to Spark Connect equivalents, or migrating from Databricks.\nGenerates SCOS-compatible reports (Issues.csv, InputFilesInventory.csv, ArtifactDependencyInventory.csv)\nfor the dvp-scos-dashboard-generator using official SCOS EWI codes (SPRKCNTPY*).\nTriggers: migrate pyspark, convert spark, scos migration,\nspark connect, pyspark compatibility, snowpark connect.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/spark-migration/snowpark-connect/migrate-pyspark-to-snowpark-connect",
+              "subskills": []
+            },
+            {
+              "name": "migrate-spark-scala-to-snowpark-connect",
+              "description": "Migrate Spark Scala workloads to Snowflake SCOS (Snowpark Connect for Spark).\nUse when: converting Scala Spark code to run on Snowflake, analyzing Scala Spark compatibility,\nupdating imports to Spark Connect equivalents, or migrating from standalone Spark Scala.\nGenerates SMA-compatible reports (Issues.csv, InputFilesInventory.csv, ArtifactDependencyInventory.csv)\nfor the dvp-sma-dashboard-generator using official SMA EWI codes (SPRKCNTSCL*).\nTriggers: migrate scala spark, convert scala, scos scala migration,\nspark connect scala, scala compatibility, snowpark connect scala.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/spark-migration/snowpark-connect/migrate-spark-scala-to-snowpark-connect",
+              "subskills": []
+            },
+            {
+              "name": "validate-pyspark-to-snowpark-connect",
+              "description": "Validate a completed PySpark to Snowpark Connect (SCOS) migration by running the migrated\nworkload end-to-end with synthetic data. Use when: verifying migration correctness,\nsmoke-testing migrated code, checking SCOS runtime compatibility.\nTriggers: validate migration, verify scos, test migration, smoke test, run migrated workload.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/spark-migration/snowpark-connect/validate-pyspark-to-snowpark-connect",
+              "subskills": []
+            },
+            {
+              "name": "validate-spark-scala-to-snowpark-connect",
+              "description": "Validate a completed Spark Scala to Snowpark Connect (SCOS) migration by running the migrated\nworkload end-to-end with synthetic data. Use when: verifying Scala migration correctness,\nsmoke-testing migrated Scala code, checking SCOS runtime compatibility for Scala.\nTriggers: validate scala migration, verify scala scos, test scala migration, smoke test scala.",
+              "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/spark-migration/snowpark-connect/validate-spark-scala-to-snowpark-connect",
+              "subskills": []
+            }
+          ]
+        },
+        {
+          "name": "stage-conversion",
+          "description": "Replace embedded file paths in SMA-converted Snowpark code. Use when: migrating Spark code via SMA, fixing file path references, updating storage locations, changing stage prefix. Triggers: replace embedded file paths, embedded file paths, file paths, SMA file paths, Snowpark paths, change stage prefix.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/spark-migration/stage-conversion",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "sql-author",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/sql-author",
+      "description": "Use for ANY task that involves writing, running, or debugging SQL against Snowflake tables. Helps find the right table, verify columns exist, avoid timeouts on large tables, and validate joins. Triggers: write a query, sql for, query this table, author sql, build a query, fix this query, how many, how much, show me data, explore this table, describe table, select from.",
+      "subskills": []
+    },
+    {
+      "name": "storage-lifecycle-policy",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/storage-lifecycle-policy",
+      "description": "Create, manage, and monitor Snowflake storage lifecycle policies. Use when: creating expiration or archival policies, attaching policies to tables, monitoring policy execution, retrieving archived data, managing data retention, reducing storage costs, saving on table storage. Triggers: storage lifecycle, lifecycle policy, archive data, expire data, COOL tier, COLD tier, data retention, archival storage, CREATE STORAGE LIFECYCLE POLICY, FROM ARCHIVE OF, ARCHIVE_FOR_DAYS, storage cost optimization, table is large, table is expensive, save on storage.",
+      "subskills": []
+    },
+    {
+      "name": "team-workflow",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/team-workflow",
+      "description": "Multi-phase team orchestration for feature implementation. Supports two entry paths: explicit user request for teammates, or autonomous complexity-based assessment after entering plan mode. HIGHEST PRIORITY \u2014 must be loaded FIRST (before any domain skills) when user asks to use teammates, teams, or parallel agents. Triggers: use teammates, use a team, work in parallel with agents, delegate to teammates, swarm this, swarm, team up on this, team up, orchestrate with subagents, subagent-orchestrated, gated workflow, multi-phase workflow, coordinate agents, spawn workers, worker/verifier, parallel agents, run as a team, investigate with agents, research with agents, explore with agents.",
+      "subskills": []
+    },
+    {
+      "name": "trust-center",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/trust-center",
+      "description": "Use for ALL Snowflake Trust Center requests: security findings, scanner analysis, scanner management, finding remediation, severity distribution, CIS benchmarks, Security Essentials, Threat Intelligence, enable/disable scanners, scanner schedules, notifications, webhook, notification integration, at-risk entities, security posture, vulnerability analysis, detection analysis, remediation guidance.",
+      "subskills": [
+        {
+          "name": "api-management",
+          "description": null,
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/trust-center/api-management",
+          "subskills": []
+        },
+        {
+          "name": "finding-remediation",
+          "description": "Help users understand and remediate Trust Center security findings. Use when users ask about: fixing a finding, remediating a vulnerability, understanding a specific finding, at-risk entities, suggested actions, how to fix a security issue detected by Trust Center, or want step-by-step remediation guidance.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/trust-center/finding-remediation",
+          "subskills": []
+        },
+        {
+          "name": "findings-analysis",
+          "description": "Analyze Trust Center security findings in Snowflake. Use when users ask about: new findings, finding counts, severity distribution, scanner results, resolved findings, scanner frequency optimization, security categories, or want to understand their Trust Center findings.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/trust-center/findings-analysis",
+          "subskills": []
+        },
+        {
+          "name": "scanner-analysis",
+          "description": "Analyze Trust Center scanners and scanner packages in Snowflake. Use when users ask about: scanners, scanner packages, scanner coverage, disabled scanners, scanner schedules, scanner categories, CIS benchmarks, Security Essentials, Threat Intelligence, or want to understand their Trust Center scanner configuration.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/trust-center/scanner-analysis",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "warehouse",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/warehouse",
+      "description": "Warehouse configuration, DDL, Gen2, adaptive, performance tuning, sizing, credit-per-hour rates, resume behavior, region availability, Snowpark-optimized limitations. Not for cost analytics or warehouse spend (cost-intelligence) or billing.",
+      "subskills": [
+        {
+          "name": "adaptive-warehouse",
+          "description": "Adaptive warehouse questions: creating, converting, tuning, billing, and limitations.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/warehouse/adaptive-warehouse",
+          "subskills": []
+        },
+        {
+          "name": "gen2-warehouse",
+          "description": "Gen2 warehouse questions: creating, converting, performance, limitations, regions, credit costs, and benchmarking. Also covers performance concerns where Gen2 may help.",
+          "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/warehouse/gen2-warehouse",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "workload-performance-analysis",
+      "type": "BUNDLED",
+      "path": "/home/runner/.local/share/cortex/1.0.91+174752.67f408b8e2d6/bundled_skills/workload-performance-analysis",
+      "description": "Snowflake SQL query execution analysis via ACCOUNT_USAGE views. Triggers: spilling, partition pruning, cache hit rates, clustering keys, search optimization (SOS) candidates, query acceleration (QAS) eligibility, predicate column analysis for clustering/SOS, per-warehouse spill/prune/cache metrics, slow SQL query diagnosis. Not for: cost/credits (cost-intelligence), access audit (data-governance), writing or debugging user SQL.",
+      "subskills": []
+    }
+  ]
+}
