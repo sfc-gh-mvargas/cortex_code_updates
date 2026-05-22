@@ -1,0 +1,14 @@
+{
+  "date_of": "2026-05-22",
+  "from_version": "1.0.91",
+  "to_version": "1.0.92",
+  "cli_version": "1.0.92",
+  "channel": "beta",
+  "new_skills": [
+    {
+      "name": "share-skill",
+      "description": "Share or unshare a local skill to users within the same account by  executing the Cortex Extension share SQL directly. Use when the user  says \"share skill\", \"publish skill\", \"share my skill.md\",  \"share skill with users\", \"share skill publicly\", \"upload skill to cortex extension\", \"publish my skill\", \"share this skill\", \"make skill available\", \"unshare skill\", \"stop sharing skill\", \"remove shared skill\", \"revoke shared skill access\", or \"delete shared skill\". Does not handle consumer/install flows. Does not handle sharing across accounts."
+    }
+  ],
+  "count": 1
+}

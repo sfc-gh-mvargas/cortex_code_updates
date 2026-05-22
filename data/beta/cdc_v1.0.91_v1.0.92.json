@@ -1,0 +1,24 @@
+{
+  "detected_date": "2026-05-22",
+  "from_version": "1.0.91",
+  "to_version": "1.0.92",
+  "cli_version": "1.0.92",
+  "channel": "beta",
+  "changes": [
+    {
+      "skill_name": "share-skill",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "snowflake-apps",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "spark-migration",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    }
+  ]
+}
