@@ -1,0 +1,252 @@
+{
+  "cli_version": "1.0.95",
+  "captured_at": "2026-05-23T04:17:28+00:00",
+  "ingestion_date": "2026-05-23",
+  "plugin_count": 3,
+  "channel": "beta",
+  "plugins": [
+    {
+      "name": "data",
+      "version": "0.1.0",
+      "status": "enabled",
+      "source": "bundled",
+      "description": "Data engineering plugin - warehouse exploration, pipeline authoring, Airflow integration",
+      "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_plugins/airflow",
+      "components": "",
+      "skills": [
+        {
+          "name": "airflow",
+          "description": "Manages Apache Airflow operations including listing, testing, running, and debugging DAGs, viewing task logs, checking connections and variables, and monitoring system health. Use when working with Airflow DAGs, pipelines, workflows, or tasks, or when the user mentions testing dags, running pipelines, debugging workflows, dag failures, task errors, dag status, pipeline status, list dags, show connections, check variables, or airflow health.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_plugins/airflow/skills/airflow",
+          "subskills": []
+        },
+        {
+          "name": "airflow-hitl",
+          "description": "Use when the user needs human-in-the-loop workflows in Airflow (approval/reject, form input, or human-driven branching). Covers ApprovalOperator, HITLOperator, HITLBranchOperator, HITLEntryOperator. Requires Airflow 3.1+. Does not cover AI/LLM calls (see airflow-ai).",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_plugins/airflow/skills/airflow-hitl",
+          "subskills": []
+        },
+        {
+          "name": "analyzing-data",
+          "description": "Queries data warehouse and answers business questions about data. Handles questions requiring database/warehouse queries including \"who uses X\", \"how many Y\", \"show me Z\", \"find customers\", \"what is the count\", data lookups, metrics, trends, or SQL analysis.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_plugins/airflow/skills/analyzing-data",
+          "subskills": []
+        },
+        {
+          "name": "annotating-task-lineage",
+          "description": "Annotate Airflow tasks with data lineage using inlets and outlets. Use when the user wants to add lineage metadata to tasks, specify input/output datasets, or enable lineage tracking for operators without built-in OpenLineage extraction.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_plugins/airflow/skills/annotating-task-lineage",
+          "subskills": []
+        },
+        {
+          "name": "authoring-dags",
+          "description": "Workflow and best practices for writing Apache Airflow DAGs. Use when the user wants to create a new DAG, write pipeline code, or asks about DAG patterns and conventions. For testing and debugging DAGs, see the testing-dags skill.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_plugins/airflow/skills/authoring-dags",
+          "subskills": []
+        },
+        {
+          "name": "checking-freshness",
+          "description": "Quick data freshness check. Use when the user asks if data is up to date, when a table was last updated, if data is stale, or needs to verify data currency before using it.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_plugins/airflow/skills/checking-freshness",
+          "subskills": []
+        },
+        {
+          "name": "cosmos-dbt-core",
+          "description": "Use when turning a dbt Core project into an Airflow DAG/TaskGroup using Astronomer Cosmos. Does not cover dbt Fusion. Before implementing, verify dbt engine, warehouse, Airflow version, execution environment, DAG vs TaskGroup, and manifest availability.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_plugins/airflow/skills/cosmos-dbt-core",
+          "subskills": []
+        },
+        {
+          "name": "cosmos-dbt-fusion",
+          "description": "Use when running a dbt Fusion project with Astronomer Cosmos. Covers Cosmos 1.11+ configuration for Fusion on Snowflake/Databricks with ExecutionMode.LOCAL. Before implementing, verify dbt engine is Fusion (not Core), warehouse is supported, and local execution is acceptable. Does not cover dbt Core.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_plugins/airflow/skills/cosmos-dbt-fusion",
+          "subskills": []
+        },
+        {
+          "name": "creating-openlineage-extractors",
+          "description": "Create custom OpenLineage extractors for Airflow operators. Use when the user needs lineage from unsupported or third-party operators, wants column-level lineage, or needs complex extraction logic beyond what inlets/outlets provide.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_plugins/airflow/skills/creating-openlineage-extractors",
+          "subskills": []
+        },
+        {
+          "name": "debugging-dags",
+          "description": "Comprehensive DAG failure diagnosis and root cause analysis. Use for complex debugging requests requiring deep investigation like \"diagnose and fix the pipeline\", \"full root cause analysis\", \"why is this failing and how to prevent it\". For simple debugging (\"why did dag fail\", \"show logs\"), the airflow entrypoint skill handles it directly. This skill provides structured investigation and prevention recommendations.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_plugins/airflow/skills/debugging-dags",
+          "subskills": []
+        },
+        {
+          "name": "init",
+          "description": "Initialize warehouse schema discovery. Generates .astro/warehouse.md with all table metadata for instant lookups. Run once per project, refresh when schema changes. Use when user says \"/data:init\" or asks to set up data discovery.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_plugins/airflow/skills/init",
+          "subskills": []
+        },
+        {
+          "name": "managing-astro-local-env",
+          "description": "Manage local Airflow environment with Astro CLI. Use when the user wants to start, stop, or restart Airflow, view logs, troubleshoot containers, or fix environment issues. For project setup, see setting-up-astro-project.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_plugins/airflow/skills/managing-astro-local-env",
+          "subskills": []
+        },
+        {
+          "name": "migrating-airflow-2-to-3",
+          "description": "Guide for migrating Apache Airflow 2.x projects to Airflow 3.x. Use when the user mentions Airflow 3 migration, upgrade, compatibility issues, breaking changes, or wants to modernize their Airflow codebase. If you detect Airflow 2.x code that needs migration, prompt the user and ask if they want you to help upgrade. Always load this skill as the first step for any migration-related request.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_plugins/airflow/skills/migrating-airflow-2-to-3",
+          "subskills": []
+        },
+        {
+          "name": "profiling-tables",
+          "description": "Deep-dive data profiling for a specific table. Use when the user asks to profile a table, wants statistics about a dataset, asks about data quality, or needs to understand a table's structure and content. Requires a table name.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_plugins/airflow/skills/profiling-tables",
+          "subskills": []
+        },
+        {
+          "name": "setting-up-astro-project",
+          "description": "Initialize and configure Astro/Airflow projects. Use when the user wants to create a new project, set up dependencies, configure connections/variables, or understand project structure. For running the local environment, see managing-astro-local-env.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_plugins/airflow/skills/setting-up-astro-project",
+          "subskills": []
+        },
+        {
+          "name": "testing-dags",
+          "description": "Complex DAG testing workflows with debugging and fixing cycles. Use for multi-step testing requests like \"test this dag and fix it if it fails\", \"test and debug\", \"run the pipeline and troubleshoot issues\". For simple test requests (\"test dag\", \"run dag\"), the airflow entrypoint skill handles it directly. This skill is for iterative test-debug-fix cycles.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_plugins/airflow/skills/testing-dags",
+          "subskills": []
+        },
+        {
+          "name": "tracing-downstream-lineage",
+          "description": "Trace downstream data lineage and impact analysis. Use when the user asks what depends on this data, what breaks if something changes, downstream dependencies, or needs to assess change risk before modifying a table or DAG.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_plugins/airflow/skills/tracing-downstream-lineage",
+          "subskills": []
+        },
+        {
+          "name": "tracing-upstream-lineage",
+          "description": "Trace upstream data lineage. Use when the user asks where data comes from, what feeds a table, upstream dependencies, data sources, or needs to understand data origins.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_plugins/airflow/skills/tracing-upstream-lineage",
+          "subskills": []
+        }
+      ]
+    },
+    {
+      "name": "code-review",
+      "version": "0.1.0",
+      "status": "enabled",
+      "source": "bundled",
+      "description": "Code review plugin - reviews pull requests for bugs and AGENTS.md compliance",
+      "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_plugins/review",
+      "components": "",
+      "skills": []
+    },
+    {
+      "name": "databricks",
+      "version": "0.1.0",
+      "status": "enabled",
+      "source": "external",
+      "description": "Databricks development skills - CLI, bundles, ETL, dbt, Unity Catalog, SQL, performance, cost optimization, testing, and notebook refactoring",
+      "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_external_plugins/databricks",
+      "components": "",
+      "skills": [
+        {
+          "name": "databricks-automation-bundles",
+          "description": "Create, configure, deploy, and run Databricks Declarative Automation Bundles (DAB, formerly Databricks Asset Bundles). Use when: initializing bundle projects, defining jobs, pipelines, Python wheels, Scala JARs, MLOps stacks, or Databricks apps as code, deploying bundles to workspaces, running bundle workflows, validating configurations, generating bundle config from existing resources, binding resources, creating custom templates, or managing the full bundle lifecycle (init \u2192 validate \u2192 deploy \u2192 run \u2192 destroy). Triggers: bundle, DAB, asset bundle, declarative automation bundle, bundle init, bundle deploy, bundle run, bundle validate, bundle destroy, databricks.yml, job bundle, pipeline bundle, python wheel bundle, scala jar bundle, mlops stacks, bundle template, CI/CD databricks, infrastructure as code databricks.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_external_plugins/databricks/skills/databricks-automation-bundles",
+          "subskills": []
+        },
+        {
+          "name": "databricks-cli",
+          "description": "Run Databricks CLI commands for day-to-day workspace operations. Use when: managing clusters, running jobs, listing or cancelling job runs, managing SQL warehouses, working with workspace files and notebooks, managing secrets and scopes, managing users/groups/service-principals/permissions, querying serving endpoints, interacting with ML experiments and model registry, using the filesystem (DBFS/Volumes), executing arbitrary REST API calls, or any general databricks CLI operation not covered by the bundle, install, UC, or ETL skills. Triggers: databricks cli, clusters, jobs, job runs, pipelines, SQL warehouse, workspace, notebooks, secrets, fs, dbfs, serving endpoints, model serving, experiments, model registry, users, groups, service principals, permissions, grants, alerts, queries, instance pools, libraries, repos, git credentials, account, api, REST.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_external_plugins/databricks/skills/databricks-cli",
+          "subskills": []
+        },
+        {
+          "name": "databricks-cli-install",
+          "description": "Install, update, and configure the Databricks CLI. Use when the user wants to install databricks cli, set up databricks cli, update databricks cli, configure databricks authentication, databricks auth login, brew install databricks, troubleshoot databricks cli installation issues, connect to a new databricks workspace, new workspace onboarding, getting started with databricks, or first time databricks setup. NOTE: If the user wants to install Databricks SKILLS or MCP tools for Cortex Code (AI Dev Kit), route to the databricks-setup skill instead.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_external_plugins/databricks/skills/databricks-cli-install",
+          "subskills": []
+        },
+        {
+          "name": "databricks-cost-optimization",
+          "description": "Audit and optimize Databricks costs across compute, storage, and workloads. Use when: reduce Databricks cost, save money, cost optimization, expensive cluster, DBU usage, spot instances, autoscaling, auto termination, compute policy, right-size cluster, serverless vs classic, Photon cost-benefit, streaming cost, always-on streaming, tagging, cost attribution, chargeback, budget alerts, cost monitoring, system tables billing, billing usage, system.billing.usage, job compute vs all-purpose, SQL warehouse sizing, instance type selection, GPU cost, unnecessary GPU, compute policies, fleet instances, cost audit, cost dashboard, reduce spend Databricks, model serving cost, ML training cost, Delta optimization cost.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_external_plugins/databricks/skills/databricks-cost-optimization",
+          "subskills": [
+            {
+              "name": "cluster-compute",
+              "description": "Optimize Databricks cluster compute costs. Triggers: job compute, all-purpose, autoscaling, auto termination, compute policy, instance type, right-size cluster, Photon cost, spot instances, fleet, cluster cost, expensive cluster, job vs all-purpose, compute policies, T-shirt sizing, cluster pools.",
+              "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_external_plugins/databricks/skills/databricks-cost-optimization/cluster-compute",
+              "subskills": []
+            },
+            {
+              "name": "cost-monitoring-governance",
+              "description": "Databricks cost monitoring, tagging, budgets, dashboards, and governance. Triggers: billing, tagging, budget, chargeback, cost dashboard, cost audit, system.billing.usage, untagged resources, cost attribution, spending alerts.",
+              "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_external_plugins/databricks/skills/databricks-cost-optimization/cost-monitoring-governance",
+              "subskills": []
+            },
+            {
+              "name": "ml-gpu-compute",
+              "description": "Optimize Databricks ML and GPU compute costs. Triggers: GPU cost, unnecessary GPU, ML training cost, model serving cost, deep learning cost, GPU audit, GPU instance, model serving scaling, inference cost, ML compute, training cluster, GPU utilization, Mosaic AI serving.",
+              "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_external_plugins/databricks/skills/databricks-cost-optimization/ml-gpu-compute",
+              "subskills": []
+            },
+            {
+              "name": "sql-warehouses",
+              "description": "Optimize Databricks SQL warehouse costs. Triggers: SQL warehouse, warehouse sizing, serverless warehouse, classic warehouse, pro warehouse, IWM, intelligent workload management, SQL cost, warehouse idle, warehouse scaling, warehouse auto stop, SQL serverless, warehouse type.",
+              "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_external_plugins/databricks/skills/databricks-cost-optimization/sql-warehouses",
+              "subskills": []
+            },
+            {
+              "name": "streaming-workloads",
+              "description": "Optimize Databricks streaming and workload design costs. Triggers: streaming cost, always-on, triggered streaming, availableNow, Delta optimization, OPTIMIZE, VACUUM, Z-ORDER, liquid clustering, runtime version, batch vs streaming, continuous vs triggered, 24/7 compute, streaming freshness.",
+              "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_external_plugins/databricks/skills/databricks-cost-optimization/streaming-workloads",
+              "subskills": []
+            }
+          ]
+        },
+        {
+          "name": "databricks-dbsql",
+          "description": "Databricks SQL (DBSQL) advanced features and SQL warehouse capabilities. Use when the user mentions: DBSQL, Databricks SQL, SQL warehouse, SQL scripting, stored procedure, CALL procedure, materialized view, CREATE MATERIALIZED VIEW, pipe syntax, pipe operator, geospatial, H3, ST_, spatial SQL, collation, COLLATE, ai_query, ai_classify, ai_extract, ai_gen, ai_analyze_sentiment, ai_similarity, ai_forecast, ai_mask, ai_fix_grammar, ai_parse_document, vector_search, AI function, http_request, remote_query, read_files, Lakehouse Federation, recursive CTE, WITH RECURSIVE, multi-statement transaction, temp table, temporary view, data modeling best practices on Databricks, Liquid Clustering, star schema Databricks, SCD Type 2 Databricks.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_external_plugins/databricks/skills/databricks-dbsql",
+          "subskills": []
+        },
+        {
+          "name": "databricks-dbt-pipeline",
+          "description": "Build, deploy, and run end-to-end dbt pipelines on Databricks using Declarative Automation Bundles (DAB) and the Databricks CLI. Use when: dbt pipeline, dbt project, dbt Databricks, dbt-databricks, dbt task, dbt workflow, dbt job, dbt run, dbt seed, dbt test, dbt deps, dbt build, dbt models, dbt sources, dbt transformations, profiles.yml Databricks, dbt SQL warehouse, dbt serverless, dbt-core Databricks, dbt bundle, dbt-sql template, medallion dbt, dbt deploy, dbt schedule, dbt CI/CD, dbt DAB, dbt production, dbt development workflow.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_external_plugins/databricks/skills/databricks-dbt-pipeline",
+          "subskills": []
+        },
+        {
+          "name": "databricks-etl-pyspark-notebooks",
+          "description": "Build, deploy, and orchestrate ETL pipelines on Databricks using PySpark notebooks (.ipynb). Use when: creating ETL pipelines, building medallion architecture (silver/gold), writing PySpark transformations in notebooks, scheduling notebook-based data pipelines, deploying ETL jobs with Declarative Automation Bundles, configuring serverless or classic compute for ETL workloads, writing to Delta or Iceberg tables. Assumes source data already exists as tables in Unity Catalog. Triggers: ETL, ELT, extract transform load, PySpark, spark notebook, medallion, silver gold, data pipeline, transform, aggregate, data engineering, Delta Lake, Iceberg, data lakehouse, notebook job, ETL job, Delta merge, SCD.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_external_plugins/databricks/skills/databricks-etl-pyspark-notebooks",
+          "subskills": []
+        },
+        {
+          "name": "databricks-local-testing",
+          "description": "Generate pytest suites for Databricks PySpark code that run locally without a cluster. Handles dbutils mocking (fs, secrets, widgets), SparkSession fixtures, display() stubs, and DataFrame assertions. Use when: writing unit tests, testing locally, mocking dbutils, pytest databricks, local testing, CI/CD testing, test pyspark, mock secrets, mock widgets, test without cluster, assertDataFrameEqual, conftest fixtures.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_external_plugins/databricks/skills/databricks-local-testing",
+          "subskills": []
+        },
+        {
+          "name": "databricks-notebook-refactor",
+          "description": "Refactor monolithic Databricks notebooks into modular Python packages. Extracts business logic into testable .py modules, replaces %run chains with imports, parameterizes hardcoded values, and creates thin orchestrator notebooks. Use when: refactor notebook, modularize code, extract functions, %run migration, notebook to package, monolith notebook, code organization, split notebook, clean up notebook, production-ready code, move to modules, notebook too big, organize notebook code.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_external_plugins/databricks/skills/databricks-notebook-refactor",
+          "subskills": []
+        },
+        {
+          "name": "databricks-setup",
+          "description": "Install, update, and manage the Databricks AI Dev Kit skills for Cortex Code. Handles prerequisites, installer execution, and profile management. Use when: install databricks skills, set up databricks tools, setup databricks, update ai dev kit, databricks ai dev kit, databricks setup, dev kit install, add databricks skills, reinstall databricks tools, change skill profile, list available skills.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_external_plugins/databricks/skills/databricks-setup",
+          "subskills": []
+        },
+        {
+          "name": "databricks-spark-performance",
+          "description": "Diagnose and fix Spark job performance bottlenecks on Databricks. Use when: slow Spark job, shuffle optimization, data skew, spill to disk, broadcast join, AQE tuning, Adaptive Query Execution, Photon evaluation, partition tuning, Spark UI interpretation, stage bottleneck, OOM, out of memory, GC pressure, task duration skew, shuffle partition count, spark.sql.shuffle.partitions, autoBroadcastJoinThreshold, redundant shuffle, unnecessary repartition, double shuffle, why is my Spark job slow, optimize Spark, performance tuning Databricks, slow stage, slow query Databricks.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_external_plugins/databricks/skills/databricks-spark-performance",
+          "subskills": []
+        },
+        {
+          "name": "databricks-unity-catalog",
+          "description": "Browse and discover data in Databricks Unity Catalog via the CLI. Use when: listing catalogs, schemas, tables, volumes, viewing table metadata, exploring UC hierarchy, finding data assets, checking grants/permissions, or referencing data objects for downstream work. Triggers: unity catalog, UC, list catalogs, list schemas, list tables, describe table, browse data, data discovery, catalog.schema.table, three-level namespace, grants, permissions, volumes.",
+          "path": "/home/runner/.local/share/cortex/1.0.95+041013.41427c3749ca/bundled_external_plugins/databricks/skills/databricks-unity-catalog",
+          "subskills": []
+        }
+      ]
+    }
+  ]
+}
