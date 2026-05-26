@@ -1,0 +1,19 @@
+{
+  "detected_date": "2026-05-26",
+  "from_version": "1.0.96",
+  "to_version": "1.0.97",
+  "cli_version": "1.0.97",
+  "channel": "beta",
+  "changes": [
+    {
+      "skill_name": "ai-readiness-score",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "migration-guide",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    }
+  ]
+}
