@@ -1,0 +1,14 @@
+{
+  "date_of": "2026-05-26",
+  "from_version": "1.0.94",
+  "to_version": "1.0.98",
+  "cli_version": "1.0.98",
+  "channel": "stable",
+  "new_skills": [
+    {
+      "name": "ai-readiness-score",
+      "description": "Measure AI readiness for this Snowflake account. Scores Consumption-Ready (CR) tables, Semantic View (SV) coverage and quality, and demand coverage. Generates an HTML scorecard report with recommendations. Runs in Snowsight (notebook) or CLI mode (direct SQL), auto-detected by environment. Caches results for fast reruns. Use when: AI readiness, readiness score, how AI-ready am I, measure my ai readiness, semantic view coverage, Semantic View (SV) quality, Consumption-Ready (CR) tables, demand coverage, CR tables, AI readiness report, score my account."
+    }
+  ],
+  "count": 1
+}
