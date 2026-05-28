@@ -1,0 +1,44 @@
+{
+  "detected_date": "2026-05-28",
+  "from_version": "1.0.99",
+  "to_version": "1.1.0",
+  "cli_version": "1.1.0",
+  "channel": "beta",
+  "changes": [
+    {
+      "skill_name": "cortex-ai-function-studio",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "cortex-code-guide",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "cost-intelligence",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "document-intelligence",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "marketplace-search",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "share-skill",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "trust-center",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    }
+  ]
+}
