@@ -1,0 +1,19 @@
+{
+  "detected_date": "2026-06-04",
+  "from_version": "1.1.4",
+  "to_version": "1.1.5",
+  "cli_version": "1.1.5",
+  "channel": "beta",
+  "changes": [
+    {
+      "skill_name": "data-cleanrooms",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "marketplace-search",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    }
+  ]
+}
