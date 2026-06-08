@@ -1,0 +1,14 @@
+{
+  "date_of": "2026-06-04",
+  "from_version": "1.1.2",
+  "to_version": "1.1.5",
+  "cli_version": "1.1.5",
+  "channel": "stable",
+  "new_skills": [
+    {
+      "name": "sharing",
+      "description": "Router for Snowflake sharing and collaboration. Routes to Secure Data Sharing, Declarative Sharing, Native Apps, or Data Clean Rooms. Asks up to 2 questions when intent is ambiguous, then loads the target sub-skill. This skill should supersede invocation of product-specific skills unless the product is named explicitly. Triggers: share, sharing, listing, data product, how do I share, what's the best way to share, compare sharing options."
+    }
+  ],
+  "count": 1
+}
