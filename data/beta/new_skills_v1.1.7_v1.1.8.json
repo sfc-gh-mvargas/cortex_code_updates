@@ -1,0 +1,14 @@
+{
+  "date_of": "2026-06-12",
+  "from_version": "1.1.7",
+  "to_version": "1.1.8",
+  "cli_version": "1.1.8",
+  "channel": "beta",
+  "new_skills": [
+    {
+      "name": "openflow-observability",
+      "description": "Troubleshoot Openflow connector / runtime / deployment issues via Snowsight SQL diagnostics, and run a narrow set of confirmation-gated SQL actions on SQL-managed runtimes. Use when: connector is unhealthy, table FAILED, runtime stuck or OOM, EAI / network issues, restart / resume / suspend runtime, attach EAI to runtime. Triggers: openflow, connector, runtime, deployment, EAI, table FAILED, openflow troubleshoot, openflow runtime."
+    }
+  ],
+  "count": 1
+}

@@ -1,0 +1,19 @@
+{
+  "detected_date": "2026-06-12",
+  "from_version": "1.1.7",
+  "to_version": "1.1.8",
+  "cli_version": "1.1.8",
+  "channel": "beta",
+  "changes": [
+    {
+      "skill_name": "cortex-code-guide",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "openflow-observability",
+      "action": "NEW",
+      "detail": null
+    }
+  ]
+}
