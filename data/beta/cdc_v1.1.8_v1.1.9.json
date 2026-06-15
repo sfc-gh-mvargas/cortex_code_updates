@@ -1,0 +1,29 @@
+{
+  "detected_date": "2026-06-15",
+  "from_version": "1.1.8",
+  "to_version": "1.1.9",
+  "cli_version": "1.1.9",
+  "channel": "beta",
+  "changes": [
+    {
+      "skill_name": "marketplace-search",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "semantic-view",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "team-workflow",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "warehouse",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "date_of": "2026-06-12",
+  "from_version": "1.1.6",
+  "to_version": "1.1.8",
+  "cli_version": "1.1.8",
+  "channel": "stable",
+  "new_skills": [
+    {
+      "name": "openflow-observability",
+      "description": "Troubleshoot Openflow connector / runtime / deployment issues via Snowsight SQL diagnostics, and run a narrow set of confirmation-gated SQL actions on SQL-managed runtimes. Use when: connector is unhealthy, table FAILED, runtime stuck or OOM, EAI / network issues, restart / resume / suspend runtime, attach EAI to runtime. Triggers: openflow, connector, runtime, deployment, EAI, table FAILED, openflow troubleshoot, openflow runtime."
+    },
+    {
+      "name": "snowflake-tasks",
+      "description": "**[REQUIRED]** Use for **ALL** Snowflake Task operations: creating, scheduling, managing, monitoring, and troubleshooting tasks and task graphs. This is the required entry point for any task-related work. Triggers: task, tasks, scheduled task, cron task, task graph, DAG, task chain, task pipeline, triggered task, stream trigger, WHEN condition, SYSTEM$STREAM_HAS_DATA, suspend task, resume task, alter task, drop task, task history, task failure, auto-suspended, SUSPEND_TASK_AFTER_NUM_FAILURES, serverless task, finalizer task, task permissions, EXECUTE TASK, task schedule, task monitoring, parameterized task, CONFIG, SYSTEM$GET_TASK_GRAPH_CONFIG, runtime parameters, configurable pipeline, return value, pass data between tasks, SYSTEM$SET_RETURN_VALUE, SYSTEM$GET_PREDECESSOR_RETURN_VALUE, inter-task communication."
+    }
+  ],
+  "count": 2
+}

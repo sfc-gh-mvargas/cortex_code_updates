@@ -1,0 +1,29 @@
+{
+  "detected_date": "2026-06-12",
+  "from_version": "1.1.6",
+  "to_version": "1.1.8",
+  "cli_version": "1.1.8",
+  "channel": "stable",
+  "changes": [
+    {
+      "skill_name": "cortex-code-guide",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "cost-intelligence",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "openflow-observability",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "snowflake-tasks",
+      "action": "NEW",
+      "detail": null
+    }
+  ]
+}
