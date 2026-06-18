@@ -1,0 +1,29 @@
+{
+  "detected_date": "2026-06-18",
+  "from_version": "1.1.9",
+  "to_version": "1.1.13",
+  "cli_version": "1.1.13",
+  "channel": "beta",
+  "changes": [
+    {
+      "skill_name": "lineage",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "manage-authentication-policy",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "share-skill-and-plugin-via-snowflake",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "share-skill",
+      "action": "DELETED",
+      "detail": null
+    }
+  ]
+}
