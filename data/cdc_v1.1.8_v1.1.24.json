@@ -1,0 +1,79 @@
+{
+  "detected_date": "2026-06-30",
+  "from_version": "1.1.8",
+  "to_version": "1.1.24",
+  "cli_version": "1.1.24",
+  "channel": "stable",
+  "changes": [
+    {
+      "skill_name": "cost-intelligence",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "data-cleanrooms",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "data-sharing",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "lineage",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "manage-authentication-policy",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "marketplace-search",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "native-app-consumer",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "native-app-provider",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "semantic-view",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "share-skill-and-plugin-via-snowflake",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "sql-author",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "team-workflow",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "warehouse",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "share-skill",
+      "action": "DELETED",
+      "detail": null
+    }
+  ]
+}
