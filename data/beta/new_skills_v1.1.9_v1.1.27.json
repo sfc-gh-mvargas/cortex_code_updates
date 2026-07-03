@@ -1,0 +1,18 @@
+{
+  "date_of": "2026-07-02",
+  "from_version": "1.1.9",
+  "to_version": "1.1.27",
+  "cli_version": "1.1.27",
+  "channel": "beta",
+  "new_skills": [
+    {
+      "name": "manage-authentication-policy",
+      "description": "Use for requests about Snowflake authentication policies. Create, modify, view, attach, detach,\ndrop, OR recommend authentication policies. Covers: restricting authentication methods\n(PASSWORD, SAML, OAUTH, KEYPAIR), enforcing MFA, configuring PAT expiry and network policy,\nworkload identity federation, client type restrictions, minimum driver versions, and security\nintegration controls.\nInvoke when user mentions: authentication policy, auth policy, MFA policy, MFA enrollment,\nPAT policy, client types, workload identity, driver version policy, keypair only, SAML only,\nrequire MFA, block password login, restrict client access, service account authentication,\nshow/list authentication policies, recommend/suggest authentication policies, help me set up\nauth policies, audit my authentication, harden authentication, lock down authentication."
+    },
+    {
+      "name": "share-skill-and-plugin",
+      "description": "Share or unshare a local skill or plugin to users within the same account by executing the Cortex Extension share SQL directly. Use when the user says \"share skill\", \"publish skill\", \"share my skill\", \"share plugin\", \"publish plugin\", \"share my plugin\", \"share with users\", \"share publicly\", \"upload to cortex extension\", \"publish my skill\", \"publish my plugin\", \"make available\", \"add to skill catalog\", \"add to catalog\", \"add skill to catalog\", \"add plugin to catalog\", \"add my skill to the catalog\", \"publish to skill catalog\", \"publish to the catalog\", \"submit to skill catalog\", \"put in the skill catalog\", \"unshare skill\", \"unshare plugin\", \"stop sharing\", \"remove shared\", \"revoke access\", \"remove from catalog\", \"delete from catalog\" or \"delete shared\".  This is for publishing a local skill or plugin TO the catalog; to install or pull  an existing skill FROM the catalog, use find-skill instead. Does not handle  consumer/install flows. Does not handle sharing across accounts."
+    }
+  ],
+  "count": 2
+}
