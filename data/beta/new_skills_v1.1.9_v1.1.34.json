@@ -1,0 +1,26 @@
+{
+  "date_of": "2026-07-10",
+  "from_version": "1.1.9",
+  "to_version": "1.1.34",
+  "cli_version": "1.1.34",
+  "channel": "beta",
+  "new_skills": [
+    {
+      "name": "ai-functions-pipeline-builder",
+      "description": "Build Snowflake-native document and file pipelines with Cortex AI functions. Turn a plain-language request into an incremental pipeline (stream \u2192 task \u2192 INCREMENTAL dynamic tables) from a use-case template or a custom composition of building blocks \u2014 ingest files from a stage and keep the outputs fresh as new files land. Composes one-off AI steps as part of building a pipeline. Routes to AI_EXTRACT (structured fields), AI_PARSE_DOCUMENT (full text/OCR), AI_COMPLETE (visual/chart/diagram analysis), AI_CLASSIFY (categorize/triage). Use when: building a document/file processing pipeline, an incremental ingestion pipeline over a stage, or an enterprise-search / corpus-intelligence / structured-extraction / customer-360 pipeline. Triggers: document pipeline, build a pipeline, incremental pipeline, ingestion pipeline, keep outputs fresh, process new files as they land, stream and task, dynamic tables, enterprise search, corpus intelligence, structured extraction, customer 360, invoice-processing pipeline, contract analysis at scale. For a one-off task over files you already have \u2014 a single file or a one-time batch with no ongoing pipeline: extract, parse/OCR, classify, or visually analyze \u2014 use the document-intelligence skill. For standalone AI functions over already-tabular text or image rows with no file, stage, or document, defer to cortex-ai-function-studio."
+    },
+    {
+      "name": "find-skill-and-plugin",
+      "description": "Find, add, check, or update Cortex Code catalog skills and plugins before using them. Use when the user asks to search \"the catalog\" (even without specifying skill or plugin), discover available skills or plugins, install a catalog skill or plugin, make an uninstalled `/skill` or `$skill` usable, search the skill or plugin marketplace/catalog, check whether installed skills or plugins have updates, or update skills and plugins from the catalog, stage, GitHub, or tarball sources. Do not use this for public Snowflake Marketplace datasets or apps; use marketplace-search for third-party data/product listings."
+    },
+    {
+      "name": "manage-authentication-policy",
+      "description": "Use for requests about Snowflake authentication policies. Create, modify, view, attach, detach,\ndrop, OR recommend authentication policies. Covers: restricting authentication methods\n(PASSWORD, SAML, OAUTH, KEYPAIR), enforcing MFA, configuring PAT expiry and network policy,\nworkload identity federation, client type restrictions, minimum driver versions, and security\nintegration controls.\nInvoke when user mentions: authentication policy, auth policy, MFA policy, MFA enrollment,\nPAT policy, client types, workload identity, driver version policy, keypair only, SAML only,\nrequire MFA, block password login, restrict client access, service account authentication,\nshow/list authentication policies, recommend/suggest authentication policies, help me set up\nauth policies, audit my authentication, harden authentication, lock down authentication."
+    },
+    {
+      "name": "share-skill-and-plugin",
+      "description": "Share or unshare a local skill or plugin to users within the same account by executing the Cortex Extension share SQL directly. Use when the user says \"share skill\", \"publish skill\", \"share my skill\", \"share plugin\", \"publish plugin\", \"share my plugin\", \"share with users\", \"share publicly\", \"upload to cortex extension\", \"publish my skill\", \"publish my plugin\", \"make available\", \"add to skill catalog\", \"add to catalog\", \"add skill to catalog\", \"add plugin to catalog\", \"add my skill to the catalog\", \"publish to skill catalog\", \"publish to the catalog\", \"submit to skill catalog\", \"put in the skill catalog\", \"unshare skill\", \"unshare plugin\", \"stop sharing\", \"remove shared\", \"revoke access\", \"remove from catalog\", \"delete from catalog\" or \"delete shared\".  This is for publishing a local skill or plugin TO the catalog; to install or pull  an existing skill FROM the catalog, use find-skill instead. Does not handle  consumer/install flows. Does not handle sharing across accounts."
+    }
+  ],
+  "count": 4
+}
