@@ -1,0 +1,109 @@
+{
+  "detected_date": "2026-07-14",
+  "from_version": "1.1.9",
+  "to_version": "1.1.43",
+  "cli_version": "1.1.43",
+  "channel": "beta",
+  "changes": [
+    {
+      "skill_name": "ai-functions-pipeline-builder",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "certified-data-product-discovery",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "certify-object",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "cost-intelligence",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "data-cleanrooms",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "data-governance",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "data-sharing",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "document-intelligence",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "find-skill-and-plugin",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "iceberg",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "lineage",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "manage-authentication-policy",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "native-app-consumer",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "native-app-provider",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "recommend-object",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "share-skill-and-plugin",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "snowflake-apps",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "sql-author",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "team-workflow",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "share-skill",
+      "action": "DELETED",
+      "detail": null
+    }
+  ]
+}
