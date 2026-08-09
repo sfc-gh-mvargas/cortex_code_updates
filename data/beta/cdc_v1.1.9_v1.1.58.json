@@ -1,0 +1,199 @@
+{
+  "detected_date": "2026-08-06",
+  "from_version": "1.1.9",
+  "to_version": "1.1.58",
+  "cli_version": "1.1.58",
+  "channel": "beta",
+  "changes": [
+    {
+      "skill_name": "agent-studio",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "ai-functions-pipeline-builder",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "business-ontology",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "certified-data-product-discovery",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "certify-object",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "cortex-sense",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "cost-intelligence",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "data-cleanrooms",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "data-governance",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "data-sharing",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "declarative-sharing",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "document-intelligence",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "find-skill-and-plugin",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "get-marketplace-listing-details",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "guardrails-guide",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "html-authoring",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "iceberg",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "lineage",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "machine-learning",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "manage-authentication-policy",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "manage-zerocopy-sapbdc",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "marketplace-search",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "native-app-consumer",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "native-app-provider",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "recommend-object",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "sar-actions-desktop",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "share-skill-and-plugin",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "sharing",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "snowflake-apps",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "snowflake-publish-report",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "sql-author",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "team-workflow",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "warehouse",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "workspaces",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "cortex-agent",
+      "action": "DELETED",
+      "detail": null
+    },
+    {
+      "skill_name": "find-skill",
+      "action": "DELETED",
+      "detail": null
+    },
+    {
+      "skill_name": "semantic-view",
+      "action": "DELETED",
+      "detail": null
+    },
+    {
+      "skill_name": "share-skill",
+      "action": "DELETED",
+      "detail": null
+    }
+  ]
+}
