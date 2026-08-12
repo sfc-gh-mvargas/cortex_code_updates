@@ -1,0 +1,78 @@
+{
+  "date_of": "2026-08-10",
+  "from_version": "1.1.8",
+  "to_version": "1.1.65",
+  "cli_version": "1.1.65",
+  "channel": "stable",
+  "new_skills": [
+    {
+      "name": "agent-studio",
+      "description": "Semantic View, Semantic Model, Cortex Analyst, and Cortex Agent skill. Use for ALL requests that mention these \u2014 including create, build, edit, deploy, validate, audit, optimize, evaluate, suggest VQRs/relationships, or manage verified queries. Keywords: semantic view, semantic model, Cortex Analyst, Cortex Agent, analyst YAML, semantic YAML, analyst model, VQR, verified query, verified query representation, agentic optimization, sql_correctness, SQL generation accuracy, audit semantic view, suggest relationships, suggest metrics, suggest filters, agent alias, agent version, importing Tableau workbooks (.twb/.twbx/.tds/.tdsx), importing Power BI files (.pbit/.pbix), importing OSI (Open Semantic Interchange, also known as Ossie) YAML models. DO NOT attempt these operations manually \u2014 this is the entry point."
+    },
+    {
+      "name": "ai-functions-pipeline-builder",
+      "description": "Build Snowflake-native document and file pipelines with Cortex AI functions. Turn a plain-language request into an incremental pipeline (stream \u2192 task \u2192 INCREMENTAL dynamic tables) from a use-case template or a custom composition of building blocks \u2014 ingest files from a stage and keep the outputs fresh as new files land. Composes one-off AI steps as part of building a pipeline. Routes to AI_EXTRACT (structured fields), AI_PARSE_DOCUMENT (full text/OCR), AI_COMPLETE (visual/chart/diagram analysis), AI_CLASSIFY (categorize/triage). Use when: building a document/file processing pipeline, an incremental ingestion pipeline over a stage, or an enterprise-search / corpus-intelligence / structured-extraction / customer-360 pipeline. Triggers: document pipeline, build a pipeline, incremental pipeline, ingestion pipeline, keep outputs fresh, process new files as they land, stream and task, dynamic tables, enterprise search, corpus intelligence, structured extraction, customer 360, invoice-processing pipeline, contract analysis at scale. For a one-off task over files you already have \u2014 a single file or a one-time batch with no ongoing pipeline: extract, parse/OCR, classify, or visually analyze \u2014 use the document-intelligence skill. For standalone AI functions over already-tabular text or image rows with no file, stage, or document, defer to cortex-ai-function-studio."
+    },
+    {
+      "name": "automation",
+      "description": "Schedule recurring Cortex Code runs as Snowflake AGENT TASKs via the `cortex automation` CLI (aka `/automation`): daily/hourly/weekly tasks, recurring reports, unattended cron jobs, and checking automation fire history. NOT the LangGraph Cortex Automations product (see cortex-automations)."
+    },
+    {
+      "name": "business-ontology",
+      "description": "Create and manage Business Ontology nodes, domains, relationships, and Snowflake object associations \u2014 individually or via bulk import with AI extraction. Also owns source registration: track stage files and prefixes as ontology sources, run imports from them, and expose those sources to Cortex Sense for enrichment."
+    },
+    {
+      "name": "certified-data-product-discovery",
+      "description": "Find certified data products that can answer a user's question and guide the user through using them. Searches Snowflake objects with Snowscope, classifies results by certification (SNOWFLAKE.CORE.CERTIFICATION_STATUS = 'CERTIFIED') and by access (accessible vs Discover-Not-Access), presents a grouped menu, then queries the chosen object. Use this skill whenever a data question is combined with a restriction to certified or trusted sources \u2014 for example \"use certified data only\", \"use only certified tables\", \"from certified sources only\", \"answer using certified data\", \"only trusted data\", \"only governed data\", \"with certified data in <db.schema> only\". Also use when the user asks: \"which certified tables can I use for <topic>\", \"find certified data for my question\", \"what trusted data is available for <topic>\", \"is there a certified source for <metric>\", \"discover certified data products\", \"answer with certified data only\". Do not use for publishing new data products (that is `collaboration/data-products`) or for cross-account sharing (that is `collaboration/data-sharing`)."
+    },
+    {
+      "name": "certify-object",
+      "description": "Apply, verify, and manage the SNOWFLAKE.CORE.CERTIFICATION_STATUS tag on Snowflake objects to mark them as trusted sources in the data catalog. Triggers: certify this table, mark as certified, apply certification, tag as trusted, mark this object as certified, certify it. Use when: user wants to mark a specific Snowflake object as certified."
+    },
+    {
+      "name": "cortex-sense",
+      "description": "Set up, test, query, and refine Cortex Sense contexts. CoCo runs a background scan of the account the moment the use case is named, proposes a scoped domain context, accepts edits in plain English, and persists a manifest the offline build consumes. Use when: starting a new use case for Cortex Sense, validating a built context with real questions, querying across multiple contexts, listing all available Cortex Sense domains, or correcting a wrong / missing / stale answer. Triggers: set up cortex sense, build cortex sense for <use case>, test the <use case> context, query about <X>, search contexts for <X>, search across contexts for <X>, what does cortex sense know about <X>, which of my contexts know about <X>, refine cortex sense, the agent picked the wrong table, DAU is wrong, exclude staging, add another schema, @cortex-sense resume <use case>, @cortex-sense query <use case> about <X>, list cortex sense, show all domains, what cortex sense do I have, list all contexts, what domains exist."
+    },
+    {
+      "name": "find-skill-and-plugin",
+      "description": "Find, add, check, or update Cortex Code catalog skills and plugins before using them. Use when the user asks to search \"the catalog\" (even without specifying skill or plugin), discover available skills or plugins, install a catalog skill or plugin, try to find a skill or a plugin that can help with a task, make an uninstalled `/skill` or `$skill` usable, search the skill or plugin marketplace/catalog, check whether installed skills or plugins have updates, or update skills and plugins from the catalog, stage, GitHub, or tarball sources. ALSO use when the user expresses intent to acquire, install, or enable a capability, tool, or integration that no already-installed skill covers \u2014 even without naming a skill, plugin, or catalog, and including non-Snowflake developer domains such as infrastructure, CI/CD, and third-party SaaS. Do not use this for public Snowflake Marketplace datasets or apps; use marketplace-search for third-party data/product listings."
+    },
+    {
+      "name": "guardrails-guide",
+      "description": "Guides through CoCo /guardrails and Restricted Session Scope (RSS). Use for ANY request involving: creating a scope, creating an RSS scope, blocking roles for the agent, making the session read-only via RSS, applying a session restriction, storing a scope to the session, removing RSS from a session, deactivating RSS, turning off guardrails, disabling RSS mid-session, preserving session state when removing RSS, 'block securityadmin', 'sql read-only scope', 'restrict what the agent can do', 'limit agent SQL', 'create USER$<USERNAME>.RSS', 'apply scope', 'activate scope', 'how do I use guardrails', 'set up RSS', 'create RSS object', 'named scopes', 'restrict roles for the agent', 'guardrails not working', 'RSS help', 'session scope', 'RESTRICTED_SESSION_SCOPE', 'remove RSS', 'keep session variables', 'keep temp tables after removing RSS'. ALSO use for ANY SQL error whose message contains 'Restricted session scope' \u2014 e.g. 'Insufficient privileges to operate on schema. Restricted session scope:'. When this error appears, do NOT suggest role switches or GRANT statements; instead read the active scope via SYS_CONTEXT and guide the user to activate a scope with the required privilege via /guardrails. When a user says \"create a scope that blocks X\" or \"apply read-only to session\" or \"store scope to session\" \u2014 always use this skill before doing anything else. Do NOT search external docs for RSS syntax \u2014 all syntax is embedded in this skill. Do NOT run `cortex search docs` for RSS or DDL questions; always use the DDL reference section in this skill instead."
+    },
+    {
+      "name": "html-authoring",
+      "description": "**[REQUIRED]** for ALL creation, updating, or editing of `.html` files, regardless of complexity. Snowflake renders report HTML in a strict, sandboxed environment: no inline event handlers, no `eval`, no runtime network calls, no remote images or CDN scripts \u2014 only a fixed set of vendored libraries served from `/libs/`. Author every report to these rules so it renders correctly and is safe to share. Must use whenever generating, creating, updating, or modifying an `.html` file (e.g. 'update the HTML report at \u2026')."
+    },
+    {
+      "name": "manage-authentication-policy",
+      "description": "Use for requests about Snowflake authentication policies. Create, modify, view, attach, detach,\ndrop, OR recommend authentication policies. Covers: restricting authentication methods\n(PASSWORD, SAML, OAUTH, KEYPAIR), enforcing MFA, configuring PAT expiry and network policy,\nworkload identity federation, client type restrictions, minimum driver versions, and security\nintegration controls.\nInvoke when user mentions: authentication policy, auth policy, MFA policy, MFA enrollment,\nPAT policy, client types, workload identity, driver version policy, keypair only, SAML only,\nrequire MFA, block password login, restrict client access, service account authentication,\nshow/list authentication policies, recommend/suggest authentication policies, help me set up\nauth policies, audit my authentication, harden authentication, lock down authentication."
+    },
+    {
+      "name": "manage-zerocopy-sapbdc",
+      "description": "Manage the end-to-end lifecycle of the Snowflake and SAP BDC Zero-Copy Integration and connector. Use when: consuming SAP data products in Snowflake, publishing Snowflake databases to SAP BDC with minimal CSN (v1.0, SDK-compatible), analyzing shared SAP data, or troubleshooting SAP BDC connector issues. This version uses MINIMAL CSN generation only (no options, no reviews, no validation loops). Triggers: SAP BDC, SAP connector, minimal CSN, SDK CSN, zerocopy connector, SAP data product, SAP BDC Connect, SAP publish, SAP share, SAP troubleshoot."
+    },
+    {
+      "name": "recommend-object",
+      "description": "Score and rank candidate Snowflake objects on trust signals to identify the most trustworthy source for a user's data question. Trust signals include: semantic view backing (including verified queries), dashboard/Streamlit dependency usage, daily refresh patterns, service role ownership, schema placement, freshness, and structural quality. Triggers: which table should I use, score these tables, rank these objects, which is most trustworthy, best source for, which table has, what is the best data to use for. Use when: candidates have already been identified and the user needs to know which one is the most trustworthy source for a given metric or concept."
+    },
+    {
+      "name": "sar-actions-desktop",
+      "description": "Desktop/CLI environment for building Snowflake Apps in CoCo Desktop on a local machine with a full shell, the `snow` CLI, and `npm`. Load this alongside the `snowflake-apps` skill for ANY Snowflake App request on the desktop: create, scaffold, build, develop, run locally, deploy, publish, operate, monitor, or troubleshoot. A Snowflake App is a web application (typically Next.js) deployed to SPCS via `snow app` \u2014 NOT a Streamlit app or Native App. Triggers: build me an app, new app, scaffold, web app, dashboard, data app, deploy my app, push to snowflake, ship it, deploy failed, run locally, develop, app logs, app status, app.yml, snowflake-app."
+    },
+    {
+      "name": "share-skill-and-plugin",
+      "description": "Share or unshare a local skill or plugin to users within the same account by executing the Cortex Extension share SQL directly. Use when the user says \"share skill\", \"publish skill\", \"share my skill\", \"share plugin\", \"publish plugin\", \"share my plugin\", \"share with users\", \"share publicly\", \"upload to cortex extension\", \"publish my skill\", \"publish my plugin\", \"make available\", \"add to skill catalog\", \"add to catalog\", \"add skill to catalog\", \"add plugin to catalog\", \"add my skill to the catalog\", \"publish to skill catalog\", \"publish to the catalog\", \"submit to skill catalog\", \"put in the skill catalog\", \"unshare skill\", \"unshare plugin\", \"stop sharing\", \"remove shared\", \"revoke access\", \"remove from catalog\", \"delete from catalog\" or \"delete shared\".  This is for publishing a local skill or plugin TO the catalog; to install or pull  an existing skill FROM the catalog, use find-skill-and-plugin instead. Does not handle  consumer/install flows. Does not handle sharing across accounts."
+    },
+    {
+      "name": "snowflake-publish-report",
+      "description": "Publish a local HTML report file as a shareable Snowflake Intelligence (Cowork) report artifact from Cortex Code. Copies the HTML into the user's workspace (an editable copy) and creates the report artifact linked back to it, so the \"edit\" button opens the workspace copy. Use after authoring an HTML report, or whenever the user asks to publish or share one. Triggers: publish report, publish the html, publish this report, share report, publish to snowflake intelligence, publish to cowork, share to cowork, publish as a snowflake intelligence / cowork report."
+    },
+    {
+      "name": "workspaces",
+      "description": "MANDATORY for Snowflake workspace operations. Workspace lifecycle (CREATE/ALTER/DROP/RENAME), file MOVEMENT (upload, download, list, remove, copy) via the `cortex ws` CLI subcommand, RBAC (GRANT READ/WRITE), shared-workspace publishing (`ALTER WORKSPACE ... COMMIT` to make uploads visible to other users), dropped-user recovery (DROPPED_USER$), replication setup, account-wide audit. Use when the user uploads, downloads, lists, removes, or copies files in a Snowflake workspace; creates/alters/drops a workspace; shares or revokes access; recovers content from a dropped user; sets up workspace replication; or asks anything referencing snow://workspace URIs, USER$ schemas, LOCAL schema workspaces, DEFAULT$/My Workspace, secondary replicas, or workspace administration. Triggers: workspace, workspaces, snow://workspace, USER$, DEFAULT$, personal workspace, shared workspace, LOCAL workspace, ALTER WORKSPACE, GRANT WORKSPACE, list workspace, files in workspace, what's in my workspace, secondary replica, read-only replica, dropped user."
+    }
+  ],
+  "count": 17
+}
