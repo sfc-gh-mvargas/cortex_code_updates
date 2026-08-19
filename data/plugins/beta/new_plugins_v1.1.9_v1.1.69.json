@@ -1,0 +1,22 @@
+{
+  "date_of": "2026-08-19",
+  "from_version": "1.1.9",
+  "to_version": "1.1.69",
+  "cli_version": "1.1.69",
+  "channel": "beta",
+  "new_plugins": [
+    {
+      "name": "blueprints",
+      "description": "Snowflake Blueprint Manager \u2014 guided platform configuration via expert-authored blueprints, skills, and slash commands.",
+      "version": "0.1.0",
+      "source": "external"
+    },
+    {
+      "name": "sf-solutions",
+      "description": "Discover, install, and teardown Snowflake industry solution accelerators - Manufacturing, Logistics, Energy, Utilities, Retail, Healthcare",
+      "version": "0.1.0",
+      "source": "external"
+    }
+  ],
+  "count": 2
+}

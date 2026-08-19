@@ -1,0 +1,19 @@
+{
+  "detected_date": "2026-08-19",
+  "from_version": "1.1.9",
+  "to_version": "1.1.69",
+  "cli_version": "1.1.69",
+  "channel": "beta",
+  "changes": [
+    {
+      "plugin_name": "blueprints",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "plugin_name": "sf-solutions",
+      "action": "NEW",
+      "detail": null
+    }
+  ]
+}
