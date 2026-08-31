@@ -1,0 +1,16 @@
+{
+  "date_of": "2026-08-31",
+  "from_version": "1.1.9",
+  "to_version": "1.1.78",
+  "cli_version": "1.1.78",
+  "channel": "beta",
+  "new_plugins": [
+    {
+      "name": "blueprints",
+      "description": "Snowflake Blueprint Manager \u2014 guided platform configuration via expert-authored blueprints, skills, and slash commands.",
+      "version": "0.1.0",
+      "source": "external"
+    }
+  ],
+  "count": 1
+}
