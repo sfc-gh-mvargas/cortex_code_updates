@@ -1,0 +1,14 @@
+{
+  "date_of": "2026-09-11",
+  "from_version": "1.1.84",
+  "to_version": "1.1.87",
+  "cli_version": "1.1.87",
+  "channel": "stable",
+  "new_skills": [
+    {
+      "name": "ci-cd",
+      "description": "Set up automated Snowflake deploys with CI/CD pipelines and OIDC authentication on GitHub Actions, GitLab CI, or Azure DevOps. Use whenever the user wants to automate Snowflake deploys, deploy on push or PR merge, validate on PR / merge request, configure pipeline authentication, or unblock CI from a Snowflake network policy (e.g. allow GitHub Actions / GitLab / Azure DevOps runners through a network policy, recommend a managed network rule for CI runners, IP-allowlist hosted runners)."
+    }
+  ],
+  "count": 1
+}

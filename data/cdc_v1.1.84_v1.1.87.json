@@ -1,0 +1,44 @@
+{
+  "detected_date": "2026-09-11",
+  "from_version": "1.1.84",
+  "to_version": "1.1.87",
+  "cli_version": "1.1.87",
+  "channel": "stable",
+  "changes": [
+    {
+      "skill_name": "ci-cd",
+      "action": "NEW",
+      "detail": null
+    },
+    {
+      "skill_name": "data-quality",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "developing-with-streamlit-in-snowflake",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "dynamic-tables-apply-recommendations",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "lineage",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "native-app-consumer",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    },
+    {
+      "skill_name": "native-app-provider",
+      "action": "MODIFIED",
+      "detail": "description_changed"
+    }
+  ]
+}

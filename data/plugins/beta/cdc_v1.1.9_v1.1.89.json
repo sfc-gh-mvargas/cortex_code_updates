@@ -1,0 +1,14 @@
+{
+  "detected_date": "2026-09-14",
+  "from_version": "1.1.9",
+  "to_version": "1.1.89",
+  "cli_version": "1.1.89",
+  "channel": "beta",
+  "changes": [
+    {
+      "plugin_name": "blueprints",
+      "action": "NEW",
+      "detail": null
+    }
+  ]
+}
